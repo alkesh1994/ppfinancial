@@ -28,6 +28,6 @@ class Client extends Model
       'client_bank_ifsc_code',
       'client_bank_micr_code',
       'client_bank_branch',
-      'client_cheque_photo',
+      'client_bank_cheque_photo',
     ];
 }

@@ -32,6 +32,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::view('/add-new-client', 'dashboard.client.create')->name('add_new_client');
 
+    Route::post('/store','ClientController@store')->name('store');
+
   });
 
 
