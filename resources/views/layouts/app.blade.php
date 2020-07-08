@@ -64,7 +64,7 @@ tfoot input {
   <header class="main-header">
 
     <!-- Logo -->
-    <a href="/" class="logo" target="_blank">
+    <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>P</b> P</span>
       <!-- logo for regular state and mobile devices -->
@@ -118,7 +118,7 @@ tfoot input {
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li>
-          <a href="{{ route('home')}}">
+          <a href="/dashboard">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
 
           </a>
@@ -127,14 +127,14 @@ tfoot input {
         <li class="treeview">
           <a href="#">
             <i class="fa fa-users" style="color:aqua;font-size:14px;"></i>
-            <span>Clients Info</span>
+            <span>Clientele</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href=""><i class="fa fa-list-ol"></i>Clients List</a></li>
-            <li><a href=""><i class="fa fa-pencil"></i>Add Client</a></li>
+            <li><a href="{{route('dashboard.clients.list')}}"><i class="fa fa-list-ol"></i>Clients List</a></li>
+            <li><a href=""><i class="fa fa-plus"></i>Add Client</a></li>
           </ul>
         </li>
       </ul>

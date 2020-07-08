@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models\Client;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -29,11 +29,5 @@ class Client extends Model
       'client_bank_micr_code',
       'client_bank_branch',
       'client_cheque_photo',
-      'amount_received',
-      'tenure',
-      'interest_rate',
-      'total_amount',
-      'commission_percentage',
-      'commission_amount',
-    ]
+    ];
 }

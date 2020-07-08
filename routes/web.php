@@ -20,4 +20,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
+
+  //Dashboard home
+  Route::get('/', 'HomeController@index');
+
+  //Client routes group
+  Route::prefix('clients')->namespace('Client')->as('clients.')->group(function() {
+
+    Route::get('/', 'ClientController@list')->name('list');
+
+  });
+
+
+});

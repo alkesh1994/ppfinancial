@@ -37,12 +37,6 @@ class CreateClientsTable extends Migration
             $table->string('client_bank_micr_code')->nullable();
             $table->string('client_bank_branch')->nullable();
             $table->string('client_cheque_photo')->nullable();
-            $table->string('amount_received')->nullable();
-            $table->string('tenure')->nullable();
-            $table->string('interest_rate')->nullable();
-            $table->string('total_amount')->nullable();
-            $table->string('commission_percentage')->nullable();
-            $table->string('commission_amount')->nullable();
             $table->timestamps();
         });
     }
