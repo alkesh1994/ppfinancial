@@ -126,10 +126,10 @@ tfoot input {
         <!--********Blog Navigation******-->
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-quote-left" style="color:aqua;font-size:14px;"></i>
+            <i class="fa fa-users" style="color:aqua;font-size:14px;"></i>
             <span>Clients Info</span>
             <span class="pull-right-container">
-              <i class="fa fa-user pull-right"></i>
+              <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
