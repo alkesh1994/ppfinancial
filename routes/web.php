@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 Auth::routes();
@@ -29,6 +29,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
   Route::prefix('clients')->namespace('Client')->as('clients.')->group(function() {
 
     Route::get('/', 'ClientController@list')->name('list');
+
+    Route::view('/add-new-client', 'dashboard.client.create')->name('add_new_client');
 
   });
 
