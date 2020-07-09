@@ -62,7 +62,7 @@ class ClientController extends Controller
       $client->delete();
 
       Session::flash('success', 'Client deleted successfully');
-      return response()->json(['success'=>'Client deleted successfully.']);
+      return redirect()->route('dashboard.clients.list');
 
     }
 }

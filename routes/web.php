@@ -38,7 +38,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::post('/update/{id}','ClientController@update')->name('update');
 
-    Route::get('/delete-client', 'ClientController@destroy')->name('delete_client');
+    Route::get('/delete-client/{id}', 'ClientController@destroy')->name('delete_client');
 
   });
 
