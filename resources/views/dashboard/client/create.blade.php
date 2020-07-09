@@ -8,7 +8,7 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{route('dashboard.home')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li><a href="{{route('dashboard.clients.create_client')}}">Clients</a></li>
+    <li><a href="{{route('dashboard.clients.list')}}">Clients</a></li>
     <li class="active">Create Client</li>
   </ol>
 </section>
@@ -113,14 +113,14 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="client_permanent_address">Client Permanent Address<span style="color:red;">*</span></label>
-                  <textarea id="client_permanent_address" name="client_permanent_address" class="form-control" placeholder="Enter Client Permanent Address">{!!old('client_permanent_address')!!}</textarea>
+                  <textarea id="client_permanent_address" name="client_permanent_address" class="form-control" placeholder="Enter Client Permanent Address">{{old('client_permanent_address')}}</textarea>
                 </div>
                 <span data-name="client_permanent_address" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="client_alternate_address">Client Alternate Address</label>
-                  <textarea id="client_alternate_address" name="client_alternate_address" class="form-control" placeholder="Enter Client Alternate Address">{!!old('client_alternate_address')!!}</textarea>
+                  <textarea id="client_alternate_address" name="client_alternate_address" class="form-control" placeholder="Enter Client Alternate Address">{{old('client_alternate_address')}}</textarea>
                 </div>
                 <span data-name="client_alternate_address" class="error" style="color:red;"></span>
               </div>
