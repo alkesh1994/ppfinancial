@@ -18,7 +18,7 @@
     <!-- left column -->
     <div class="col-md-12">
       <!-- form begin -->
-      <form role="form" method="put" enctype="multipart/form-data">
+      <form role="form" method="POST" enctype="multipart/form-data">
         {{ csrf_field()}}
         <!-- Personal Details begin -->
         <div class="box box-primary" style="padding-bottom:0px;margin-bottom:0px;">
@@ -267,8 +267,8 @@ $('button[type=submit]').on('click', function () {
   var formData = new FormData(form[0]);
 
   $.ajax({
-    url: "{{route('dashboard.clients.store')}}",
-    type: 'PUT',
+    url: "{{route('dashboard.clients.update',['id' => $client->id])}}",
+    type: 'POST',
     data: formData,
     processData: false,
     contentType: false,

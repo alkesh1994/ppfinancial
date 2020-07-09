@@ -37,6 +37,7 @@ class CreateClientsTable extends Migration
             $table->string('client_bank_micr_code')->nullable();
             $table->string('client_bank_branch')->nullable();
             $table->string('client_bank_cheque_photo')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

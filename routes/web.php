@@ -34,11 +34,11 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::post('/store','ClientController@store')->name('store');
 
-    Route::get('/edit-client/{id}', function (App\Models\Client\Client $id) {
-    	return view('dashboard.client.edit')->with('client', $id);
-    })->name('edit_client');
+    Route::get('/edit-client/{id}', 'ClientController@edit')->name('edit_client');
 
-    Route::get('/delete-client', 'ClientController@store')->name('delete_client');
+    Route::post('/update/{id}','ClientController@update')->name('update');
+
+    Route::get('/delete-client', 'ClientController@destroy')->name('delete_client');
 
   });
 
