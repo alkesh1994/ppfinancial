@@ -115,39 +115,38 @@
 <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script>
 
-  $(document).ready(function() {
-    // Setup - add a text input to each footer cell
-    var set = $('#tablelist tfoot th');
-    var length = set.length;
-    $('#tablelist tfoot th').each(function (index,element) {
-      if (index<(length-1)) {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+$(document).ready(function() {
+  // Setup - add a text input to each footer cell
+  var set = $('#tablelist tfoot th');
+  var length = set.length;
+  $('#tablelist tfoot th').each(function (index,element) {
+    if (index<(length-1)) {
+      var title = $(this).text();
+      $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    }
+
+  } );
+
+  // DataTable
+  var table = $('#tablelist').DataTable({
+    "order": [],
+    columnDefs: [ { orderable: false, targets: [4] } ]
+  });
+
+  // Apply the search
+  table.columns().every( function () {
+    var that = this;
+
+    $( 'input', this.footer() ).on( 'keyup change clear', function () {
+      if ( that.search() !== this.value ) {
+        that
+        .search( this.value )
+        .draw();
       }
-
     } );
-
-    // DataTable
-    var table = $('#tablelist').DataTable({
-      "order": [],
-      columnDefs: [ { orderable: false, targets: [4] } ]
-    });
-
-    // Apply the search
-    table.columns().every( function () {
-        var that = this;
-
-        $( 'input', this.footer() ).on( 'keyup change clear', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
-    $('#tablelist tfoot tr').appendTo('#tablelist thead');
+  } );
+  $('#tablelist tfoot tr').appendTo('#tablelist thead');
 } );
 </script>
-
 
 @stop
