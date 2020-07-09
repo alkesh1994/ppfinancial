@@ -1,15 +1,21 @@
 <?php
 
-namespace App\Models\Services\Client;
+namespace App\Services\Client;
 
-use Illuminate\Http\Request\Client\StoreClientRequest;
+use App\Http\Requests\Client\StoreClientRequest;
 use App\Models\Client\Client;
 
-class ClientService extends Controller
+class ClientService
 {
    public function storeData(StoreClientRequest $request){
 
-     $clientAadharCardPhoto = $this->handleUploadedImage($request->file('client_aadhar_card_photo'),'AadharCards');
+     $clientAadharCardPhotoPath = $this->handleUploadedImage($request->file('client_aadhar_card_photo'),'aadharCards');
+
+     $clientPanCardPhotoPath = $this->handleUploadedImage($request->file('client_pan_card_photo'),'panCards');
+
+     $clientPersonalPhotoPath = $this->handleUploadedImage($request->file('client_personal_photo'),'personalPhotos');
+
+     $clientBankChequePhotoPath = $this->handleUploadedImage($request->file('client_bank_cheque_photo'),'bankCheques');
 
      $storeData = Client::create([
        'client_first_name' => $request->get('client_first_name'),
@@ -25,15 +31,15 @@ class ClientService extends Controller
        'commission_of_referral' => $request->get('commission_of_referral'),
        'client_permanent_address' => $request->get('client_permanent_address'),
        'client_alternate_address' => $request->get('client_alternate_address'),
-       'client_aadhar_card_photo' => $request->get('client_aadhar_card_photo'),
-       'client_pan_card_photo' => $request->get('client_pan_card_photo'),
-       'client_personal_photo' => $request->get('client_personal_photo'),
+       'client_aadhar_card_photo' => $clientAadharCardPhotoPath,
+       'client_pan_card_photo' => $clientPanCardPhotoPath,
+       'client_personal_photo' => $clientPersonalPhotoPath,
        'client_bank_name' => $request->get('client_bank_name'),
        'client_bank_branch' => $request->get('client_bank_branch'),
        'client_bank_ifsc_code' => $request->get('client_bank_ifsc_code'),
        'client_bank_micr_code' => $request->get('client_bank_micr_code'),
        'client_bank_account_number' => $request->get('client_bank_account_number'),
-       'client_bank_cheque_photo' => $request->get('client_bank_cheque_photo')
+       'client_bank_cheque_photo' => $clientBankChequePhotoPath
      ]);
 
      return $storeData;
@@ -41,6 +47,12 @@ class ClientService extends Controller
    }
 
    function handleUploadedImage($image,$type){
-     
+
+     //handle image upload
+     $imagePath = "uploads/clients/".$type."/".time().str_random(10).$image->getClientOriginalName();
+     $image->move("uploads/clients/".$type, $imagePath);
+
+     return $imagePath;
+
    }
 }

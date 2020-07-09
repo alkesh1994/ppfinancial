@@ -13,7 +13,7 @@ class StoreClientRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -31,14 +31,14 @@ class StoreClientRequest extends FormRequest
           'nominee_middle_name' => 'required|max:50',
           'nominee_last_name' => 'required|max:50',
           'client_dob' => 'required',
-          'client_phone_number' => 'required|number|max:10',
-          'client_alternate_phone_number' => 'nullable|number|max:10',
+          'client_phone_number' => 'required|numeric',
+          'client_alternate_phone_number' => 'nullable|numeric',
           'client_permanent_address' => 'required',
           'client_aadhar_card_photo' => 'required|image',
           'client_pan_card_photo' => 'required|image',
           'client_personal_photo' => 'required|image',
           'client_bank_name' => 'required',
-          'client_bank_account_number' => 'required|number',
+          'client_bank_account_number' => 'required|numeric',
           'client_bank_ifsc_code' => 'required',
           'client_bank_micr_code' => 'required',
           'client_bank_branch' => 'required',

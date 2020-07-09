@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request\Client\StoreClientRequest;
+use App\Http\Requests\Client\StoreClientRequest;
 use App\Models\Client\Client;
 use App\Services\Client\ClientService;
+use Session;
 
 
 class ClientController extends Controller
@@ -27,7 +28,8 @@ class ClientController extends Controller
       $clientService = new ClientService();
       $storeData = $clientService->storeData($request);
 
-      return back()->with(['success' => 'Congratulations!']);
+      Session::flash('success', 'Client created successfully');
+      return response()->json(['success'=>'Client created successfully.']);
 
     }
 }
