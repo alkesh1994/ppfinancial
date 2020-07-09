@@ -23,14 +23,14 @@ Auth::routes();
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
 
   //Dashboard home
-  Route::get('/', 'HomeController@index');
+  Route::get('/', 'HomeController@index')->name('home');
 
   //Client routes group
   Route::prefix('clients')->namespace('Client')->as('clients.')->group(function() {
 
-    Route::get('/', 'ClientController@list')->name('list');
+    Route::get('/list', 'ClientController@list')->name('list');
 
-    Route::view('/add-new-client', 'dashboard.client.create')->name('add_new_client');
+    Route::view('/create-client', 'dashboard.client.create')->name('create_client');
 
     Route::post('/store','ClientController@store')->name('store');
 

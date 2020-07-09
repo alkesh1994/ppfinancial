@@ -134,7 +134,7 @@ tfoot input {
           </a>
           <ul class="treeview-menu">
             <li><a href="{{route('dashboard.clients.list')}}"><i class="fa fa-list-ol"></i>Clients List</a></li>
-            <li><a href="{{route('dashboard.clients.add_new_client')}}"><i class="fa fa-plus"></i>Add Client</a></li>
+            <li><a href="{{route('dashboard.clients.create_client')}}"><i class="fa fa-plus"></i>Add Client</a></li>
           </ul>
         </li>
       </ul>
