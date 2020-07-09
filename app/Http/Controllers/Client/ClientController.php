@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request\Client\StoreClientRequest;
 use App\Models\Client\Client;
+use App\Services\Client\ClientService;
 
 
 class ClientController extends Controller
@@ -23,8 +24,8 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request){
 
       //client data is valid
-
-      $this->createCouponService->make($request);
+      $clientService = new ClientService();
+      $storeData = $clientService->storeData($request);
 
       return back()->with(['success' => 'Congratulations!']);
 

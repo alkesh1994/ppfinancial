@@ -32,7 +32,7 @@ class StoreClientRequest extends FormRequest
           'nominee_last_name' => 'required|max:50',
           'client_dob' => 'required',
           'client_phone_number' => 'required|number|max:10',
-          'client_alternate_phone_number' => 'required|number|max:10',
+          'client_alternate_phone_number' => 'nullable|number|max:10',
           'client_permanent_address' => 'required',
           'client_aadhar_card_photo' => 'required|image',
           'client_pan_card_photo' => 'required|image',
