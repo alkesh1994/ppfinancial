@@ -7,6 +7,8 @@ use App\Models\Client\Client;
 
 class ClientService
 {
+
+   //process and store data
    public function storeData(StoreClientRequest $request){
 
      $clientAadharCardPhotoPath = $this->handleUploadedImage($request->file('client_aadhar_card_photo'),'aadharCards');

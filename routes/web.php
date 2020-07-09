@@ -34,6 +34,10 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::post('/store','ClientController@store')->name('store');
 
+    Route::view('/edit-client', 'dashboard.client.edit')->name('edit_client');
+
+    Route::get('/delete-client', 'ClientController@store')->name('delete_client');
+
   });
 
 
