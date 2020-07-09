@@ -4,12 +4,13 @@
 
 <section class="content-header">
   <h1>
-    Clients List
+    Client : {{$client->client_full_name}}
 
   </h1>
   <ol class="breadcrumb">
     <li><a href="{{route('dashboard.home')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Clients</li>
+    <li><a href="{{route('dashboard.clients.list')}}"><i class="fa fa-dashboard"></i> Clients</a></li>
+    <li class="active">Accounts</li>
   </ol>
 </section>
 
@@ -20,6 +21,7 @@
       <!-- /.box-header -->
       <div class="box box-primary">
         <div class="box-header">
+          <h3 class="box-title">Personal Details</h3>
           <div class="pull-right">
             <a href="{{route('dashboard.clients.create_client')}}" class="btn btn-warning"><i class="fa fa-plus-circle"></i> Create Client</a>
           </div>
@@ -37,36 +39,34 @@
               </tr>
             </thead>
 
-            @if($clients->count() > 0)
+            @if($accounts->count() > 0)
             <?php $i=0; ?>
             <tbody>
-              @foreach($clients as $client)
+              @foreach($accounts as $account)
               <?php $i++; ?>
 
               <tr>
-                <td>{{ $client->client_full_name }}</td>
-                <td>{{ $client->client_phone_number }}</td>
-                <td>{{ $client->client_bank_name }}</td>
-                <td>{{ $client->client_bank_branch }}</td>
+                <td>{{ $account->client_full_name }}</td>
+                <td>{{ $account->client_phone_number }}</td>
+                <td>{{ $account->client_bank_name }}</td>
+                <td>{{ $account->client_bank_branch }}</td>
                 <td>
-                  <a href="{{ route('dashboard.clients.edit_client',['id'=> $client->id]) }}" title="Edit"><span class="label label-success"><i class="glyphicon glyphicon-pencil"></i></span></a>
-                  <a href="{{ route('dashboard.clients.accounts.list',['id'=> $client->id]) }}" title="Accounts"><span class="label label-success"><i class="glyphicon glyphicon-book"></i></span></a>
-                  <a data-toggle="modal" data-target="#delete-client{{$i}}" title="Delete"><span class="label label-danger"><i class="glyphicon glyphicon-trash"></i></span></a>
-                  <div class="modal modal-danger fade" id="delete-client{{$i}}">
+                  <a data-toggle="modal" data-target="#delete-account{{$i}}" title="Delete"><span class="label label-danger"><i class="glyphicon glyphicon-trash"></i></span></a>
+                  <div class="modal modal-danger fade" id="delete-account{{$i}}">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Delete Client!!</h4>
+                            <h4 class="modal-title">Delete Account!!</h4>
                           </div>
                           <div class="modal-body">
-                            <h4>Are you sure you want to delete this client?</h4>
-                            <p>(This client will be moved to trashed)</p>
+                            <h4>Are you sure you want to delete this account?</h4>
+                            <p>(This account will be moved to trashed)</p>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                            <a class="btn btn-outline" href="{{ route('dashboard.clients.delete_client',['id'=> $client->id]) }}">Yes Delete</a>
+                            <a class="btn btn-outline" href="{{ route('dashboard.clients.accounts.delete_account',['client'=> $client->id,'id'=> $account->id]) }}">Yes Delete</a>
                           </div>
                         </div>
                         <!-- /.modal-content -->
@@ -92,7 +92,7 @@
               <tbody>
                 <tr>
 
-                  <th colspan="5" class="text-center">No client created yet</th>
+                  <th colspan="5" class="text-center">No account created yet</th>
 
                 </tr>
               </tbody>
