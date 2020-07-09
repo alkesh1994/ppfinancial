@@ -21,10 +21,7 @@
       <!-- /.box-header -->
       <div class="box box-primary">
         <div class="box-header">
-          <h3 class="box-title">Personal Details</h3>
-          <div class="pull-right">
-            <a href="{{route('dashboard.clients.create_client')}}" class="btn btn-warning"><i class="fa fa-plus-circle"></i> Create Client</a>
-          </div>
+          <h3 class="box-title">Accounts List</h3>
         </div>
         <div class="box-body table-responsive ">
 
