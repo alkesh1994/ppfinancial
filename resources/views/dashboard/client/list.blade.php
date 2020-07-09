@@ -46,7 +46,7 @@
               <?php $i++; ?>
 
               <tr>
-                <td>{{ $client->client_first_name }}</td>
+                <td>{{ $client->client_full_name }}</td>
                 <td>{{ $client->client_phone_number }}</td>
                 <td>{{ $client->client_bank_name }}</td>
                 <td>{{ $client->client_bank_branch }}</td>

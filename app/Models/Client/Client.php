@@ -35,4 +35,10 @@ class Client extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function getClientFullNameAttribute()
+    {
+      return $this->client_first_name . ' ' . $this->client_middle_name . ' ' . $this->client_last_name;
+    }
+
 }
