@@ -27,7 +27,7 @@ class StoreAccountRequest extends FormRequest
           'amount_received' => 'required|numeric',
           'tenure' => 'required',
           'interest_rate' => 'required',
-          'start_date' => 'required',
+          'start_date' => 'required|date',
         ];
     }
 }
