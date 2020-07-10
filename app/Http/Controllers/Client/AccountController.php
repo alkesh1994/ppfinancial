@@ -14,7 +14,7 @@ class AccountController extends Controller
     //To show list of clients
     public function list($id){
 
-      $accounts = Account::latest()->get();
+      $accounts = Account::where('client_id',$id)->latest()->get();
       $client = Client::findOrFail($id);
 
       return view('dashboard.client.account.list',['accounts' => $accounts,'client'=> $client]);

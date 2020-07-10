@@ -50,29 +50,6 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="nominee_first_name">Nominee First Name<span style="color:red;">*</span></label>
-                  <input type="text" id="nominee_first_name" name="nominee_first_name" class="form-control" value="{{old('nominee_first_name')}}" placeholder="Enter Nominee First Name">
-                  <span data-name="nominee_first_name" class="error" style="color:red;"></span>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="nominee_middle_name">Nominee Middle Name<span style="color:red;">*</span></label>
-                  <input type="text" id="nominee_middle_name" name="nominee_middle_name" class="form-control" value="{{old('nominee_middle_name')}}" placeholder="Enter Nominee Middle Name">
-                  <span data-name="nominee_middle_name" class="error" style="color:red;"></span>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="nominee_last_name">Nominee Last Name<span style="color:red;">*</span></label>
-                  <input type="text" id="nominee_last_name" name="nominee_last_name" class="form-control" value="{{old('nominee_last_name')}}" placeholder="Enter Nominee Last Name">
-                  <span data-name="nominee_last_name" class="error" style="color:red;"></span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="client_dob">Client Date of Birth<span style="color:red;">*</span></label>
