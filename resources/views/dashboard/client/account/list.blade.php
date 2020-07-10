@@ -33,15 +33,15 @@
                 <div class="form-group">
                   <label for="start_date">Start Date<span style="color:red;">*</span></label>
                   <input type="date" id="start_date" name="start_date" class="form-control" value="{{old('start_date')}}" placeholder="Enter Start Date">
+                  <span data-name="start_date" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="start_date" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="amount_received">Amount Received<span style="color:red;">*</span></label>
                   <input type="number" id="amount_received" name="amount_received" class="form-control" value="{{old('amount_received')}}" placeholder="Enter Amount Received" onchange="updateTotalAmount()">
+                  <span data-name="amount_received" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="amount_received" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
@@ -50,8 +50,8 @@
                     <option value="6">6 months</option>
                     <option value="12">1 year</option>
                   </select>
+                  <span data-name="tenure" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="tenure" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-1">
                 <div class="form-group">
@@ -62,15 +62,15 @@
                     <option value="2.5">2.5</option>
                     <option value="3">3</option>
                   </select>
+                  <span data-name="interest_rate" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="interest_rate" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="total_amount">Total Amount</label>
                   <input type="text" id="total_amount" class="form-control" value="" placeholder="Total Amount" disabled>
+                  <span data-name="total_amount" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="total_amount" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-1">
                 <div class="form-group">
@@ -80,15 +80,15 @@
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </select>
+                  <span data-name="commission_percentage" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="commission_percentage" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="commission_amount">Commission Amount</label>
                   <input type="text" id="commission_amount" class="form-control" value="{{old('commission_amount')}}" placeholder="Commission Amount" disabled>
+                  <span data-name="commission_amount" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="commission_amount" class="error" style="color:red;"></span>
               </div>
             </div>
           </div>
