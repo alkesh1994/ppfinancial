@@ -25,9 +25,6 @@ class ClientService
        'client_first_name' => $request->get('client_first_name'),
        'client_middle_name' => $request->get('client_middle_name'),
        'client_last_name' => $request->get('client_last_name'),
-       'nominee_first_name' => $request->get('nominee_first_name'),
-       'nominee_middle_name' => $request->get('nominee_middle_name'),
-       'nominee_last_name' => $request->get('nominee_last_name'),
        'client_dob' => $request->get('client_dob'),
        'client_phone_number' => $request->get('client_phone_number'),
        'client_alternate_phone_number' => $request->get('client_alternate_phone_number'),
@@ -70,9 +67,6 @@ class ClientService
      $client->client_first_name = $request->client_first_name;
      $client->client_middle_name = $request->client_middle_name;
      $client->client_last_name = $request->client_last_name;
-     $client->nominee_first_name = $request->nominee_first_name;
-     $client->nominee_middle_name = $request->nominee_middle_name;
-     $client->nominee_last_name = $request->nominee_last_name;
      $client->client_dob = $request->client_dob;
      $client->client_phone_number = $request->client_phone_number;
      $client->client_alternate_phone_number = $request->client_alternate_phone_number;

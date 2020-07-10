@@ -13,9 +13,6 @@ class Client extends Model
       'client_first_name',
       'client_middle_name',
       'client_last_name',
-      'nominee_first_name',
-      'nominee_middle_name',
-      'nominee_last_name',
       'client_dob',
       'client_phone_number',
       'client_alternate_phone_number',
@@ -35,6 +32,10 @@ class Client extends Model
     ];
 
     protected $dates = ['deleted_at'];
+
+    public function accounts(){
+      return $this->hasMany('App\Models\Client\Account');
+    }
 
     public function getClientFullNameAttribute()
     {

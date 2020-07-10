@@ -42,5 +42,16 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
   });
 
+  //Accounts routes group
+  Route::namespace('Client')->as('clients.accounts.')->group(function() {
+
+    Route::get('clients/{id}/accounts/list', 'AccountController@list')->name('list');
+
+    Route::post('clients/accounts/store','AccountController@store')->name('store');
+
+    Route::get('clients/{client}/accounts/delete-account/{account}', 'ClientController@destroy')->name('delete_account');
+
+  });
+
 
 });
