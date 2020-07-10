@@ -22,4 +22,13 @@ class Account extends Model
     public function client(){
       return $this->belongsTo('App\Models\Client\Client')->withTrashed();
     }
+
+    public function getTenureDisplayAttribute()
+    {
+      if($this->tenure == 6)
+         return '6 months';
+
+      if($this->tenure == 12)
+        return '1 year';
+    }
 }

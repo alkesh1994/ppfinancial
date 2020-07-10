@@ -36,6 +36,8 @@ class Client extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $attributes = ['client_full_name'];
+
     public function accounts(){
       return $this->hasMany('App\Models\Client\Account');
     }
