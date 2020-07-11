@@ -34,9 +34,9 @@ class ClientController extends Controller
     }
 
     //to sho edit form
-    public function edit($id){
+    public function edit($slug){
 
-      $client = Client::findOrFail($id);
+      $client = Client::where('slug',$slug)->firstOrFail();
 
       return view('dashboard.client.edit',['client' => $client]);
 

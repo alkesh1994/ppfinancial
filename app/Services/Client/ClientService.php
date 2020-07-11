@@ -5,6 +5,7 @@ namespace App\Services\Client;
 use App\Http\Requests\Client\StoreClientRequest;
 use App\Http\Requests\Client\UpdateClientRequest;
 use App\Models\Client\Client;
+use App\Services\Helpers\SlugService;
 use File;
 
 class ClientService
@@ -12,6 +13,10 @@ class ClientService
 
    //process and store data
    public function storeData(StoreClientRequest $request){
+
+     $sluggableField = $request->get('client_first_name').' '.$request->get('client_middle_name').' '.$request->get('client_last_name').' '.str_random(10);
+     $slugService = new SlugService();
+     $slug = $slugService->createSlug('Client\\Client',$sluggableField);
 
      $clientAadharCardPhotoPath = $this->handleImageUpload($request->file('client_aadhar_card_photo'),'aadharCards');
 
@@ -22,6 +27,7 @@ class ClientService
      $clientBankChequePhotoPath = $this->handleImageUpload($request->file('client_bank_cheque_photo'),'bankCheques');
 
      $storeData = Client::create([
+       'slug' => $slug,
        'client_first_name' => $request->get('client_first_name'),
        'client_middle_name' => $request->get('client_middle_name'),
        'client_last_name' => $request->get('client_last_name'),
@@ -51,6 +57,14 @@ class ClientService
    public function updateData(UpdateClientRequest $request,$id){
 
      $client = Client::findOrFail($id);
+
+     if(($client->client_first_name != $request->client_first_name) || ($client->client_middle_name != $request->client_middle_name) || ($client->client_last_name != $request->client_last_name)){
+       $sluggableField = $request->get('client_first_name').' '.$request->get('client_middle_name').' '.$request->get('client_last_name').' '.str_random(10);
+       $slugService = new SlugService();
+       $client->slug = $slugService->createSlug('Client\\Client',$sluggableField);
+     }else{
+       $slug = $client->slug;
+     }
 
      if($request->file('client_aadhar_card_photo'))
      $client->client_aadhar_card_photo = $this->updateImage($request->file('client_aadhar_card_photo'), $client->client_aadhar_card_photo,'aadharCards');

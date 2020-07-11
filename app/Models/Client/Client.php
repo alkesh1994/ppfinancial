@@ -10,6 +10,7 @@ class Client extends Model
     use SoftDeletes;
 
     protected $fillable = [
+      'slug',
       'client_first_name',
       'client_middle_name',
       'client_last_name',

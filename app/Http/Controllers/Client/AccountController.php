@@ -12,10 +12,10 @@ use Session;
 class AccountController extends Controller
 {
     //To show list of clients
-    public function list($id){
+    public function list($slug){
 
-      $accounts = Account::where('client_id',$id)->latest()->get();
-      $client = Client::findOrFail($id);
+      $client = Client::where('slug',$slug)->firstOrFail();
+      $accounts = Account::where('client_id',$client->id)->latest()->get();
 
       return view('dashboard.client.account.list',['accounts' => $accounts,'client'=> $client]);
 

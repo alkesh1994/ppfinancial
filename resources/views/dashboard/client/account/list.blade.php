@@ -190,7 +190,7 @@
               <tbody>
                 <tr>
 
-                  <th colspan="5" class="text-center">No account created yet</th>
+                  <th colspan="7" class="text-center">No account created yet</th>
 
                 </tr>
               </tbody>
@@ -247,7 +247,7 @@ $('button[type=submit]').on('click', function () {
     success: function(result)
     {
 
-      window.location.replace("{{route('dashboard.clients.accounts.list',['id' => $client->id])}}");
+      window.location.replace("{{route('dashboard.clients.accounts.list',['slug' => $client->slug])}}");
     },
     error: function(error)
     {

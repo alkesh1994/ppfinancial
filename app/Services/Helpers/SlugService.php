@@ -5,8 +5,6 @@ namespace App\Services\Helpers;
 class SlugService
 {
 
-  const MODELS_NAMESPACE_PATH = "\\App\\Models\\";
-
   public function createSlug($model,$sluggableField, $id = 0)
   {
     $slug = str_slug($sluggableField);
@@ -29,7 +27,8 @@ class SlugService
 
   protected function getRelatedSlugs($model,$slug, $id = 0)
   {
-    return MODELS_NAMESPACE_PATH.$model::select('slug')->where('slug', 'like', $slug.'%')->where('id', '<>', $id)->get();
+    $modelNamespace = "\\App\\Models\\".$model;
+    return $modelNamespace::select('slug')->where('slug', 'like', $slug.'%')->where('id', '<>', $id)->get();
   }
 
 }
