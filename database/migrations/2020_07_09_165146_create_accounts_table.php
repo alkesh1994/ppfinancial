@@ -15,6 +15,7 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
+            $table->text('slug');
             $table->integer('amount_received')->nullable();
             $table->string('tenure')->nullable();
             $table->integer('interest_rate')->nullable();
