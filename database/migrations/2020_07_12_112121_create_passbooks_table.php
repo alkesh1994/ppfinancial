@@ -21,6 +21,7 @@ class CreatePassbooksTable extends Migration
             $table->integer('base_amount')->nullable();
             $table->integer('interest_rate')->nullable();
             $table->integer('interest_amount')->nullable();
+            $table->integer('current_amount')->nullable();
             $table->integer('total_amount')->nullable();
             $table->integer('months_left')->nullable();
             $table->integer('withdrawn_amount')->nullable();

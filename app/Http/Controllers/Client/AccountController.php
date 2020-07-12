@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\Client\StoreAccountRequest;
 use App\Models\Client\Client;
 use App\Models\Client\Account;
@@ -54,6 +55,17 @@ class AccountController extends Controller
 
         Session::flash('success', 'Account deleted successfully');
         return redirect()->route('dashboard.clients.accounts.list',['slug'=> $clientSlug]);
+
+    }
+
+    //when amount is withdrawn
+    public function withdraw(Request $request){
+
+      //get result
+      $withdraw = $this->accountService->withdrawAmount($request);
+
+      Session::flash('success', 'Amount withdrawn successfully');
+      return response()->json(['success'=>'Account withdrawn successfully.']);
 
     }
 

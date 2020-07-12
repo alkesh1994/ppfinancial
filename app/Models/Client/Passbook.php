@@ -13,6 +13,7 @@ class Passbook extends Model
       'base_amount',
       'interest_rate',
       'interest_amount',
+      'current_amount',
       'total_amount',
       'months_left',
       'withdrawn_amount',

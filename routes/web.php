@@ -51,6 +51,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::get('clients/{clientSlug}/accounts/delete-account/{accountId}', 'AccountController@destroy')->name('delete_account');
 
+    Route::post('clients/accounts/withdraw','AccountController@withdraw')->name('withdraw');
+
   });
 
   //Passbook routes group

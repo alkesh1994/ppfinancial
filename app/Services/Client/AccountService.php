@@ -2,6 +2,7 @@
 
 namespace App\Services\Client;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\Client\StoreAccountRequest;
 use App\Models\Client\Account;
 use App\Services\Helpers\SlugService;
@@ -45,4 +46,14 @@ class AccountService
      return $storeAccount;
 
    }
+
+   //withdraw amount
+   public function withdrawAmount(Request $request){
+
+     $withdraw = $this->passbookService->withdrawAmount($request);
+
+     return $withdraw;
+   }
+
+
 }

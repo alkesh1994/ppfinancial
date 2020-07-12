@@ -39,7 +39,7 @@
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="amount_received">Amount Received<span style="color:red;">*</span></label>
-                  <input type="number" id="amount_received" name="amount_received" class="form-control" value="{{old('amount_received')}}" placeholder="Enter Amount Received" onkeypress="updateAmounts()">
+                  <input type="number" id="amount_received" name="amount_received" class="form-control" value="{{old('amount_received')}}" placeholder="Enter Amount Received" onchange="updateAmounts()">
                   <span data-name="amount_received" class="error" style="color:red;"></span>
                 </div>
               </div>
@@ -99,7 +99,7 @@
           <div class="col-md-12">
             <!-- /.box-body -->
             <div class="text-center box-footer" style="padding-top:20px;">
-              <button type="submit" name="action" class="btn btn-primary btn-lg dis" value="draft" style="  box-shadow: 2px 5px #888888;">Submit</button>
+              <button type="submit" id="create_account" name="action" class="btn btn-primary btn-lg dis" value="draft" style="  box-shadow: 2px 5px #888888;">Submit</button>
             </div>
           </div>
         </div>
@@ -150,7 +150,47 @@
                 <td><button @if($account->active)class="btn btn-sm btn-flat btn-success"@else class="btn btn-sm btn-flat btn-danger"@endif >{{$account->status}}</button></td>
                 <td>
                   <a href="{{ route('dashboard.clients.accounts.passbook.show',['clientSlug'=> $client->slug,'accountSlug'=> $account->slug]) }}" title="Passbook" target="_blank"><span class="label label-success"><i class="glyphicon glyphicon-list-alt"></i></span></a>
-                  <a href="" title="Accounts" target="_blank"><span class="label label-primary"><i class="glyphicon glyphicon-book"></i></span></a>
+                  <a data-toggle="modal" data-target="#withdrawnAmount{{$i}}" title="Withdraw Amount"><span class="label label-warning"><i class="glyphicon glyphicon-arrow-down"></i></span></a>
+                  <div class="modal modal-warning fade" id="withdrawnAmount{{$i}}">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Withdraw Amount</h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>Amount Received : {{ $account->amount_received }} ₹</p>
+                            <form method="post">
+                              {{ csrf_field()}}
+                              <input type="hidden" name="account_id" value="{{$account->id}}">
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label for="withdrawn_amount">Withdraw Amount<span style="color:red;">*</span></label>
+                                    <input type="number" id="withdrawn_amount" name="withdrawn_amount" class="form-control" value="{{old('withdrawn_amount')}}" placeholder="Enter Withdrawn Amount" required>
+                                    <span data-name="withdrawn_amount" class="error" style="color:red;"></span>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label for="penalty">Penalty</label>
+                                    <input type="number" id="penalty" name="penalty" class="form-control" value="" placeholder="Penalty" disabled>
+                                    <span data-name="penalty" class="error" style="color:red;"></span>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" id="withdraw" class="btn btn-outline disw">Submit</button>
+                          </div>
+                            </form>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
                   <a data-toggle="modal" data-target="#delete-account{{$i}}" title="Delete"><span class="label label-danger"><i class="glyphicon glyphicon-trash"></i></span></a>
                   <div class="modal modal-danger fade" id="delete-account{{$i}}">
                     <div class="modal-dialog">
@@ -221,7 +261,7 @@ $.ajaxSetup({
   }
 });
 
-$('button[type=submit]').on('click', function () {
+$('#create_account').on('click', function () {
 
   var $this = $(this);
 
@@ -266,6 +306,36 @@ $('button[type=submit]').on('click', function () {
   });
 });
 
+$('#withdraw').on('click', function () {
+
+  var formData = new FormData(form[0]);
+  formData.append('penalty',document.getElementById('penalty').value);
+
+  $.ajax({
+    url: "{{route('dashboard.clients.accounts.withdraw')}}",
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    beforeSend: function() {
+      $(".disw").prop('disabled', true); // disable button
+    },
+    statusCode: {
+      401: function() {
+        window.location.replace("{{route('dashboard.home')}}");
+      }
+    },
+    success: function(result)
+    {
+
+      window.location.replace("{{route('dashboard.clients.accounts.list',['slug' => $client->slug])}}");
+    },
+    error: function(error)
+    {
+      $(".disw").prop('disabled', false);
+    }
+  });
+});
 </script>
 <script type="text/javascript">
 //dynamically update total amount
