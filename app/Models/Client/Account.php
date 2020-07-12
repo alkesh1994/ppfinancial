@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Account extends Model
 {
     protected $fillable = [
+      'slug',
       'amount_received',
       'tenure',
       'interest_rate',
