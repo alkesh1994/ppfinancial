@@ -27,7 +27,7 @@ class SlugService
 
   protected function getRelatedSlugs($model,$slug, $id = 0)
   {
-    $modelNamespace = "\\App\\Models\\".$model;
+    $modelNamespace = config('global.model_namespace').$model;
     return $modelNamespace::select('slug')->where('slug', 'like', $slug.'%')->where('id', '<>', $id)->get();
   }
 
