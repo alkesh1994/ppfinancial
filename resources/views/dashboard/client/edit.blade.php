@@ -109,6 +109,10 @@
                   <input type="file" id="client_aadhar_card_photo" name="client_aadhar_card_photo" onchange="validateImage('client_aadhar_card_photo')" class="form-control" placeholder="Choose Client Aadhar Card Photo">
                   <span data-name="client_aadhar_card_photo" class="error" style="color:red;"></span>
                 </div>
+                <div class="form-group">
+                  <label>Existing Image:</label>
+                  <a href="{{asset($client->client_aadhar_card_photo)}}" target="_blank"><img src="{{asset($client->client_aadhar_card_photo)}}" width="200"></a>
+                </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
@@ -116,12 +120,20 @@
                   <input type="file" id="client_pan_card_photo" name="client_pan_card_photo" onchange="validateImage('client_pan_card_photo')" class="form-control" placeholder="Choose Client Pan Card Photo">
                   <span data-name="client_pan_card_photo" class="error" style="color:red;"></span>
                 </div>
+                <div class="form-group">
+                  <label>Existing Image:</label>
+                  <a href="{{asset($client->client_pan_card_photo)}}" target="_blank"><img src="{{asset($client->client_pan_card_photo)}}" width="200"></a>
+                </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="client_personal_photo">Client Personal Photo<span style="color:red;">*</span></label>
                   <input type="file" id="client_personal_photo" name="client_personal_photo" onchange="validateImage('client_personal_photo')" class="form-control" placeholder="Choose Client Personal Photo">
                   <span data-name="client_personal_photo" class="error" style="color:red;"></span>
+                </div>
+                <div class="form-group">
+                  <label>Existing Image:</label>
+                  <a href="{{asset($client->client_personal_photo)}}" target="_blank"><img src="{{asset($client->client_personal_photo)}}" width="200"></a>
                 </div>
               </div>
             </div>
@@ -177,6 +189,10 @@
                   <label for="client_bank_cheque_photo">Cheque Photo<span style="color:red;">*</span></label>
                   <input type="file" id="client_bank_cheque_photo" name="client_bank_cheque_photo" onchange="validateImage('client_bank_cheque_photo')" class="form-control" placeholder="Choose Cheque Photo">
                   <span data-name="client_bank_cheque_photo" class="error" style="color:red;"></span>
+                </div>
+                <div class="form-group">
+                  <label>Existing Image:</label>
+                  <a href="{{asset($client->client_bank_cheque_photo)}}" target="_blank"><img src="{{asset($client->client_bank_cheque_photo)}}" width="200"></a>
                 </div>
               </div>
             </div>
