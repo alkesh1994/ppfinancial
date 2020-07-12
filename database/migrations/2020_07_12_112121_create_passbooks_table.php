@@ -26,6 +26,7 @@ class CreatePassbooksTable extends Migration
             $table->integer('withdrawn_amount')->nullable();
             $table->date('withdrawn_date')->nullable();
             $table->integer('penalty')->nullable();
+            $table->integer('account_id');
             $table->timestamps();
         });
     }

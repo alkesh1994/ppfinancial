@@ -17,7 +17,8 @@ class Passbook extends Model
       'months_left',
       'withdrawn_amount',
       'withdrawn_date',
-      'penalty'
+      'penalty',
+      'account_id'
     ];
 
     public function account(){
