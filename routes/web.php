@@ -53,5 +53,12 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
   });
 
+  //Passbook routes group
+  Route::namespace('Client')->as('clients.accounts.passbook.')->group(function() {
+
+    Route::get('clients/{clientSlug}/accounts/{accountSlug}/passbook', 'PassbookController@list')->name('list');
+
+  });
+
 
 });

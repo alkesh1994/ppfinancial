@@ -149,6 +149,8 @@
                 <td>{{ $account->total_amount}} ₹</td>
                 <td><button @if($account->active)class="btn btn-sm btn-flat btn-success"@else class="btn btn-sm btn-flat btn-danger"@endif >{{$account->status}}</button></td>
                 <td>
+                  <a href="{{ route('dashboard.clients.accounts.passbook.list',['clientSlug'=> $client->slug,'accountSlug'=> $account->slug]) }}" title="Passbook" target="_blank"><span class="label label-success"><i class="glyphicon glyphicon-list-alt"></i></span></a>
+                  <a href="" title="Accounts" target="_blank"><span class="label label-primary"><i class="glyphicon glyphicon-book"></i></span></a>
                   <a data-toggle="modal" data-target="#delete-account{{$i}}" title="Delete"><span class="label label-danger"><i class="glyphicon glyphicon-trash"></i></span></a>
                   <div class="modal modal-danger fade" id="delete-account{{$i}}">
                     <div class="modal-dialog">
