@@ -7,6 +7,7 @@ use App\Http\Requests\Client\StoreClientRequest;
 use App\Http\Requests\Client\UpdateClientRequest;
 use App\Models\Client\Client;
 use App\Services\Client\ClientService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
 
 class ClientController extends Controller
@@ -57,12 +58,17 @@ class ClientController extends Controller
     //to softdelete the client entry
     public function destroy($id){
 
-      $client = Client::findOrFail($id);
+      try {
+        $client = Client::findOrFail($id);
+      } catch (ModelNotFoundException $e) {
+        Session::flash('success', 'Client is deleted already');
+        return redirect()->route('dashboard.clients.list');
+      }
 
-      $client->delete();
+        $client->delete();
 
-      Session::flash('success', 'Client deleted successfully');
-      return redirect()->route('dashboard.clients.list');
+        Session::flash('success', 'Client deleted successfully');
+        return redirect()->route('dashboard.clients.list');
 
     }
 }

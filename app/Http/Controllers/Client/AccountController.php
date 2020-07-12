@@ -7,6 +7,7 @@ use App\Http\Requests\Client\StoreAccountRequest;
 use App\Models\Client\Client;
 use App\Models\Client\Account;
 use App\Services\Client\AccountService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
 
 class AccountController extends Controller
@@ -32,4 +33,23 @@ class AccountController extends Controller
       return response()->json(['success'=>'Account created successfully.']);
 
     }
+
+    //to softdelete the account entry
+    public function destroy($clientSlug,$accountId){
+
+      try {
+        $account = Account::findOrFail($accountId);
+      } catch (ModelNotFoundException $e) {
+        Session::flash('success', 'Account is deleted already');
+        return redirect()->route('dashboard.clients.acounts.list',['slug'=> $clientSlug]);
+      }
+
+        $account->delete();
+
+        Session::flash('success', 'Account deleted successfully');
+        return redirect()->route('dashboard.clients.acounts.list',['slug'=> $clientSlug]);
+
+    }
+
+
 }

@@ -162,7 +162,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                            <a class="btn btn-outline" href="{{ route('dashboard.clients.accounts.delete_account',['client'=> $client->id,'account'=> $account->id]) }}">Yes Delete</a>
+                            <a class="btn btn-outline" href="{{ route('dashboard.clients.accounts.delete_account',['clientSlug'=> $client->slug,'accountId'=> $account->id]) }}">Yes Delete</a>
                           </div>
                         </div>
                         <!-- /.modal-content -->

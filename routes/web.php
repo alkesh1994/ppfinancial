@@ -49,7 +49,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::post('clients/accounts/store','AccountController@store')->name('store');
 
-    Route::get('clients/{client}/accounts/delete-account/{account}', 'ClientController@destroy')->name('delete_account');
+    Route::get('clients/{clientSlug}/accounts/delete-account/{accountId}', 'ClientController@destroy')->name('delete_account');
 
   });
 
