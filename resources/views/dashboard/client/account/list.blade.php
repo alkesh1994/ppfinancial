@@ -39,7 +39,7 @@
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="amount_received">Amount Received<span style="color:red;">*</span></label>
-                  <input type="number" id="amount_received" name="amount_received" class="form-control" value="{{old('amount_received')}}" placeholder="Enter Amount Received" onchange="updateAmounts()">
+                  <input type="number" id="amount_received" name="amount_received" class="form-control" value="{{old('amount_received')}}" placeholder="Enter Amount Received" onkeypress="updateAmounts()">
                   <span data-name="amount_received" class="error" style="color:red;"></span>
                 </div>
               </div>
