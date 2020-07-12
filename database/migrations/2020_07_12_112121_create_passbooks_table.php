@@ -15,11 +15,17 @@ class CreatePassbooksTable extends Migration
     {
         Schema::create('passbooks', function (Blueprint $table) {
             $table->id();
-            $table->integer('base_amount');
-            $table->integer('interest_amount');
-            $table->integer('total_amount');
-            $table->integer('withdrawn_amount');
-            $table->integer('penalty');
+            $table->date('start_date')->nullable();
+            $table->date('next_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->integer('base_amount')->nullable();
+            $table->integer('interest_rate')->nullable();
+            $table->integer('interest_amount')->nullable();
+            $table->integer('total_amount')->nullable();
+            $table->integer('months_left')->nullable();
+            $table->integer('withdrawn_amount')->nullable();
+            $table->date('withdrawn_date')->nullable();
+            $table->integer('penalty')->nullable();
             $table->timestamps();
         });
     }
