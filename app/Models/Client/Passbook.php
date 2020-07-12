@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Passbook extends Model
 {
-    protected $fillable=[
+    protected $fillable = [
       'start_date',
       'next_date',
       'end_date',
