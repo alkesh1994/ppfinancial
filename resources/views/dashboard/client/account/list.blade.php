@@ -33,62 +33,62 @@
                 <div class="form-group">
                   <label for="start_date">Start Date<span style="color:red;">*</span></label>
                   <input type="date" id="start_date" name="start_date" class="form-control" value="{{old('start_date')}}" placeholder="Enter Start Date">
+                  <span data-name="start_date" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="start_date" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="amount_received">Amount Received<span style="color:red;">*</span></label>
-                  <input type="number" id="amount_received" name="amount_received" class="form-control" value="{{old('amount_received')}}" placeholder="Enter Amount Received" onchange="updateTotalAmount()">
+                  <input type="number" id="amount_received" name="amount_received" class="form-control" value="{{old('amount_received')}}" placeholder="Enter Amount Received" onchange="updateAmounts()">
+                  <span data-name="amount_received" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="amount_received" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="tenure">Tenure</label>
-                  <select class="form-control" id="tenure" name="tenure" onchange="updateTotalAmount()">
+                  <select class="form-control" id="tenure" name="tenure" onchange="updateAmounts()">
                     <option value="6">6 months</option>
                     <option value="12">1 year</option>
                   </select>
+                  <span data-name="tenure" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="tenure" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-1">
                 <div class="form-group">
                   <label for="interest_rate">Interest Rate %</label>
-                  <select class="form-control" id="interest_rate" name="interest_rate" onchange="updateTotalAmount()">
+                  <select class="form-control" id="interest_rate" name="interest_rate" onchange="updateAmounts()">
                     <option value="1.5">1.5</option>
                     <option value="2">2</option>
                     <option value="2.5">2.5</option>
                     <option value="3">3</option>
                   </select>
+                  <span data-name="interest_rate" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="interest_rate" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="total_amount">Total Amount</label>
                   <input type="text" id="total_amount" class="form-control" value="" placeholder="Total Amount" disabled>
+                  <span data-name="total_amount" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="total_amount" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-1">
                 <div class="form-group">
                   <label for="commission_percentage">Commission %</label>
-                  <select class="form-control" id="commission_percentage" name="commission_percentage" onchange="updateCommissionAmount()">
+                  <select class="form-control" id="commission_percentage" name="commission_percentage" onchange="updateAmounts()">
                     <option value="0">N.A</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                   </select>
+                  <span data-name="commission_percentage" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="commission_percentage" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="commission_amount">Commission Amount</label>
                   <input type="text" id="commission_amount" class="form-control" value="{{old('commission_amount')}}" placeholder="Commission Amount" disabled>
+                  <span data-name="commission_amount" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="commission_amount" class="error" style="color:red;"></span>
               </div>
             </div>
           </div>
@@ -162,7 +162,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-                            <a class="btn btn-outline" href="{{ route('dashboard.clients.accounts.delete_account',['client'=> $client->id,'account'=> $account->id]) }}">Yes Delete</a>
+                            <a class="btn btn-outline" href="{{ route('dashboard.clients.accounts.delete_account',['clientSlug'=> $client->slug,'accountId'=> $account->id]) }}">Yes Delete</a>
                           </div>
                         </div>
                         <!-- /.modal-content -->
@@ -190,7 +190,7 @@
               <tbody>
                 <tr>
 
-                  <th colspan="5" class="text-center">No account created yet</th>
+                  <th colspan="7" class="text-center">No account created yet</th>
 
                 </tr>
               </tbody>
@@ -247,7 +247,7 @@ $('button[type=submit]').on('click', function () {
     success: function(result)
     {
 
-      window.location.replace("{{route('dashboard.clients.accounts.list',['id' => $client->id])}}");
+      window.location.replace("{{route('dashboard.clients.accounts.list',['slug' => $client->slug])}}");
     },
     error: function(error)
     {
@@ -264,13 +264,16 @@ $('button[type=submit]').on('click', function () {
 </script>
 <script type="text/javascript">
 //dynamically update total amount
-function updateTotalAmount() {
+function updateAmounts() {
 
   var amount_received = +document.getElementById('amount_received').value;
   var interest_rate = +document.getElementById('interest_rate').value;
   var tenure = +document.getElementById('tenure').value;
+  var commission_percentage = +document.getElementById('commission_percentage').value;
 
   var interest_amount = (amount_received * interest_rate)/100;
+
+  var commission_amount = (amount_received * commission_percentage)/100;
 
   if(tenure === 6)
     var total_amount = amount_received + interest_amount * 6;
@@ -279,15 +282,6 @@ function updateTotalAmount() {
     var total_amount = amount_received + (interest_amount * 12);
 
   document.getElementById('total_amount').value = total_amount;
-}
-//dynamically update commission amount
-function updateCommissionAmount(){
-
-  var amount_received = +document.getElementById('amount_received').value;
-  var commission_percentage = +document.getElementById('commission_percentage').value;
-
-  var commission_amount = (amount_received * commission_percentage)/100;
-
   document.getElementById('commission_amount').value = commission_amount;
 }
 </script>

@@ -34,7 +34,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::post('/store','ClientController@store')->name('store');
 
-    Route::get('/edit-client/{id}', 'ClientController@edit')->name('edit_client');
+    Route::get('/edit-client/{slug}', 'ClientController@edit')->name('edit_client');
 
     Route::post('/update/{id}','ClientController@update')->name('update');
 
@@ -45,11 +45,11 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
   //Accounts routes group
   Route::namespace('Client')->as('clients.accounts.')->group(function() {
 
-    Route::get('clients/{id}/accounts/list', 'AccountController@list')->name('list');
+    Route::get('clients/{slug}/accounts/list', 'AccountController@list')->name('list');
 
     Route::post('clients/accounts/store','AccountController@store')->name('store');
 
-    Route::get('clients/{client}/accounts/delete-account/{account}', 'ClientController@destroy')->name('delete_account');
+    Route::get('clients/{clientSlug}/accounts/delete-account/{accountId}', 'AccountController@destroy')->name('delete_account');
 
   });
 

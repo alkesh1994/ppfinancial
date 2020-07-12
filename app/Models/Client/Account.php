@@ -3,10 +3,14 @@
 namespace App\Models\Client;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Account extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
+      'slug',
       'amount_received',
       'tenure',
       'interest_rate',
@@ -18,6 +22,8 @@ class Account extends Model
       'active',
       'client_id'
     ];
+
+    protected $dates = ['deleted_at'];
 
     public function client(){
       return $this->belongsTo('App\Models\Client\Client')->withTrashed();

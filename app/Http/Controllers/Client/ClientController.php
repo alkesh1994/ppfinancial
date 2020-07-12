@@ -7,10 +7,16 @@ use App\Http\Requests\Client\StoreClientRequest;
 use App\Http\Requests\Client\UpdateClientRequest;
 use App\Models\Client\Client;
 use App\Services\Client\ClientService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
 
 class ClientController extends Controller
 {
+    private $clientService;
+
+    public function __construct(ClientService $clientService){
+      $this->clientService = $clientService;
+    }
 
     //To show list of clients
     public function list(){
@@ -25,8 +31,7 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request){
 
       //client data is valid
-      $clientService = new ClientService();
-      $storeData = $clientService->storeData($request);
+      $storeData = $this->clientService->storeData($request);
 
       Session::flash('success', 'Client created successfully');
       return response()->json(['success'=>'Client created successfully.']);
@@ -34,9 +39,9 @@ class ClientController extends Controller
     }
 
     //to sho edit form
-    public function edit($id){
+    public function edit($slug){
 
-      $client = Client::findOrFail($id);
+      $client = Client::where('slug',$slug)->firstOrFail();
 
       return view('dashboard.client.edit',['client' => $client]);
 
@@ -46,8 +51,7 @@ class ClientController extends Controller
     public function update(UpdateClientRequest $request,$id){
 
       //client data is valid
-      $clientService = new ClientService();
-      $updateData = $clientService->updateData($request,$id);
+      $updateData = $this->clientService->updateData($request,$id);
 
       Session::flash('success', 'Client updated successfully');
       return response()->json(['success'=>'Client updated successfully.']);
@@ -57,12 +61,17 @@ class ClientController extends Controller
     //to softdelete the client entry
     public function destroy($id){
 
-      $client = Client::findOrFail($id);
+      try {
+        $client = Client::findOrFail($id);
+      } catch (ModelNotFoundException $e) {
+        Session::flash('success', 'Client is deleted already');
+        return redirect()->route('dashboard.clients.list');
+      }
 
-      $client->delete();
+        $client->delete();
 
-      Session::flash('success', 'Client deleted successfully');
-      return redirect()->route('dashboard.clients.list');
+        Session::flash('success', 'Client deleted successfully');
+        return redirect()->route('dashboard.clients.list');
 
     }
 }
