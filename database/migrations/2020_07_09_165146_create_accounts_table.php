@@ -26,6 +26,7 @@ class CreateAccountsTable extends Migration
             $table->integer('commission_amount')->nullable();
             $table->integer('active')->default(1);
             $table->integer('client_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -41,13 +41,13 @@ class AccountController extends Controller
         $account = Account::findOrFail($accountId);
       } catch (ModelNotFoundException $e) {
         Session::flash('success', 'Account is deleted already');
-        return redirect()->route('dashboard.clients.acounts.list',['slug'=> $clientSlug]);
+        return redirect()->route('dashboard.clients.accounts.list',['slug'=> $clientSlug]);
       }
 
         $account->delete();
 
         Session::flash('success', 'Account deleted successfully');
-        return redirect()->route('dashboard.clients.acounts.list',['slug'=> $clientSlug]);
+        return redirect()->route('dashboard.clients.accounts.list',['slug'=> $clientSlug]);
 
     }
 

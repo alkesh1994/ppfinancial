@@ -39,14 +39,14 @@
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="amount_received">Amount Received<span style="color:red;">*</span></label>
-                  <input type="number" id="amount_received" name="amount_received" class="form-control" value="{{old('amount_received')}}" placeholder="Enter Amount Received" onchange="updateTotalAmount()">
+                  <input type="number" id="amount_received" name="amount_received" class="form-control" value="{{old('amount_received')}}" placeholder="Enter Amount Received" onchange="updateAmounts()">
                   <span data-name="amount_received" class="error" style="color:red;"></span>
                 </div>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="tenure">Tenure</label>
-                  <select class="form-control" id="tenure" name="tenure" onchange="updateTotalAmount()">
+                  <select class="form-control" id="tenure" name="tenure" onchange="updateAmounts()">
                     <option value="6">6 months</option>
                     <option value="12">1 year</option>
                   </select>
@@ -56,7 +56,7 @@
               <div class="col-sm-1">
                 <div class="form-group">
                   <label for="interest_rate">Interest Rate %</label>
-                  <select class="form-control" id="interest_rate" name="interest_rate" onchange="updateTotalAmount()">
+                  <select class="form-control" id="interest_rate" name="interest_rate" onchange="updateAmounts()">
                     <option value="1.5">1.5</option>
                     <option value="2">2</option>
                     <option value="2.5">2.5</option>
@@ -75,7 +75,7 @@
               <div class="col-sm-1">
                 <div class="form-group">
                   <label for="commission_percentage">Commission %</label>
-                  <select class="form-control" id="commission_percentage" name="commission_percentage" onchange="updateCommissionAmount()">
+                  <select class="form-control" id="commission_percentage" name="commission_percentage" onchange="updateAmounts()">
                     <option value="0">N.A</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -264,13 +264,16 @@ $('button[type=submit]').on('click', function () {
 </script>
 <script type="text/javascript">
 //dynamically update total amount
-function updateTotalAmount() {
+function updateAmounts() {
 
   var amount_received = +document.getElementById('amount_received').value;
   var interest_rate = +document.getElementById('interest_rate').value;
   var tenure = +document.getElementById('tenure').value;
+  var commission_percentage = +document.getElementById('commission_percentage').value;
 
   var interest_amount = (amount_received * interest_rate)/100;
+
+  var commission_amount = (amount_received * commission_percentage)/100;
 
   if(tenure === 6)
     var total_amount = amount_received + interest_amount * 6;
@@ -279,15 +282,6 @@ function updateTotalAmount() {
     var total_amount = amount_received + (interest_amount * 12);
 
   document.getElementById('total_amount').value = total_amount;
-}
-//dynamically update commission amount
-function updateCommissionAmount(){
-
-  var amount_received = +document.getElementById('amount_received').value;
-  var commission_percentage = +document.getElementById('commission_percentage').value;
-
-  var commission_amount = (amount_received * commission_percentage)/100;
-
   document.getElementById('commission_amount').value = commission_amount;
 }
 </script>
