@@ -65,7 +65,7 @@ class AccountController extends Controller
       $withdraw = $this->accountService->withdrawAmount($request);
 
       Session::flash('success', 'Amount withdrawn successfully');
-      return response()->json(['success'=>'Account withdrawn successfully.']);
+      return redirect()->back();
 
     }
 

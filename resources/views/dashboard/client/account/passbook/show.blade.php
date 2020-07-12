@@ -34,6 +34,7 @@
                 <th>Base Amount(₹)</th>
                 <th>Interest Rate(%)</th>
                 <th>Interest Amount(₹)</th>
+                <th>Current Amount(₹)</th>
                 <th>Total Amount(₹)</th>
                 <th>Withdrawn Amount(₹)</th>
                 <th>Withdrawn Date</th>
@@ -54,6 +55,7 @@
                 <td>{{ $passbookEntry->base_amount }}</td>
                 <td>{{ $passbookEntry->interest_rate }}</td>
                 <td>{{ $passbookEntry->interest_amount }}</td>
+                <td>{{ $passbookEntry->current_amount }}</td>
                 <td>{{ $passbookEntry->total_amount }}</td>
                 <td>{{ $passbookEntry->withdrawn_amount}}</td>
                 <td>{{ $passbookEntry->withdrawn_date}}</td>
@@ -64,6 +66,7 @@
               </tbody>
               <tfoot>
                 <tr>
+                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>

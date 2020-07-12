@@ -161,28 +161,26 @@
                           </div>
                           <div class="modal-body">
                             <p>Amount Received : {{ $account->amount_received }} ₹</p>
-                            <form method="post">
+                            <form method="post" action="{{url('dashboard/clients/accounts/withdraw')}}">
                               {{ csrf_field()}}
                               <input type="hidden" name="account_id" value="{{$account->id}}">
                               <div class="row">
                                 <div class="col-sm-6">
                                   <div class="form-group">
                                     <label for="withdrawn_amount">Withdraw Amount<span style="color:red;">*</span></label>
-                                    <input type="number" id="withdrawn_amount" name="withdrawn_amount" class="form-control" value="{{old('withdrawn_amount')}}" placeholder="Enter Withdrawn Amount" required>
-                                    <span data-name="withdrawn_amount" class="error" style="color:red;"></span>
+                                    <input type="number" id="withdrawn_amount" name="withdrawn_amount" class="form-control" value="{{old('withdrawn_amount')}}" placeholder="Enter Withdrawn Amount" onchange="updatePenalty()" required>
                                   </div>
                                 </div>
                                 <div class="col-sm-6">
                                   <div class="form-group">
                                     <label for="penalty">Penalty</label>
-                                    <input type="number" id="penalty" name="penalty" class="form-control" value="" placeholder="Penalty" disabled>
-                                    <span data-name="penalty" class="error" style="color:red;"></span>
+                                    <input type="number" id="penalty" class="form-control" value="" placeholder="Penalty" disabled>
                                   </div>
                                 </div>
                               </div>
                           </div>
                           <div class="modal-footer">
-                            <button type="submit" id="withdraw" class="btn btn-outline disw">Submit</button>
+                            <button type="submit" class="btn btn-outline disw">Submit</button>
                           </div>
                             </form>
                         </div>
@@ -305,37 +303,6 @@ $('#create_account').on('click', function () {
     }
   });
 });
-
-$('#withdraw').on('click', function () {
-
-  var formData = new FormData(form[0]);
-  formData.append('penalty',document.getElementById('penalty').value);
-
-  $.ajax({
-    url: "{{route('dashboard.clients.accounts.withdraw')}}",
-    type: 'POST',
-    data: formData,
-    processData: false,
-    contentType: false,
-    beforeSend: function() {
-      $(".disw").prop('disabled', true); // disable button
-    },
-    statusCode: {
-      401: function() {
-        window.location.replace("{{route('dashboard.home')}}");
-      }
-    },
-    success: function(result)
-    {
-
-      window.location.replace("{{route('dashboard.clients.accounts.list',['slug' => $client->slug])}}");
-    },
-    error: function(error)
-    {
-      $(".disw").prop('disabled', false);
-    }
-  });
-});
 </script>
 <script type="text/javascript">
 //dynamically update total amount
@@ -358,6 +325,13 @@ function updateAmounts() {
 
   document.getElementById('total_amount').value = total_amount;
   document.getElementById('commission_amount').value = commission_amount;
+}
+function updatePenalty(){
+
+  var withdrawn_amount = +document.getElementById('withdrawn_amount').value;
+
+  document.getElementById('penalty').value = (withdrawn_amount * 20)/100;
+
 }
 </script>
 <!-- DataTables -->

@@ -14,15 +14,13 @@ class PassbookService
 
      $nextDate = (new Carbon($storeAccount['start_date']))->addMonths(1);
 
-     $interestAmount = ($storeAccount['amount_received'] * $storeAccount['interest_rate']) / 100;
-
      $storePassbook = Passbook::create([
        'start_date' => $storeAccount['start_date'],
        'next_date' => $nextDate,
        'end_date' => $storeAccount['end_date'],
        'base_amount' => $storeAccount['amount_received'],
        'interest_rate' => $storeAccount['interest_rate'],
-       'interest_amount' => $interestAmount,
+       'interest_amount' => 0,
        'current_amount' => $storeAccount['amount_received'],
        'total_amount' => $storeAccount['total_amount'],
        'months_left' => $storeAccount['tenure'],
@@ -42,7 +40,9 @@ class PassbookService
 
      $currentAmount = $lastEntry->current_amount - $request->withdrawn_amount;
 
-     $totalAmount = $lastEntry->total_amount - $request->withdrawn_amount;
+     $interestAmount = ($baseAmount * $lastEntry->interest_rate)/100;
+
+     $totalAmount = $baseAmount + ($interestAmount * $lastEntry->account->tenure);
 
      $withdrawnDate = Carbon::now();
 
@@ -54,7 +54,7 @@ class PassbookService
        'end_date' => $lastEntry->end_date,
        'base_amount' => $baseAmount,
        'interest_rate' => $lastEntry->interest_rate,
-       'interest_amount' => $lastEntry->interest_amount,
+       'interest_amount' => 0,
        'current_amount' => $currentAmount,
        'total_amount' => $totalAmount,
        'months_left' => $lastEntry->months_left,
