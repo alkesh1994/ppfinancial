@@ -29,6 +29,10 @@ class Account extends Model
       return $this->belongsTo('App\Models\Client\Client')->withTrashed();
     }
 
+    public function passbook(){
+      return $this->hasOne('App\Models\Client\Passbook');
+    }
+
     public function getTenureDisplayAttribute()
     {
       if($this->tenure == 6)
