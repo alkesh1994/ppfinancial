@@ -12,6 +12,13 @@ use Session;
 
 class AccountController extends Controller
 {
+
+    private $accountService;
+
+    public function __construct(AccountService $accountService){
+      $this->accountService = $accountService;
+    }
+
     //To show list of clients
     public function list($slug){
 
@@ -26,8 +33,7 @@ class AccountController extends Controller
     public function store(StoreAccountRequest $request){
 
       //account data is valid
-      $accountService = new AccountService();
-      $storeData = $accountService->storeData($request);
+      $storeData = $this->accountService->storeData($request);
 
       Session::flash('success', 'Account created successfully');
       return response()->json(['success'=>'Account created successfully.']);

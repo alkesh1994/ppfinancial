@@ -10,11 +10,16 @@ use Carbon\Carbon;
 class AccountService
 {
 
+   private $slugService;
+
+   public function __construct(SlugService $slugService){
+     $this->slugService = $slugService;
+   }
+
    //process and store data
    public function storeData(StoreAccountRequest $request){
 
-     $slugService = new SlugService();
-     $slug = $slugService->createSlug('Client\\Account',str_random(10));
+     $slug = $this->slugService->createSlug('Client\\Account',str_random(10));
 
      $startDate = (new Carbon($request->get('start_date')));
      $endDate = (new Carbon($request->get('start_date')))->addMonths($request->input('tenure'));

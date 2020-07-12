@@ -12,6 +12,11 @@ use Session;
 
 class ClientController extends Controller
 {
+    private $clientService;
+
+    public function __construct(ClientService $clientService){
+      $this->clientService = $clientService;
+    }
 
     //To show list of clients
     public function list(){
@@ -26,8 +31,7 @@ class ClientController extends Controller
     public function store(StoreClientRequest $request){
 
       //client data is valid
-      $clientService = new ClientService();
-      $storeData = $clientService->storeData($request);
+      $storeData = $this->clientService->storeData($request);
 
       Session::flash('success', 'Client created successfully');
       return response()->json(['success'=>'Client created successfully.']);
@@ -47,8 +51,7 @@ class ClientController extends Controller
     public function update(UpdateClientRequest $request,$id){
 
       //client data is valid
-      $clientService = new ClientService();
-      $updateData = $clientService->updateData($request,$id);
+      $updateData = $this->clientService->updateData($request,$id);
 
       Session::flash('success', 'Client updated successfully');
       return response()->json(['success'=>'Client updated successfully.']);
