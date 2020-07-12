@@ -41,4 +41,13 @@ class Account extends Model
       if($this->tenure == 12)
         return '1 year';
     }
+
+    public function getStatusAttribute()
+    {
+      if($this->active){
+         return 'Active';
+      }else{
+         return 'Inactive';
+      }
+    }
 }

@@ -123,12 +123,13 @@
           <table id="tablelist" class="display">
             <thead>
               <tr>
-                <th>Start Date</th>
+                <th>StartDate</th>
                 <th>End Date</th>
                 <th>Amt Rcvd</th>
                 <th>Tenure</th>
                 <th>Interest Rate</th>
                 <th>Total Amt</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -146,6 +147,7 @@
                 <td>{{ $account->tenure_display }}</td>
                 <td>{{ $account->interest_rate}} %</td>
                 <td>{{ $account->total_amount}} ₹</td>
+                <td><button @if($account->active)class="btn btn-sm btn-flat btn-success"@else class="btn btn-sm btn-flat btn-danger"@endif >{{$account->status}}</button></td>
                 <td>
                   <a data-toggle="modal" data-target="#delete-account{{$i}}" title="Delete"><span class="label label-danger"><i class="glyphicon glyphicon-trash"></i></span></a>
                   <div class="modal modal-danger fade" id="delete-account{{$i}}">
@@ -177,12 +179,13 @@
               </tbody>
               <tfoot>
                 <tr>
-                  <th>Start Date</th>
+                  <th>StartDate</th>
                   <th>End Date</th>
                   <th>Amt Rcvd</th>
                   <th>Tenure</th>
                   <th>Interest Rate</th>
                   <th>Total Amt</th>
+                  <th>Status</th>
                   <th></th>
                 </tr>
               </tfoot>
@@ -294,7 +297,7 @@ $(document).ready(function() {
   var set = $('#tablelist tfoot th');
   var length = set.length;
   $('#tablelist tfoot th').each(function (index,element) {
-    if (index<(length-1)) {
+    if (index<(length-2)) {
       var title = $(this).text();
       $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     }
@@ -302,9 +305,10 @@ $(document).ready(function() {
   } );
 
   // DataTable
-  var table = $('#tablelist').DataTable({
+  var table = $('#tablelist').dataTable({
     "order": [],
-    columnDefs: [ { orderable: false, targets: [6] } ]
+    "autoWidth": true,
+    columnDefs: [ { orderable: false, targets: [6,7] } ]
   });
 
   // Apply the search
