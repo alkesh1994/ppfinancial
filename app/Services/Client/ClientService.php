@@ -6,6 +6,7 @@ use App\Http\Requests\Client\StoreClientRequest;
 use App\Http\Requests\Client\UpdateClientRequest;
 use App\Models\Client\Client;
 use App\Services\Helpers\SlugService;
+use App\Services\Helpers\ImageUploadService;
 use File;
 
 class ClientService
@@ -18,13 +19,15 @@ class ClientService
      $slugService = new SlugService();
      $slug = $slugService->createSlug('Client\\Client',$sluggableField);
 
-     $clientAadharCardPhotoPath = $this->handleImageUpload($request->file('client_aadhar_card_photo'),'aadharCards');
+     $imageUploadService = new ImageUploadService();
 
-     $clientPanCardPhotoPath = $this->handleImageUpload($request->file('client_pan_card_photo'),'panCards');
+     $clientAadharCardPhotoPath = $imageUploadService->handleImageUpload($request->file('client_aadhar_card_photo'),'clients/aadharCards');
 
-     $clientPersonalPhotoPath = $this->handleImageUpload($request->file('client_personal_photo'),'personalPhotos');
+     $clientPanCardPhotoPath = $imageUploadService->handleImageUpload($request->file('client_pan_card_photo'),'clients/panCards');
 
-     $clientBankChequePhotoPath = $this->handleImageUpload($request->file('client_bank_cheque_photo'),'bankCheques');
+     $clientPersonalPhotoPath = $imageUploadService->handleImageUpload($request->file('client_personal_photo'),'clients/personalPhotos');
+
+     $clientBankChequePhotoPath = $imageUploadService->handleImageUpload($request->file('client_bank_cheque_photo'),'clients/bankCheques');
 
      $storeData = Client::create([
        'slug' => $slug,
@@ -66,17 +69,19 @@ class ClientService
        $slug = $client->slug;
      }
 
+     $imageUploadService = new ImageUploadService();
+
      if($request->file('client_aadhar_card_photo'))
-     $client->client_aadhar_card_photo = $this->updateImage($request->file('client_aadhar_card_photo'), $client->client_aadhar_card_photo,'aadharCards');
+     $client->client_aadhar_card_photo = $imageUploadService->handleImageUpload($request->file('client_aadhar_card_photo'),'clients/aadharCards',$client->client_aadhar_card_photo);
 
      if($request->file('client_pan_card_photo'))
-     $client->client_pan_card_photo = $this->updateImage($request->file('client_pan_card_photo'), $client->client_pan_card_photo,'panCards');
+     $client->client_pan_card_photo = $imageUploadService->handleImageUpload($request->file('client_pan_card_photo'),'clients/panCards',$client->client_pan_card_photo);
 
      if($request->file('client_personal_photo'))
-     $client->client_personal_photo = $this->updateImage($request->file('client_personal_photo'), $client->client_personal_photo,'personalPhotos');
+     $client->client_personal_photo = $imageUploadService->handleImageUpload($request->file('client_personal_photo'),'clients/personalPhotos',$client->client_personal_photo);
 
      if($request->file('client_bank_cheque_photo'))
-     $client->client_bank_cheque_photo = $this->updateImage($request->file('client_bank_cheque_photo'), $client->client_bank_cheque_photo,'bankCheques');
+     $client->client_bank_cheque_photo = $this->handleImageUpload($request->file('client_bank_cheque_photo'),'clients/bankCheques',$client->client_bank_cheque_photo);
 
      $client->client_first_name = $request->client_first_name;
      $client->client_middle_name = $request->client_middle_name;
@@ -97,28 +102,6 @@ class ClientService
      $client->save();
 
      return $client;
-
-   }
-
-   function updateImage($image,$oldImage,$directory){
-
-      //handle image update
-      if(File::exists($oldImage))
-          File::delete($oldImage);
-
-      $imagePath = $this->handleImageUpload($image,$directory);
-
-      return $imagePath;
-
-   }
-
-   function handleImageUpload($image,$directory){
-
-     //handle image upload
-     $imagePath = "uploads/clients/".$directory."/".time().str_random(10).$image->getClientOriginalName();
-     $image->move("uploads/clients/".$directory, $imagePath);
-
-     return $imagePath;
 
    }
 }
