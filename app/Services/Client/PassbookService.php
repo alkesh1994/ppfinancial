@@ -36,17 +36,19 @@ class PassbookService
 
      $lastEntry = Passbook::where('account_id',$request->account_id)->orderBy('created_at','desc')->firstOrFail();
 
-     $baseAmount = $lastEntry->base_amount - $request->withdrawn_amount;
+     $penalty = ($request->withdrawn_amount * 20)/100;
 
-     $currentAmount = $lastEntry->current_amount - $request->withdrawn_amount;
+     $amountDeducted = $request->withdrawn_amount + $penalty;
+
+     $baseAmount = $lastEntry->base_amount - $amountDeducted;
+
+     $currentAmount = $lastEntry->current_amount - $amountDeducted;
 
      $interestAmount = ($baseAmount * $lastEntry->interest_rate)/100;
 
      $totalAmount = $baseAmount + ($interestAmount * $lastEntry->account->tenure);
 
      $withdrawnDate = Carbon::now();
-
-     $penalty = ($request->withdrawn_amount * 20)/100;
 
      $withdraw = Passbook::create([
        'start_date' => $lastEntry->start_date,
