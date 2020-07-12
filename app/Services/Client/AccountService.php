@@ -5,15 +5,18 @@ namespace App\Services\Client;
 use App\Http\Requests\Client\StoreAccountRequest;
 use App\Models\Client\Account;
 use App\Services\Helpers\SlugService;
+use App\Services\Client\PassbookService;
 use Carbon\Carbon;
 
 class AccountService
 {
 
    private $slugService;
+   private $passbookService;
 
-   public function __construct(SlugService $slugService){
+   public function __construct(SlugService $slugService,PassbookService $passbookService){
      $this->slugService = $slugService;
+     $this->passbookService = $passbookService;
    }
 
    //process and store data
@@ -24,7 +27,7 @@ class AccountService
      $startDate = (new Carbon($request->get('start_date')));
      $endDate = (new Carbon($request->get('start_date')))->addMonths($request->input('tenure'));
 
-     $storeData = Account::create([
+     $storeAccount = Account::create([
        'slug' => $slug,
        'amount_received' => $request->get('amount_received'),
        'tenure' => $request->get('tenure'),
@@ -37,7 +40,9 @@ class AccountService
        'client_id' => $request->get('client_id')
      ]);
 
-     return $storeData;
+     $storePassbook = $this->passbookService->storePassbook($storeAccount);
+
+     return $storeAccount;
 
    }
 }

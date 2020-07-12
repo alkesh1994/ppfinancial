@@ -9,27 +9,25 @@ class PassbookService
 {
 
    //process and store data
-   public function storeData(StoreAccountRequest $request){
+   public function storePassbook($storeAccount){
 
-     $slug = $this->slugService->createSlug('Client\\Account',str_random(10));
+     $nextDate = (new Carbon($storeAccount['start_date']))->addMonths(1);
 
-     $startDate = (new Carbon($request->get('start_date')));
-     $endDate = (new Carbon($request->get('start_date')))->addMonths($request->input('tenure'));
+     $interestAmount = ($storeAccount['amount_received'] * $storeAccount['interest_rate']) / 100;
 
-     $storeData = Account::create([
-       'slug' => $slug,
-       'amount_received' => $request->get('amount_received'),
-       'tenure' => $request->get('tenure'),
-       'interest_rate' => $request->get('interest_rate'),
-       'total_amount' => $request->get('total_amount'),
-       'start_date' => $startDate,
-       'end_date' => $endDate,
-       'commission_percentage' => $request->get('commission_percentage'),
-       'commission_amount' => $request->get('commission_amount'),
-       'client_id' => $request->get('client_id')
+     $storePassbook = Passbook::create([
+       'start_date' => $storeAccount['start_date'],
+       'next_date' => $nextDate,
+       'end_date' => $storeAccount['end_date'],
+       'base_amount' => $storeAccount['amount_received'],
+       'interest_rate' => $storeAccount['interest_rate'],
+       'interest_amount' => $interestAmount,
+       'total_amount' => $storeAccount['total_amount'],
+       'months_left' => $storeAccount['tenure'],
+       'account_id' => $storeAccount['id']
      ]);
 
-     return $storeData;
+     return $storePassbook;
 
    }
 }
