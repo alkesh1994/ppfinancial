@@ -50,63 +50,40 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="nominee_first_name">Nominee First Name<span style="color:red;">*</span></label>
-                  <input type="text" id="nominee_first_name" name="nominee_first_name" class="form-control" value="{{old('nominee_first_name')}}" placeholder="Enter Nominee First Name">
-                  <span data-name="nominee_first_name" class="error" style="color:red;"></span>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="nominee_middle_name">Nominee Middle Name<span style="color:red;">*</span></label>
-                  <input type="text" id="nominee_middle_name" name="nominee_middle_name" class="form-control" value="{{old('nominee_middle_name')}}" placeholder="Enter Nominee Middle Name">
-                  <span data-name="nominee_middle_name" class="error" style="color:red;"></span>
-                </div>
-              </div>
-              <div class="col-sm-4">
-                <div class="form-group">
-                  <label for="nominee_last_name">Nominee Last Name<span style="color:red;">*</span></label>
-                  <input type="text" id="nominee_last_name" name="nominee_last_name" class="form-control" value="{{old('nominee_last_name')}}" placeholder="Enter Nominee Last Name">
-                  <span data-name="nominee_last_name" class="error" style="color:red;"></span>
-                </div>
-              </div>
-            </div>
-            <div class="row">
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="client_dob">Client Date of Birth<span style="color:red;">*</span></label>
                   <input type="date" id="client_dob" name="client_dob" class="form-control" value="{{old('client_dob')}}" placeholder="Enter Date of Birth">
+                  <span data-name="client_dob" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="client_dob" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="client_phone_number">Client Phone Number<span style="color:red;">*</span></label>
                   <input type="number" id="client_phone_number" name="client_phone_number" class="form-control" value="{{old('client_phone_number')}}" placeholder="Enter Client Phone Number">
+                  <span data-name="client_phone_number" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="client_phone_number" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
                   <label for="client_alternate_phone_number">Alternate Phone Number</label>
                   <input type="number" id="client_alternate_phone_number" name="client_alternate_phone_number" class="form-control" value="{{old('client_alternate_phone_number')}}" placeholder="Enter Alternate Phone Number">
+                  <span data-name="client_alternate_phone_number" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="client_alternate_phone_number" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
                   <label for="referred_by">Referred By</label>
                   <input type="text" id="referred_by" name="referred_by" class="form-control" value="{{old('referred_by')}}" placeholder="Enter Referred By">
+                  <span data-name="referred_by" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="referred_by" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
                   <label for="commission_of_referral">Commission of Referral</label>
                   <input type="text" id="commission_of_referral" name="commission_of_referral" class="form-control" value="{{old('commission_of_referral')}}" placeholder="Enter Commission of Referral">
+                  <span data-name="commission_of_referral" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="commission_of_referral" class="error" style="color:red;"></span>
               </div>
             </div>
             <div class="row">
@@ -114,15 +91,15 @@
                 <div class="form-group">
                   <label for="client_permanent_address">Client Permanent Address<span style="color:red;">*</span></label>
                   <textarea id="client_permanent_address" name="client_permanent_address" class="form-control" placeholder="Enter Client Permanent Address">{{old('client_permanent_address')}}</textarea>
+                  <span data-name="client_permanent_address" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="client_permanent_address" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label for="client_alternate_address">Client Alternate Address</label>
                   <textarea id="client_alternate_address" name="client_alternate_address" class="form-control" placeholder="Enter Client Alternate Address">{{old('client_alternate_address')}}</textarea>
+                  <span data-name="client_alternate_address" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="client_alternate_address" class="error" style="color:red;"></span>
               </div>
             </div>
             <div class="row">
@@ -130,22 +107,22 @@
                 <div class="form-group">
                   <label for="client_aadhar_card_photo">Client Aadhar Card Photo<span style="color:red;">*</span></label>
                   <input type="file" id="client_aadhar_card_photo" name="client_aadhar_card_photo" onchange="validateImage('client_aadhar_card_photo')" class="form-control" placeholder="Choose Client Aadhar Card Photo">
+                  <span data-name="client_aadhar_card_photo" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="client_aadhar_card_photo" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="client_pan_card_photo">Client Pan Card Photo<span style="color:red;">*</span></label>
                   <input type="file" id="client_pan_card_photo" name="client_pan_card_photo" onchange="validateImage('client_pan_card_photo')" class="form-control" placeholder="Choose Client Pan Card Photo">
+                  <span data-name="client_pan_card_photo" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="client_pan_card_photo" class="error" style="color:red;"></span>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="client_personal_photo">Client Personal Photo<span style="color:red;">*</span></label>
                   <input type="file" id="client_personal_photo" name="client_personal_photo" onchange="validateImage('client_personal_photo')" class="form-control" placeholder="Choose Client Personal Photo">
+                  <span data-name="client_personal_photo" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="client_personal_photo" class="error" style="color:red;"></span>
               </div>
             </div>
           </div>
@@ -199,8 +176,8 @@
                 <div class="form-group">
                   <label for="client_bank_cheque_photo">Cheque Photo<span style="color:red;">*</span></label>
                   <input type="file" id="client_bank_cheque_photo" name="client_bank_cheque_photo" onchange="validateImage('client_bank_cheque_photo')" class="form-control" placeholder="Choose Cheque Photo">
+                  <span data-name="client_bank_cheque_photo" class="error" style="color:red;"></span>
                 </div>
-                <span data-name="client_bank_cheque_photo" class="error" style="color:red;"></span>
               </div>
             </div>
           </div>

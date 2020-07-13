@@ -34,11 +34,31 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::post('/store','ClientController@store')->name('store');
 
-    Route::get('/edit-client/{id}', 'ClientController@edit')->name('edit_client');
+    Route::get('/edit-client/{slug}', 'ClientController@edit')->name('edit_client');
 
     Route::post('/update/{id}','ClientController@update')->name('update');
 
     Route::get('/delete-client/{id}', 'ClientController@destroy')->name('delete_client');
+
+  });
+
+  //Accounts routes group
+  Route::namespace('Client')->as('clients.accounts.')->group(function() {
+
+    Route::get('clients/{slug}/accounts/list', 'AccountController@list')->name('list');
+
+    Route::post('clients/accounts/store','AccountController@store')->name('store');
+
+    Route::get('clients/{clientSlug}/accounts/delete-account/{accountId}', 'AccountController@destroy')->name('delete_account');
+
+    Route::post('clients/accounts/withdraw','AccountController@withdraw')->name('withdraw');
+
+  });
+
+  //Passbook routes group
+  Route::namespace('Client')->as('clients.accounts.passbook.')->group(function() {
+
+    Route::get('clients/{clientSlug}/accounts/{accountSlug}/passbook/show', 'PassbookController@show')->name('show');
 
   });
 

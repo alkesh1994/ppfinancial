@@ -20,8 +20,6 @@
       <!-- /.box-header -->
       <div class="box box-primary">
         <div class="box-header">
-          <!--*************Add New Blog*****-->
-
           <div class="pull-right">
             <a href="{{route('dashboard.clients.create_client')}}" class="btn btn-warning"><i class="fa fa-plus-circle"></i> Create Client</a>
           </div>
@@ -51,7 +49,8 @@
                 <td>{{ $client->client_bank_name }}</td>
                 <td>{{ $client->client_bank_branch }}</td>
                 <td>
-                  <a href="{{ route('dashboard.clients.edit_client',['id'=> $client->id]) }}" title="Edit"><span class="label label-success"><i class="glyphicon glyphicon-pencil"></i></span></a>
+                  <a href="{{ route('dashboard.clients.edit_client',['slug'=> $client->slug]) }}" title="Edit" target="_blank"><span class="label label-success"><i class="glyphicon glyphicon-pencil"></i></span></a>
+                  <a href="{{ route('dashboard.clients.accounts.list',['slug'=> $client->slug]) }}" title="Accounts" target="_blank"><span class="label label-primary"><i class="glyphicon glyphicon-book"></i></span></a>
                   <a data-toggle="modal" data-target="#delete-client{{$i}}" title="Delete"><span class="label label-danger"><i class="glyphicon glyphicon-trash"></i></span></a>
                   <div class="modal modal-danger fade" id="delete-client{{$i}}">
                     <div class="modal-dialog">
