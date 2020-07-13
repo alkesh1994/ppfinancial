@@ -36,6 +36,8 @@
                 <th>Interest Amount(₹)</th>
                 <th>Current Amount(₹)</th>
                 <th>Total Amount(₹)</th>
+                <th>Commision Amt(₹)</th>
+                <th>Commission Total Amt(₹)</th>
                 <th>Withdrawn Amount(₹)</th>
                 <th>Withdrawn Date</th>
                 <th>Penalty(₹)</th>
@@ -57,6 +59,8 @@
                 <td>{{ $passbookEntry->interest_amount }}</td>
                 <td>{{ $passbookEntry->current_amount }}</td>
                 <td>{{ $passbookEntry->total_amount }}</td>
+                <td>{{ $passbookEntry->commission_amount}}</td>
+                <td>{{ $passbookEntry->commission_total_amount}}</td>
                 <td>{{ $passbookEntry->withdrawn_amount}}</td>
                 <td>{{ $passbookEntry->withdrawn_date}}</td>
                 <td>{{ $passbookEntry->penalty }}</td>
@@ -66,6 +70,8 @@
               </tbody>
               <tfoot>
                 <tr>
+                  <th></th>
+                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>

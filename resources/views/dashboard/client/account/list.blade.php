@@ -43,7 +43,7 @@
                   <span data-name="amount_received" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-1">
+              <div class="col-sm-2">
                 <div class="form-group">
                   <label for="tenure">Tenure</label>
                   <select class="form-control" id="tenure" name="tenure" onchange="updateAmounts()">
@@ -79,27 +79,17 @@
                   <label for="commission_percentage">Commission %</label>
                   <select class="form-control" id="commission_percentage" name="commission_percentage" onchange="updateAmounts()">
                     <option value="0">N.A</option>
+                    <option value="1">1</option>
                     <option value="2">2</option>
-                    <option value="3">3</option>
                   </select>
                   <span data-name="commission_percentage" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-1">
-                <div class="form-group">
-                  <label for="commission_period">Commission Period</label>
-                  <select class="form-control" id="commission_period" name="commission_period" onchange="updateAmounts()">
-                    <option value="6">6 months</option>
-                    <option value="12">1 year</option>
-                  </select>
-                  <span data-name="commission_period" class="error" style="color:red;"></span>
-                </div>
-              </div>
               <div class="col-sm-2">
                 <div class="form-group">
-                  <label for="commission_amount">Commission Amount</label>
-                  <input type="text" id="commission_amount" class="form-control" value="{{old('commission_amount')}}" placeholder="Commission Amount" disabled>
-                  <span data-name="commission_amount" class="error" style="color:red;"></span>
+                  <label for="commission_total_amount">Commission Total Amount</label>
+                  <input type="text" id="commission_total_amount" class="form-control" value="{{old('commission_total_amount')}}" placeholder="Commission Amount" disabled>
+                  <span data-name="commission_total_amount" class="error" style="color:red;"></span>
                 </div>
               </div>
             </div>
@@ -330,20 +320,18 @@ function updateAmounts() {
 
   var comm_amount = (amount_received * commission_percentage)/100;
 
-  if(commission_period === 6)
-    var commission_amount = comm_amount * 6;
-
-  if(commission_period === 12)
-    var commission_amount = comm_amount * 12;
-
-  if(tenure === 6)
+  if(tenure === 6){
     var total_amount = amount_received + interest_amount * 6;
+    var commission_total_amount = comm_amount * 6;
+  }
 
-  if(tenure === 12)
+  if(tenure === 12){
     var total_amount = amount_received + (interest_amount * 12);
+    var commission_total_amount = comm_amount * 6;
+  }
 
   document.getElementById('total_amount').value = total_amount;
-  document.getElementById('commission_amount').value = commission_amount;
+  document.getElementById('commission_total_amount').value = commission_total_amount;
 }
 function updatePenalty(){
 

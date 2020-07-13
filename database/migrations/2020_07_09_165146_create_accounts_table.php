@@ -23,8 +23,7 @@ class CreateAccountsTable extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->integer('commission_percentage')->nullable();
-            $table->integer('commission_period')->nullable();
-            $table->decimal('commission_amount',15,4)->nullable();
+            $table->decimal('commission_total_amount',15,4)->nullable();
             $table->integer('active')->default(1);
             $table->integer('client_id');
             $table->softDeletes();

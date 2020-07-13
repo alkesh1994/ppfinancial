@@ -19,6 +19,9 @@ class Passbook extends Model
       'withdrawn_amount',
       'withdrawn_date',
       'penalty',
+      'commission_percentage',
+      'commission_amount',
+      'commission_total_amount',
       'account_id'
     ];
 

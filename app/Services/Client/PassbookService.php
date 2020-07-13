@@ -54,7 +54,7 @@ class PassbookService
 
      $commisionAmount = ($baseAmount * $lastEntry->commission_percentage)/100;
 
-     $commisionTotalAmount = $baseAmount + ($commisionAmount * $lastEntry->commission_period);
+     $commisionTotalAmount = $baseAmount + ($commisionAmount * $lastEntry->account->tenure);
 
      $totalAmount = $baseAmount + ($interestAmount * $lastEntry->account->tenure);
 

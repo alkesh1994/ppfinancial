@@ -29,7 +29,6 @@ class CreatePassbooksTable extends Migration
             $table->date('withdrawn_date')->nullable();
             $table->decimal('penalty',15,4)->nullable();
             $table->integer('commission_percentage')->nullable();
-            $table->integer('commission_period')->nullable();
             $table->decimal('commission_amount',15,4)->nullable();
             $table->decimal('commission_total_amount',15,4)->nullable();
             $table->integer('account_id');

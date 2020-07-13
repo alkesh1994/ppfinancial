@@ -18,8 +18,7 @@ class Account extends Model
       'start_date',
       'end_date',
       'commission_percentage',
-      'commission_period',
-      'commission_amount',
+      'commission_total_amount',
       'active',
       'client_id'
     ];
