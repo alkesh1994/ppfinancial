@@ -14,6 +14,8 @@ class PassbookService
 
      $nextDate = (new Carbon($storeAccount['start_date']))->addMonths(1);
 
+     $commisionAmount = ($storeAccount['amount_received'] * $storeAccount['commission_percentage'])/100;
+
      $storePassbook = Passbook::create([
        'start_date' => $storeAccount['start_date'],
        'next_date' => $nextDate,
@@ -24,6 +26,10 @@ class PassbookService
        'current_amount' => $storeAccount['amount_received'],
        'total_amount' => $storeAccount['total_amount'],
        'months_left' => $storeAccount['tenure'],
+       'commission_percentage' => $storeAccount['commission_percentage'],
+       'commission_period' => $storeAccount['commission_period'],
+       'commission_amount' => $commisionAmount,
+       'commission_total_amount' => $storeAccount['commission_total_amount'],
        'account_id' => $storeAccount['id']
      ]);
 
@@ -46,6 +52,10 @@ class PassbookService
 
      $interestAmount = ($baseAmount * $lastEntry->interest_rate)/100;
 
+     $commisionAmount = ($baseAmount * $lastEntry->commission_percentage)/100;
+
+     $commisionTotalAmount = $baseAmount + ($commisionAmount * $lastEntry->commission_period);
+
      $totalAmount = $baseAmount + ($interestAmount * $lastEntry->account->tenure);
 
      $withdrawnDate = Carbon::now();
@@ -63,6 +73,10 @@ class PassbookService
        'withdrawn_amount' => $request->withdrawn_amount,
        'withdrawn_date' => $withdrawnDate,
        'penalty' => $penalty,
+       'commission_amount'=> $commisionAmount,
+       'commission_percentage' => $lastEntry->commission_percentage,
+       'commission_period' => $lastEntry->commission_period,
+       'commission_total_amount' => $commisionTotalAmount,
        'account_id' => $lastEntry->account_id
      ]);
 

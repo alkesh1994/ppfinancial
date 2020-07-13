@@ -16,14 +16,15 @@ class CreateAccountsTable extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->text('slug');
-            $table->integer('amount_received')->nullable();
+            $table->decimal('amount_received',15,4)->nullable();
             $table->string('tenure')->nullable();
             $table->integer('interest_rate')->nullable();
-            $table->integer('total_amount')->nullable();
+            $table->decimal('total_amount',15,4)->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->integer('commission_percentage')->nullable();
-            $table->integer('commission_amount')->nullable();
+            $table->integer('commission_period')->nullable();
+            $table->decimal('commission_amount',15,4)->nullable();
             $table->integer('active')->default(1);
             $table->integer('client_id');
             $table->softDeletes();

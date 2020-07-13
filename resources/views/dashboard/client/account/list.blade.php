@@ -43,7 +43,7 @@
                   <span data-name="amount_received" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-1">
                 <div class="form-group">
                   <label for="tenure">Tenure</label>
                   <select class="form-control" id="tenure" name="tenure" onchange="updateAmounts()">
@@ -61,6 +61,8 @@
                     <option value="2">2</option>
                     <option value="2.5">2.5</option>
                     <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                   </select>
                   <span data-name="interest_rate" class="error" style="color:red;"></span>
                 </div>
@@ -81,6 +83,16 @@
                     <option value="3">3</option>
                   </select>
                   <span data-name="commission_percentage" class="error" style="color:red;"></span>
+                </div>
+              </div>
+              <div class="col-sm-1">
+                <div class="form-group">
+                  <label for="commission_period">Commission Period</label>
+                  <select class="form-control" id="commission_period" name="commission_period" onchange="updateAmounts()">
+                    <option value="6">6 months</option>
+                    <option value="12">1 year</option>
+                  </select>
+                  <span data-name="commission_period" class="error" style="color:red;"></span>
                 </div>
               </div>
               <div class="col-sm-2">
@@ -312,10 +324,17 @@ function updateAmounts() {
   var interest_rate = +document.getElementById('interest_rate').value;
   var tenure = +document.getElementById('tenure').value;
   var commission_percentage = +document.getElementById('commission_percentage').value;
+  var commission_period = +document.getElementById('commission_period').value;
 
   var interest_amount = (amount_received * interest_rate)/100;
 
-  var commission_amount = (amount_received * commission_percentage)/100;
+  var comm_amount = (amount_received * commission_percentage)/100;
+
+  if(commission_period === 6)
+    var commission_amount = comm_amount * 6;
+
+  if(commission_period === 12)
+    var commission_amount = comm_amount * 12;
 
   if(tenure === 6)
     var total_amount = amount_received + interest_amount * 6;

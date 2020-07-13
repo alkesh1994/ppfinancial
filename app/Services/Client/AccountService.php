@@ -37,6 +37,7 @@ class AccountService
        'start_date' => $startDate,
        'end_date' => $endDate,
        'commission_percentage' => $request->get('commission_percentage'),
+       'commission_period' => $request->get('commission_period'),
        'commission_amount' => $request->get('commission_amount'),
        'client_id' => $request->get('client_id')
      ]);
