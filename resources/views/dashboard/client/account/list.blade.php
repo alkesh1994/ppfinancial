@@ -314,7 +314,6 @@ function updateAmounts() {
   var interest_rate = +document.getElementById('interest_rate').value;
   var tenure = +document.getElementById('tenure').value;
   var commission_percentage = +document.getElementById('commission_percentage').value;
-  var commission_period = +document.getElementById('commission_period').value;
 
   var interest_amount = (amount_received * interest_rate)/100;
 
