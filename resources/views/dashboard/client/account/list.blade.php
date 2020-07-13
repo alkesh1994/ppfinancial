@@ -61,6 +61,8 @@
                     <option value="2">2</option>
                     <option value="2.5">2.5</option>
                     <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
                   </select>
                   <span data-name="interest_rate" class="error" style="color:red;"></span>
                 </div>
@@ -77,17 +79,17 @@
                   <label for="commission_percentage">Commission %</label>
                   <select class="form-control" id="commission_percentage" name="commission_percentage" onchange="updateAmounts()">
                     <option value="0">N.A</option>
+                    <option value="1">1</option>
                     <option value="2">2</option>
-                    <option value="3">3</option>
                   </select>
                   <span data-name="commission_percentage" class="error" style="color:red;"></span>
                 </div>
               </div>
               <div class="col-sm-2">
                 <div class="form-group">
-                  <label for="commission_amount">Commission Amount</label>
-                  <input type="text" id="commission_amount" class="form-control" value="{{old('commission_amount')}}" placeholder="Commission Amount" disabled>
-                  <span data-name="commission_amount" class="error" style="color:red;"></span>
+                  <label for="commission_total_amount">Commission Total Amount</label>
+                  <input type="text" id="commission_total_amount" class="form-control" value="{{old('commission_total_amount')}}" placeholder="Commission Amount" disabled>
+                  <span data-name="commission_total_amount" class="error" style="color:red;"></span>
                 </div>
               </div>
             </div>
@@ -99,7 +101,7 @@
           <div class="col-md-12">
             <!-- /.box-body -->
             <div class="text-center box-footer" style="padding-top:20px;">
-              <button type="submit" name="action" class="btn btn-primary btn-lg dis" value="draft" style="  box-shadow: 2px 5px #888888;">Submit</button>
+              <button type="submit" id="create_account" name="action" class="btn btn-primary btn-lg dis" value="draft" style="  box-shadow: 2px 5px #888888;">Submit</button>
             </div>
           </div>
         </div>
@@ -125,10 +127,11 @@
               <tr>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Amt Rcvd</th>
+                <th>Amount Received</th>
                 <th>Tenure</th>
                 <th>Interest Rate</th>
-                <th>Total Amt</th>
+                <th>Total Amount</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -146,7 +149,48 @@
                 <td>{{ $account->tenure_display }}</td>
                 <td>{{ $account->interest_rate}} %</td>
                 <td>{{ $account->total_amount}} ₹</td>
+                <td><button @if($account->active)class="btn btn-sm btn-flat btn-success"@else class="btn btn-sm btn-flat btn-danger"@endif >{{$account->status}}</button></td>
                 <td>
+                  <a href="{{ route('dashboard.clients.accounts.passbook.show',['clientSlug'=> $client->slug,'accountSlug'=> $account->slug]) }}" title="Passbook" target="_blank"><span class="label label-success"><i class="glyphicon glyphicon-list-alt"></i></span></a>
+                  <a data-toggle="modal" data-target="#withdrawnAmount{{$i}}" title="Withdraw Amount"><span class="label label-warning"><i class="glyphicon glyphicon-arrow-down"></i></span></a>
+                  <div class="modal modal-warning fade" id="withdrawnAmount{{$i}}">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Withdraw Amount</h4>
+                          </div>
+                          <div class="modal-body">
+                            <p>Amount Received : {{ $account->amount_received }} ₹</p>
+                            <form method="post" action="{{route('dashboard.clients.accounts.withdraw')}}">
+                              {{ csrf_field()}}
+                              <input type="hidden" name="account_id" value="{{$account->id}}">
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label for="withdrawn_amount">Withdraw Amount<span style="color:red;">*</span></label>
+                                    <input type="number" id="withdrawn_amount" name="withdrawn_amount" class="form-control" value="{{old('withdrawn_amount')}}" placeholder="Enter Withdrawn Amount" onchange="updatePenalty()" required>
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label for="penalty">Penalty</label>
+                                    <input type="number" id="penalty" class="form-control" value="" placeholder="Penalty" disabled>
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline disw">Submit</button>
+                          </div>
+                            </form>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
                   <a data-toggle="modal" data-target="#delete-account{{$i}}" title="Delete"><span class="label label-danger"><i class="glyphicon glyphicon-trash"></i></span></a>
                   <div class="modal modal-danger fade" id="delete-account{{$i}}">
                     <div class="modal-dialog">
@@ -179,10 +223,11 @@
                 <tr>
                   <th>Start Date</th>
                   <th>End Date</th>
-                  <th>Amt Rcvd</th>
+                  <th>Amount Received</th>
                   <th>Tenure</th>
                   <th>Interest Rate</th>
-                  <th>Total Amt</th>
+                  <th>Total Amount</th>
+                  <th>Status</th>
                   <th></th>
                 </tr>
               </tfoot>
@@ -216,7 +261,7 @@ $.ajaxSetup({
   }
 });
 
-$('button[type=submit]').on('click', function () {
+$('#create_account').on('click', function () {
 
   var $this = $(this);
 
@@ -228,7 +273,7 @@ $('button[type=submit]').on('click', function () {
 
   var formData = new FormData(form[0]);
   formData.append('total_amount',document.getElementById('total_amount').value);
-  formData.append('commission_amount',document.getElementById('commission_amount').value);
+  formData.append('commission_total_amount',document.getElementById('commission_total_amount').value);
 
   $.ajax({
     url: "{{route('dashboard.clients.accounts.store')}}",
@@ -260,7 +305,6 @@ $('button[type=submit]').on('click', function () {
     }
   });
 });
-
 </script>
 <script type="text/javascript">
 //dynamically update total amount
@@ -273,16 +317,27 @@ function updateAmounts() {
 
   var interest_amount = (amount_received * interest_rate)/100;
 
-  var commission_amount = (amount_received * commission_percentage)/100;
+  var comm_amount = (amount_received * commission_percentage)/100;
 
-  if(tenure === 6)
+  if(tenure === 6){
     var total_amount = amount_received + interest_amount * 6;
+    var commission_total_amount = comm_amount * 6;
+  }
 
-  if(tenure === 12)
+  if(tenure === 12){
     var total_amount = amount_received + (interest_amount * 12);
+    var commission_total_amount = comm_amount * 6;
+  }
 
   document.getElementById('total_amount').value = total_amount;
-  document.getElementById('commission_amount').value = commission_amount;
+  document.getElementById('commission_total_amount').value = commission_total_amount;
+}
+function updatePenalty(){
+
+  var withdrawn_amount = +document.getElementById('withdrawn_amount').value;
+
+  document.getElementById('penalty').value = (withdrawn_amount * 20)/100;
+
 }
 </script>
 <!-- DataTables -->
@@ -294,7 +349,7 @@ $(document).ready(function() {
   var set = $('#tablelist tfoot th');
   var length = set.length;
   $('#tablelist tfoot th').each(function (index,element) {
-    if (index<(length-1)) {
+    if (index<(length-2)) {
       var title = $(this).text();
       $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
     }
@@ -302,9 +357,10 @@ $(document).ready(function() {
   } );
 
   // DataTable
-  var table = $('#tablelist').DataTable({
+  var table = $('#tablelist').dataTable({
     "order": [],
-    columnDefs: [ { orderable: false, targets: [6] } ]
+    "autoWidth": true,
+    columnDefs: [ { orderable: false, targets: [6,7] } ]
   });
 
   // Apply the search

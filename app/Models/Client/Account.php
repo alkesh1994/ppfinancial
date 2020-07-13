@@ -18,7 +18,7 @@ class Account extends Model
       'start_date',
       'end_date',
       'commission_percentage',
-      'commission_amount',
+      'commission_total_amount',
       'active',
       'client_id'
     ];
@@ -29,6 +29,10 @@ class Account extends Model
       return $this->belongsTo('App\Models\Client\Client')->withTrashed();
     }
 
+    public function passbook(){
+      return $this->hasOne('App\Models\Client\Passbook');
+    }
+
     public function getTenureDisplayAttribute()
     {
       if($this->tenure == 6)
@@ -36,5 +40,14 @@ class Account extends Model
 
       if($this->tenure == 12)
         return '1 year';
+    }
+
+    public function getStatusAttribute()
+    {
+      if($this->active){
+         return 'Active';
+      }else{
+         return 'Inactive';
+      }
     }
 }
