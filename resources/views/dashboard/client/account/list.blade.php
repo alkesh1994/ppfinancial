@@ -163,7 +163,7 @@
                           </div>
                           <div class="modal-body">
                             <p>Amount Received : {{ $account->amount_received }} ₹</p>
-                            <form method="post" action="{{url('dashboard/clients/accounts/withdraw')}}">
+                            <form method="post" action="{{route('dashboard.clients.accounts.withdraw')}}">
                               {{ csrf_field()}}
                               <input type="hidden" name="account_id" value="{{$account->id}}">
                               <div class="row">
@@ -273,7 +273,7 @@ $('#create_account').on('click', function () {
 
   var formData = new FormData(form[0]);
   formData.append('total_amount',document.getElementById('total_amount').value);
-  formData.append('commission_amount',document.getElementById('commission_amount').value);
+  formData.append('commission_total_amount',document.getElementById('commission_total_amount').value);
 
   $.ajax({
     url: "{{route('dashboard.clients.accounts.store')}}",
