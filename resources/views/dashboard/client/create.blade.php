@@ -161,14 +161,14 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="client_bank_micr_code">MICR Code<span style="color:red;">*</span></label>
-                  <input type="text" id="client_bank_micr_code" name="client_bank_micr_code" class="form-control" value="{{old('client_bank_micr_code')}}" placeholder="Enter MICR Code">
+                  <input type="number" id="client_bank_micr_code" name="client_bank_micr_code" class="form-control" value="{{old('client_bank_micr_code')}}" placeholder="Enter MICR Code" onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)" maxlength = "9" min = "1" max = "999999999">
                   <span data-name="client_bank_micr_code" class="error" style="color:red;"></span>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="client_bank_account_number">Account Number<span style="color:red;">*</span></label>
-                  <input type="text" id="client_bank_account_number" name="client_bank_account_number" class="form-control" value="{{old('client_bank_account_number')}}" placeholder="Enter Account Number">
+                  <input type="number" id="client_bank_account_number" name="client_bank_account_number" class="form-control" value="{{old('client_bank_account_number')}}" placeholder="Enter Account Number">
                   <span data-name="client_bank_account_number" class="error" style="color:red;"></span>
                 </div>
               </div>
@@ -201,7 +201,23 @@
 @endsection
 
 @section('scripts')
+<script>
+  function maxLengthCheck(object) {
+    if (object.value.length > object.maxLength)
+      object.value = object.value.slice(0, object.maxLength)
+  }
 
+  function isNumeric (evt) {
+    var theEvent = evt || window.event;
+    var key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode (key);
+    var regex = /[0-9]|\./;
+    if ( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+  }
+</script>
 <script type="text/javascript">
 function validateImage(id) {
   var formData = new FormData();
