@@ -18,11 +18,11 @@ class CreateAccountsTable extends Migration
             $table->text('slug');
             $table->decimal('amount_received',15,4)->nullable();
             $table->string('tenure')->nullable();
-            $table->integer('interest_rate')->nullable();
+            $table->decimal('interest_rate',3,1)->nullable();
             $table->decimal('total_amount',15,4)->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->integer('commission_percentage')->nullable();
+            $table->decimal('commission_percentage',3,1)->nullable();
             $table->decimal('commission_total_amount',15,4)->nullable();
             $table->integer('active')->default(1);
             $table->integer('client_id');
