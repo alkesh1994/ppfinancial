@@ -14,13 +14,20 @@ class Account extends Model
       'amount_received',
       'tenure',
       'interest_rate',
+      'interest_amount',
       'total_amount',
       'start_date',
       'end_date',
+      'commission_type',
       'commission_percentage',
+      'commission_amount',
       'commission_total_amount',
       'active',
-      'client_id'
+      'client_id',
+      'current_amount',
+      'next_date',
+      'months_left',
+      'total_withdraw_amount'
     ];
 
     protected $dates = ['deleted_at'];

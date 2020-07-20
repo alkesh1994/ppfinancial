@@ -27,18 +27,25 @@ class AccountService
 
      $startDate = (new Carbon($request->get('start_date')));
      $endDate = (new Carbon($request->get('start_date')))->addMonths($request->input('tenure'));
+     $nextDate = (new Carbon($request->get('next_date')))->addMonths(1);
 
      $storeAccount = Account::create([
        'slug' => $slug,
        'amount_received' => $request->get('amount_received'),
        'tenure' => $request->get('tenure'),
        'interest_rate' => $request->get('interest_rate'),
+       'interest_amount' => $request->get('interest_amount'),
        'total_amount' => $request->get('total_amount'),
        'start_date' => $startDate,
        'end_date' => $endDate,
+       'commission_type' => $request->get('commission_type'),
        'commission_percentage' => $request->get('commission_percentage'),
+       'commission_amount' => $request->get('commission_amount'),
        'commission_total_amount' => $request->get('commission_total_amount'),
-       'client_id' => $request->get('client_id')
+       'client_id' => $request->get('client_id'),
+       'current_amount'=> $request->get('amount_received'),
+       'next_date' => $nextDate,
+       'months_left' => $request->get('tenure')
      ]);
 
      $storePassbook = $this->passbookService->storePassbook($storeAccount);

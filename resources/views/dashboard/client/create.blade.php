@@ -50,21 +50,21 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="client_dob">Client Date of Birth<span style="color:red;">*</span></label>
                   <input type="date" id="client_dob" name="client_dob" class="form-control" value="{{old('client_dob')}}" placeholder="Enter Date of Birth">
                   <span data-name="client_dob" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="client_phone_number">Client Phone Number<span style="color:red;">*</span></label>
                   <input type="number" id="client_phone_number" name="client_phone_number" class="form-control" value="{{old('client_phone_number')}}" placeholder="Enter Client Phone Number">
                   <span data-name="client_phone_number" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="client_alternate_phone_number">Alternate Phone Number</label>
                   <input type="number" id="client_alternate_phone_number" name="client_alternate_phone_number" class="form-control" value="{{old('client_alternate_phone_number')}}" placeholder="Enter Alternate Phone Number">
@@ -76,13 +76,6 @@
                   <label for="referred_by">Referred By</label>
                   <input type="text" id="referred_by" name="referred_by" class="form-control" value="{{old('referred_by')}}" placeholder="Enter Referred By">
                   <span data-name="referred_by" class="error" style="color:red;"></span>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <label for="commission_of_referral">Commission of Referral</label>
-                  <input type="text" id="commission_of_referral" name="commission_of_referral" class="form-control" value="{{old('commission_of_referral')}}" placeholder="Enter Commission of Referral">
-                  <span data-name="commission_of_referral" class="error" style="color:red;"></span>
                 </div>
               </div>
             </div>
