@@ -358,16 +358,19 @@ function updateAmounts() {
 
   var interest_amount = (amount_received * interest_rate)/100;
 
-  if(commission_type === 1)
-  {
-    var comm_amount = (amount_received * commission_percentage)/100;
-    var commission_total_amount = comm_amount * 12;
-  }
-
-  if(commission_type === 2)
-  {
-    var comm_amount = (amount_received * commission_percentage)/100);
-    var commission_total_amount = comm_amount;
+  switch(commission_type) {
+  case 1:
+    commission_amount = (amount_received * commission_percentage)/100;
+    commission_total_amount = commission_amount * tenure;
+    break;
+  case 2:
+    commission_amount = (amount_received * commission_percentage)/100;
+    commission_total_amount = commission_amount;
+    break;
+  case 0:
+    commission_amount = 0;
+    commission_total_amount = 0;
+    break;
   }
 
   if(tenure === 6){
