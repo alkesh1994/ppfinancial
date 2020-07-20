@@ -39,6 +39,7 @@
                 <th>Withdrawn Amount(₹)</th>
                 <th>Penalty(₹)</th>
                 <th>Referred By</th>
+                <th>Commission Type</th>
                 <th>Commission %</th>
                 <th>Commision Amt(₹)</th>
                 <th>Commission Total Amt(₹)</th>
@@ -63,6 +64,15 @@
                 <td>{{ $passbookEntry->withdrawn_amount}}</td>
                 <td>{{ $passbookEntry->penalty }}</td>
                 <td>{{ $passbookEntry->account->client->referred_by}}</td>
+                <td>
+                  @if($passbookEntry->account->commission_type == 1)
+                   Monthly
+                  @elseif($passbookEntry->account->commission_type == 2)
+                   OneTime
+                  @else
+                   N.A
+                  @endif
+                </td>
                 <td>{{ $passbookEntry->commission_percentage}}</td>
                 <td>{{ $passbookEntry->commission_amount}}</td>
                 <td>{{ $passbookEntry->commission_total_amount}}</td>

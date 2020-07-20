@@ -88,7 +88,7 @@
                   <select class="form-control" id="commission_type" name="commission_type" onchange="updateAmounts()">
                     <option value="0">N.A</option>
                     <option value="1">Monthly</option>
-                    <option value="2">Annualy</option>
+                    <option value="2">OneTime</option>
                   </select>
                   <span data-name="commission_type" class="error" style="color:red;"></span>
                 </div>
@@ -159,6 +159,7 @@
                 <th>Tenure</th>
                 <th>Interest Rate</th>
                 <th>Total Amount</th>
+                <th>Commission Type</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -177,6 +178,7 @@
                 <td>{{ $account->tenure_display }}</td>
                 <td>{{ $account->interest_rate}} %</td>
                 <td>{{ $account->total_amount}} ₹</td>
+                <td>{{ $account->commission_type_display}}</td>
                 <td><button @if($account->active)class="btn btn-sm btn-flat btn-success"@else class="btn btn-sm btn-flat btn-danger"@endif >{{$account->status}}</button></td>
                 <td>
                   <a href="{{ route('dashboard.clients.accounts.passbook.show',['clientSlug'=> $client->slug,'accountSlug'=> $account->slug]) }}" title="Passbook" target="_blank"><span class="label label-success"><i class="glyphicon glyphicon-list-alt"></i></span></a>
@@ -352,19 +354,28 @@ function updateAmounts() {
   var interest_rate = +document.getElementById('interest_rate').value;
   var tenure = +document.getElementById('tenure').value;
   var commission_percentage = +document.getElementById('commission_percentage').value;
+  var commission_type = +document.getElementById('commission_type').value;
 
   var interest_amount = (amount_received * interest_rate)/100;
 
-  var comm_amount = (amount_received * commission_percentage)/100;
+  if(commission_type === 1)
+  {
+    var comm_amount = (amount_received * commission_percentage)/100;
+    var commission_total_amount = comm_amount * 12;
+  }
+
+  if(commission_type === 2)
+  {
+    var comm_amount = (amount_received * commission_percentage)/100);
+    var commission_total_amount = comm_amount;
+  }
 
   if(tenure === 6){
     var total_amount = amount_received + interest_amount * 6;
-    var commission_total_amount = comm_amount * 6;
   }
 
   if(tenure === 12){
     var total_amount = amount_received + (interest_amount * 12);
-    var commission_total_amount = comm_amount * 12;
   }
 
   document.getElementById('total_amount').value = total_amount;

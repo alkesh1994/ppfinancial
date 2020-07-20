@@ -49,6 +49,18 @@ class Account extends Model
         return '1 year';
     }
 
+    public function getCommissionTypeDisplayAttribute()
+    {
+      if($this->commission_type == 0)
+         return 'N.A';
+
+      if($this->commission_type == 1)
+         return 'Monthly';
+
+      if($this->commission_type == 2)
+        return 'One Time';
+    }
+
     public function getStatusAttribute()
     {
       if($this->active){
