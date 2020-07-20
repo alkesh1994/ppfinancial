@@ -16,7 +16,7 @@ class CreatePassbooksTable extends Migration
         Schema::create('passbooks', function (Blueprint $table) {
             $table->id();
             $table->date('date')->nullable();
-            $table->decimal('base_amount',15,4)->nullable();
+            $table->decimal('base_amount',15,2)->nullable();
             $table->decimal('interest_rate',3,1)->nullable();
             $table->integer('tenure')->nullable();
             $table->decimal('interest_amount',15,2)->nullable();
