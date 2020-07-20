@@ -36,9 +36,9 @@ class StoreClientRequest extends FormRequest
           'client_personal_photo' => 'required|image',
           'referred_by' => 'nullable|min:3|max:20',
           'client_bank_name' => 'required',
-          'client_bank_account_number' => 'required|numeric|digits:11',
+          'client_bank_account_number' => 'required|numeric',
           'client_bank_ifsc_code' => 'required|size:11',
-          'client_bank_micr_code' => 'required|numeric|size:9',
+          'client_bank_micr_code' => 'required|numeric|digits:9',
           'client_bank_branch' => 'required',
           'client_bank_cheque_photo' => 'required|image',
         ];
