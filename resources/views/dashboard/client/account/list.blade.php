@@ -156,6 +156,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Amount Received</th>
+                <th>Current Amount</th>
                 <th>Tenure</th>
                 <th>Interest Rate</th>
                 <th>Total Amount</th>
@@ -175,6 +176,7 @@
                 <td>{{ $account->start_date }}</td>
                 <td>{{ $account->end_date }}</td>
                 <td>{{ $account->amount_received }} ₹</td>
+                <td>{{ $account->current_amount }} ₹</td>
                 <td>{{ $account->tenure_display }}</td>
                 <td>{{ $account->interest_rate}} %</td>
                 <td>{{ $account->total_amount}} ₹</td>
@@ -261,9 +263,11 @@
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Amount Received</th>
+                  <th>Current Amount</th>
                   <th>Tenure</th>
                   <th>Interest Rate</th>
                   <th>Total Amount</th>
+                  <th>Commission Type</th>
                   <th></th>
                   <th></th>
                 </tr>
@@ -358,16 +362,19 @@ function updateAmounts() {
 
   var interest_amount = (amount_received * interest_rate)/100;
 
+  var commission_amount = 0;
+  var commission_total_amount = 0;
+
   if(commission_type === 1)
   {
-    var comm_amount = (amount_received * commission_percentage)/100;
-    var commission_total_amount = comm_amount * 12;
+    commission_amount = (amount_received * commission_percentage)/100;
+    commission_total_amount = commission_amount * 12;
   }
 
   if(commission_type === 2)
   {
-    var comm_amount = (amount_received * commission_percentage)/100);
-    var commission_total_amount = comm_amount;
+    commission_amount = (amount_received * commission_percentage)/100;
+    commission_total_amount = commission_amount;
   }
 
   if(tenure === 6){
@@ -380,7 +387,7 @@ function updateAmounts() {
 
   document.getElementById('total_amount').value = total_amount;
   document.getElementById('interest_amount').value = interest_amount;
-  document.getElementById('commission_amount').value = comm_amount;
+  document.getElementById('commission_amount').value = commission_amount;
   document.getElementById('commission_total_amount').value = commission_total_amount;
 }
 function updatePenalty(){
