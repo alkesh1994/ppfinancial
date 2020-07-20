@@ -28,7 +28,7 @@
           <table id="tablelist" class="display">
             <thead>
               <tr>
-                <th>Date</th>
+                <th>Date(Entry)</th>
                 <th>Base Amount(₹)</th>
                 <th>Tenure(months)</th>
                 <th>Interest %</th>
