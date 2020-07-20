@@ -364,7 +364,7 @@ function updateAmounts() {
 
   if(tenure === 12){
     var total_amount = amount_received + (interest_amount * 12);
-    var commission_total_amount = comm_amount * 6;
+    var commission_total_amount = comm_amount * 12;
   }
 
   document.getElementById('total_amount').value = total_amount;
