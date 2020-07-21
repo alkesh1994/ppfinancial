@@ -4,6 +4,7 @@ namespace App\Services\Client;
 
 use Illuminate\Http\Request;
 use App\Models\Client\Passbook;
+use App\Models\Client\Account;
 use Carbon\Carbon;
 
 class PassbookService
@@ -12,23 +13,19 @@ class PassbookService
    //process and store data
    public function storePassbook($storeAccount){
 
-     $nextDate = (new Carbon($storeAccount['start_date']))->addMonths(1);
-
-     $commisionAmount = ($storeAccount['amount_received'] * $storeAccount['commission_percentage'])/100;
+     $date = (new Carbon($storeAccount['start_date']))->addMonths(1);
 
      $storePassbook = Passbook::create([
-       'start_date' => $storeAccount['start_date'],
-       'next_date' => $nextDate,
-       'end_date' => $storeAccount['end_date'],
+       'date' => $date,
        'base_amount' => $storeAccount['amount_received'],
        'interest_rate' => $storeAccount['interest_rate'],
+       'tenure' => $storeAccount['tenure'],
        'interest_amount' => 0,
        'current_amount' => $storeAccount['amount_received'],
        'total_amount' => $storeAccount['total_amount'],
-       'months_left' => $storeAccount['tenure'],
+       'referred_by' => $storeAccount['referred_by'],
        'commission_percentage' => $storeAccount['commission_percentage'],
-       'commission_period' => $storeAccount['commission_period'],
-       'commission_amount' => $commisionAmount,
+       'commission_amount' => $storeAccount['commission_amount'],
        'commission_total_amount' => $storeAccount['commission_total_amount'],
        'account_id' => $storeAccount['id']
      ]);
@@ -46,39 +43,41 @@ class PassbookService
 
      $amountDeducted = $request->withdrawn_amount + $penalty;
 
-     $baseAmount = $lastEntry->base_amount - $amountDeducted;
-
      $currentAmount = $lastEntry->current_amount - $amountDeducted;
 
-     $interestAmount = ($baseAmount * $lastEntry->interest_rate)/100;
+     $interestAmount = ($currentAmount * $lastEntry->interest_rate)/100;
 
-     $commisionAmount = ($baseAmount * $lastEntry->commission_percentage)/100;
-
-     $commisionTotalAmount =  $commisionAmount * $lastEntry->account->tenure;
-
-     $totalAmount = $baseAmount + ($interestAmount * $lastEntry->account->tenure);
+     $totalAmount = $currentAmount + ($interestAmount * $lastEntry->account->tenure);
 
      $withdrawnDate = Carbon::now();
 
      $withdraw = Passbook::create([
-       'start_date' => $lastEntry->start_date,
-       'next_date' => $lastEntry->next_date,
-       'end_date' => $lastEntry->end_date,
-       'base_amount' => $baseAmount,
+       'date' => $withdrawnDate,
+       'base_amount' => $lastEntry->base_amount,
+       'tenure' => $lastEntry->tenure,
        'interest_rate' => $lastEntry->interest_rate,
-       'interest_amount' => 0,
+       'interest_amount' => $interestAmount,
        'current_amount' => $currentAmount,
        'total_amount' => $totalAmount,
        'months_left' => $lastEntry->months_left,
        'withdrawn_amount' => $request->withdrawn_amount,
        'withdrawn_date' => $withdrawnDate,
        'penalty' => $penalty,
-       'commission_amount'=> $commisionAmount,
+       'referred_by' => $lastEntry->referred_by,
+       'commission_amount'=> $lastEntry->commission_amount,
        'commission_percentage' => $lastEntry->commission_percentage,
-       'commission_period' => $lastEntry->commission_period,
-       'commission_total_amount' => $commisionTotalAmount,
+       'commission_total_amount' => $lastEntry->commission_total_amount,
        'account_id' => $lastEntry->account_id
      ]);
+
+     $account = Account::findOrFail($lastEntry->account_id);
+
+     $account->current_amount = $currentAmount;
+     $account->interest_amount = $interestAmount;
+     $account->total_amount = $totalAmount;
+     $account->total_withdraw_amount = $account->total_withdraw_amount + $request->withdrawn_amount;
+
+     $account->save();
 
      return $withdraw;
    }

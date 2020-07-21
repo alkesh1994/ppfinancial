@@ -29,21 +29,21 @@
           <div class="box-body">
             <input type="hidden" name="client_id" value="{{$client->id}}">
             <div class="row">
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="start_date">Start Date<span style="color:red;">*</span></label>
                   <input type="date" id="start_date" name="start_date" class="form-control" value="{{old('start_date')}}" placeholder="Enter Start Date">
                   <span data-name="start_date" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="amount_received">Amount Received<span style="color:red;">*</span></label>
                   <input type="number" id="amount_received" name="amount_received" class="form-control" value="{{old('amount_received')}}" placeholder="Enter Amount Received" onchange="updateAmounts()">
                   <span data-name="amount_received" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="tenure">Tenure</label>
                   <select class="form-control" id="tenure" name="tenure" onchange="updateAmounts()">
@@ -53,28 +53,49 @@
                   <span data-name="tenure" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-1">
+              <div class="col-sm-3">
                 <div class="form-group">
-                  <label for="interest_rate">Interest Rate %</label>
-                  <select class="form-control" id="interest_rate" name="interest_rate" onchange="updateAmounts()">
-                    <option value="1.5">1.5</option>
-                    <option value="2">2</option>
-                    <option value="2.5">2.5</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                  </select>
+                  <label for="interest_rate">Interest Rate(%)<span style="color:red;">*</span></label>
+                  <input type="number" id="interest_rate" name="interest_rate" class="form-control" value="{{old('interest_rate')}}" placeholder="Enter Interest Rate" onchange="updateAmounts()">
                   <span data-name="interest_rate" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-2">
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="interest_amount">Interest Amount<span style="color:red;">*</span></label>
+                  <input type="text" id="interest_amount" class="form-control" value="" placeholder="Interest Amount" disabled>
+                  <span data-name="interest_amount" class="error" style="color:red;"></span>
+                </div>
+              </div>
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="total_amount">Total Amount</label>
                   <input type="text" id="total_amount" class="form-control" value="" placeholder="Total Amount" disabled>
                   <span data-name="total_amount" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-1">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="referred_by">Referred By</label>
+                  <input type="text" id="referred_by" class="form-control" value="{{$client->referred_by}}" placeholder="Enter Referred By" disabled>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="commission_type">Commission Type</label>
+                  <select class="form-control" id="commission_type" name="commission_type" onchange="updateAmounts()">
+                    <option value="0">N.A</option>
+                    <option value="1">Monthly</option>
+                    <option value="2">OneTime</option>
+                  </select>
+                  <span data-name="commission_type" class="error" style="color:red;"></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="commission_percentage">Commission %</label>
                   <select class="form-control" id="commission_percentage" name="commission_percentage" onchange="updateAmounts()">
@@ -85,7 +106,14 @@
                   <span data-name="commission_percentage" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <label for="commission_amount">Commission Amount</label>
+                  <input type="text" id="commission_amount" class="form-control" value="{{old('commission_amount')}}" placeholder="Commission Amount" disabled>
+                  <span data-name="commission_amount" class="error" style="color:red;"></span>
+                </div>
+              </div>
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="commission_total_amount">Commission Total Amount</label>
                   <input type="text" id="commission_total_amount" class="form-control" value="{{old('commission_total_amount')}}" placeholder="Commission Amount" disabled>
@@ -128,9 +156,11 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Amount Received</th>
+                <th>Current Amount</th>
                 <th>Tenure</th>
                 <th>Interest Rate</th>
                 <th>Total Amount</th>
+                <th>Commission Type</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
@@ -146,9 +176,11 @@
                 <td>{{ $account->start_date }}</td>
                 <td>{{ $account->end_date }}</td>
                 <td>{{ $account->amount_received }} ₹</td>
+                <td>{{ $account->current_amount }} ₹</td>
                 <td>{{ $account->tenure_display }}</td>
                 <td>{{ $account->interest_rate}} %</td>
                 <td>{{ $account->total_amount}} ₹</td>
+                <td>{{ $account->commission_type_display}}</td>
                 <td><button @if($account->active)class="btn btn-sm btn-flat btn-success"@else class="btn btn-sm btn-flat btn-danger"@endif >{{$account->status}}</button></td>
                 <td>
                   <a href="{{ route('dashboard.clients.accounts.passbook.show',['clientSlug'=> $client->slug,'accountSlug'=> $account->slug]) }}" title="Passbook" target="_blank"><span class="label label-success"><i class="glyphicon glyphicon-list-alt"></i></span></a>
@@ -162,10 +194,17 @@
                             <h4 class="modal-title">Withdraw Amount</h4>
                           </div>
                           <div class="modal-body">
-                            <p>Amount Received : {{ $account->amount_received }} ₹</p>
                             <form method="post" action="{{route('dashboard.clients.accounts.withdraw')}}">
                               {{ csrf_field()}}
                               <input type="hidden" name="account_id" value="{{$account->id}}">
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>Current Amount</label>
+                                    <input type="text" class="form-control" value="{{$account->current_amount}}" placeholder="Current Amount" disabled>
+                                  </div>
+                                </div>
+                              </div>
                               <div class="row">
                                 <div class="col-sm-6">
                                   <div class="form-group">
@@ -191,8 +230,8 @@
                       <!-- /.modal-dialog -->
                     </div>
                     <!-- /.modal -->
-                  <a data-toggle="modal" data-target="#delete-account{{$i}}" title="Delete"><span class="label label-danger"><i class="glyphicon glyphicon-trash"></i></span></a>
-                  <div class="modal modal-danger fade" id="delete-account{{$i}}">
+                  <a data-toggle="modal" data-target="#delete-account{{$i}}" title="Delete"><span class="label label-primary"><i class="glyphicon glyphicon-trash"></i></span></a>
+                  <div class="modal modal-warning fade" id="delete-account{{$i}}">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -224,10 +263,12 @@
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Amount Received</th>
+                  <th>Current Amount</th>
                   <th>Tenure</th>
                   <th>Interest Rate</th>
                   <th>Total Amount</th>
-                  <th>Status</th>
+                  <th>Commission Type</th>
+                  <th></th>
                   <th></th>
                 </tr>
               </tfoot>
@@ -273,7 +314,10 @@ $('#create_account').on('click', function () {
 
   var formData = new FormData(form[0]);
   formData.append('total_amount',document.getElementById('total_amount').value);
+  formData.append('interest_amount',document.getElementById('interest_amount').value);
+  formData.append('commission_amount',document.getElementById('commission_amount').value);
   formData.append('commission_total_amount',document.getElementById('commission_total_amount').value);
+  formData.append('referred_by',document.getElementById('referred_by').value);
 
   $.ajax({
     url: "{{route('dashboard.clients.accounts.store')}}",
@@ -314,22 +358,36 @@ function updateAmounts() {
   var interest_rate = +document.getElementById('interest_rate').value;
   var tenure = +document.getElementById('tenure').value;
   var commission_percentage = +document.getElementById('commission_percentage').value;
+  var commission_type = +document.getElementById('commission_type').value;
 
   var interest_amount = (amount_received * interest_rate)/100;
 
-  var comm_amount = (amount_received * commission_percentage)/100;
+  var commission_amount = 0;
+  var commission_total_amount = 0;
+
+  if(commission_type === 1)
+  {
+    commission_amount = (amount_received * commission_percentage)/100;
+    commission_total_amount = commission_amount * 12;
+  }
+
+  if(commission_type === 2)
+  {
+    commission_amount = (amount_received * commission_percentage)/100;
+    commission_total_amount = commission_amount;
+  }
 
   if(tenure === 6){
     var total_amount = amount_received + interest_amount * 6;
-    var commission_total_amount = comm_amount * 6;
   }
 
   if(tenure === 12){
     var total_amount = amount_received + (interest_amount * 12);
-    var commission_total_amount = comm_amount * 6;
   }
 
   document.getElementById('total_amount').value = total_amount;
+  document.getElementById('interest_amount').value = interest_amount;
+  document.getElementById('commission_amount').value = commission_amount;
   document.getElementById('commission_total_amount').value = commission_total_amount;
 }
 function updatePenalty(){

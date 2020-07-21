@@ -4,7 +4,7 @@
 
 <section class="content-header">
   <h1>
-    Client : {{$client->client_full_name}} Account : {{$account->slug}}
+    Client : {{$client->client_full_name}} | Account : {{\Carbon\Carbon::parse($account->start_date)->format('j F Y')}} to {{\Carbon\Carbon::parse($account->end_date)->format('j F Y')}}
 
   </h1>
   <ol class="breadcrumb">
@@ -28,19 +28,21 @@
           <table id="tablelist" class="display">
             <thead>
               <tr>
-                <th>Start Date</th>
-                <th>Next Date</th>
-                <th>End Date</th>
+                <th>Date(Entry)</th>
                 <th>Base Amount(₹)</th>
-                <th>Interest Rate(%)</th>
+                <th>Tenure(months)</th>
+                <th>Interest %</th>
                 <th>Interest Amount(₹)</th>
                 <th>Current Amount(₹)</th>
                 <th>Total Amount(₹)</th>
+                <th>Withdrawn Date</th>
+                <th>Withdrawn Amount(₹)</th>
+                <th>Penalty(₹)</th>
+                <th>Referred By</th>
+                <th>Commission Type</th>
+                <th>Commission %</th>
                 <th>Commision Amt(₹)</th>
                 <th>Commission Total Amt(₹)</th>
-                <th>Withdrawn Amount(₹)</th>
-                <th>Withdrawn Date</th>
-                <th>Penalty(₹)</th>
               </tr>
             </thead>
 
@@ -51,25 +53,36 @@
               <?php $i++; ?>
 
               <tr>
-                <td>{{ $passbookEntry->start_date }}</td>
-                <td>{{ $passbookEntry->next_date }}</td>
-                <td>{{ $passbookEntry->end_date }}</td>
+                <td>{{ $passbookEntry->date }}</td>
                 <td>{{ $passbookEntry->base_amount }}</td>
+                <td>{{ $passbookEntry->tenure}}</td>
                 <td>{{ $passbookEntry->interest_rate }}</td>
                 <td>{{ $passbookEntry->interest_amount }}</td>
                 <td>{{ $passbookEntry->current_amount }}</td>
                 <td>{{ $passbookEntry->total_amount }}</td>
+                <td>{{ $passbookEntry->withdrawn_date}}</td>
+                <td>{{ $passbookEntry->withdrawn_amount}}</td>
+                <td>{{ $passbookEntry->penalty }}</td>
+                <td>{{ $passbookEntry->account->client->referred_by}}</td>
+                <td>
+                  @if($passbookEntry->account->commission_type == 1)
+                   Monthly
+                  @elseif($passbookEntry->account->commission_type == 2)
+                   OneTime
+                  @else
+                   N.A
+                  @endif
+                </td>
+                <td>{{ $passbookEntry->commission_percentage}}</td>
                 <td>{{ $passbookEntry->commission_amount}}</td>
                 <td>{{ $passbookEntry->commission_total_amount}}</td>
-                <td>{{ $passbookEntry->withdrawn_amount}}</td>
-                <td>{{ $passbookEntry->withdrawn_date}}</td>
-                <td>{{ $passbookEntry->penalty }}</td>
                 </tr>
 
                 @endforeach
               </tbody>
               <tfoot>
                 <tr>
+                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>
@@ -117,7 +130,7 @@ $(document).ready(function() {
   var table = $('#tablelist').dataTable({
     "order": [],
     "autoWidth": true,
-    columnDefs: [ { orderable: false, targets: [6,7] } ]
+    columnDefs: [ { orderable: false, targets: [2,10] } ]
   });
 
 } );

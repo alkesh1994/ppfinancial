@@ -50,21 +50,21 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="client_dob">Client Date of Birth<span style="color:red;">*</span></label>
                   <input type="date" id="client_dob" name="client_dob" class="form-control" value="{{old('client_dob') ? old('client_dob') : $client->client_dob}}" placeholder="Enter Date of Birth">
                   <span data-name="client_dob" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="client_phone_number">Client Phone Number<span style="color:red;">*</span></label>
                   <input type="number" id="client_phone_number" name="client_phone_number" class="form-control" value="{{old('client_phone_number') ? old('client_phone_number') : $client->client_phone_number}}" placeholder="Enter Client Phone Number">
                   <span data-name="client_phone_number" class="error" style="color:red;"></span>
                 </div>
               </div>
-              <div class="col-sm-2">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <label for="client_alternate_phone_number">Alternate Phone Number</label>
                   <input type="number" id="client_alternate_phone_number" name="client_alternate_phone_number" class="form-control" value="{{old('client_alternate_phone_number') ? old('client_alternate_phone_number') : $client->client_alternate_phone_number}}" placeholder="Enter Alternate Phone Number">
@@ -76,13 +76,6 @@
                   <label for="referred_by">Referred By</label>
                   <input type="text" id="referred_by" name="referred_by" class="form-control" value="{{old('referred_by') ? old('referred_by') : $client->referred_by}}" placeholder="Enter Referred By">
                   <span data-name="referred_by" class="error" style="color:red;"></span>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <label for="commission_of_referral">Commission of Referral</label>
-                  <input type="text" id="commission_of_referral" name="commission_of_referral" class="form-control" value="{{old('commission_of_referral') ? old('commission_of_referral') : $client->commission_of_referral}}" placeholder="Enter Commission of Referral">
-                  <span data-name="commission_of_referral" class="error" style="color:red;"></span>
                 </div>
               </div>
             </div>
@@ -173,7 +166,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="client_bank_micr_code">MICR Code<span style="color:red;">*</span></label>
-                  <input type="text" id="client_bank_micr_code" name="client_bank_micr_code" class="form-control" value="{{old('client_bank_micr_code') ? old('client_bank_micr_code') : $client->client_bank_micr_code}}" placeholder="Enter MICR Code">
+                  <input type="number" id="client_bank_micr_code" name="client_bank_micr_code" class="form-control" value="{{old('client_bank_micr_code') ? old('client_bank_micr_code') : $client->client_bank_micr_code}}" placeholder="Enter MICR Code" onkeypress="return isNumeric(event)" oninput="maxLengthCheck(this)" maxlength = "9" min = "1" max = "999999999">
                   <span data-name="client_bank_micr_code" class="error" style="color:red;"></span>
                 </div>
               </div>
@@ -217,7 +210,23 @@
 @endsection
 
 @section('scripts')
+<script>
+  function maxLengthCheck(object) {
+    if (object.value.length > object.maxLength)
+      object.value = object.value.slice(0, object.maxLength)
+  }
 
+  function isNumeric (evt) {
+    var theEvent = evt || window.event;
+    var key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode (key);
+    var regex = /[0-9]|\./;
+    if ( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+  }
+</script>
 <script type="text/javascript">
 function validateImage(id) {
   var formData = new FormData();
