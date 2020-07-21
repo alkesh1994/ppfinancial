@@ -45,12 +45,14 @@ class UpdatePassbook extends Command
     {   
         $accs = Account::all();
         $todayDate = Carbon::now();
+        $todayDate = $todayDate->format('Y-m-d');
         foreach($accs as $acc)
         {
-            if($acc->next_date == $todayDate && $acc->months_left!= 0)
+            if($acc->next_date === $todayDate && $acc->months_left != 0)
             {
                 if($acc->commission_type == 1 || $acc->commission_type == 0){
                     $account = Account::find($acc->id);
+                    
                     $nextDate = Carbon::now()->addMonths(1);
                     $monthsLeft = $account->months_left - 1;
                     $currentAmount = $account->current_amount + $account->interest_amount;
@@ -63,7 +65,7 @@ class UpdatePassbook extends Command
                     //passbook
 
                     $storePassbook = Passbook::create([
-                        'date' => Carbon::now(),
+                        'date' => $todayDate,
                         'base_amount' => $account->amount_received,
                         'interest_rate' => $account->interest_rate,
                         'tenure' => $account->tenure,
@@ -77,8 +79,9 @@ class UpdatePassbook extends Command
                         'account_id' => $account->id
                     ]);
                 }
+               
 
-                if($acc->commission_type == 2 || $acc->commission_type == 0){
+                if($acc->commission_type === 2 || $acc->commission_type === 0){
                     $account = Account::find($acc->id);
                     $nextDate = Carbon::now()->addMonths(1);
                     $monthsLeft = $account->months_left - 1;
@@ -106,7 +109,7 @@ class UpdatePassbook extends Command
                         'account_id' => $account->id
                     ]);
                 }
-            }    
+            }
         }    
     }
 }
