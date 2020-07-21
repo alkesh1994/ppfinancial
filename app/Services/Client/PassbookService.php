@@ -13,10 +13,8 @@ class PassbookService
    //process and store data
    public function storePassbook($storeAccount){
 
-     $date = (new Carbon($storeAccount['start_date']))->addMonths(1);
-
      $storePassbook = Passbook::create([
-       'date' => $date,
+       'date' => $storeAccount['start_date'],
        'base_amount' => $storeAccount['amount_received'],
        'interest_rate' => $storeAccount['interest_rate'],
        'tenure' => $storeAccount['tenure'],
