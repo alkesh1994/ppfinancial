@@ -22,6 +22,9 @@
       <div class="box box-primary">
         <div class="box-header">
           <h3 class="box-title">Passbook Entries</h3>
+          <div class="pull-right">
+            <a href="{{route('dashboard.clients.accounts.passbook.export_passbook_pdf',['clientSlug' => $client->slug, 'accountSlug' => $account->slug])}}" class="btn btn-warning"><i class="fa fa-download"></i> Export Pdf</a>
+          </div>
         </div>
         <div class="box-body table-responsive ">
 
