@@ -16,164 +16,164 @@ use Carbon\Carbon;
 class AccountService
 {
 
-   private $slugService;
-   private $passbookService;
+  private $slugService;
+  private $passbookService;
 
-   public function __construct(SlugService $slugService,PassbookService $passbookService)
-   {
-     $this->slugService = $slugService;
-     $this->passbookService = $passbookService;
-   }
+  public function __construct(SlugService $slugService,PassbookService $passbookService)
+  {
+    $this->slugService = $slugService;
+    $this->passbookService = $passbookService;
+  }
 
-   //To show list of accounts
-   public function listAccounts($slug)
-   {
+  //To show list of accounts
+  public function listAccounts($slug)
+  {
 
-     $client = Client::where('slug',$slug)->firstOrFail();
-     $accounts = Account::where('client_id',$client->id)->latest()->get();
+    $client = Client::where('slug',$slug)->firstOrFail();
+    $accounts = Account::where('client_id',$client->id)->latest()->get();
 
-     return view('dashboard.client.account.list',['accounts' => $accounts,'client'=> $client]);
+    return view('dashboard.client.account.list',['accounts' => $accounts,'client'=> $client]);
 
-   }
+  }
 
-   //process and store data
-   public function storeAccount(StoreAccountRequest $request)
-   {
+  //process and store data
+  public function storeAccount(StoreAccountRequest $request)
+  {
 
-     $slug = $this->slugService->createSlug('Client\\Account',str_random(10));
+    $slug = $this->slugService->createSlug('Client\\Account',str_random(10));
 
-     $startDate = (new Carbon($request->get('start_date')));
-     $endDate = (new Carbon($request->get('start_date')))->addMonths($request->input('tenure'));
-     $nextDate = (new Carbon($request->get('next_date')))->addMonths(1);
+    $startDate = (new Carbon($request->get('start_date')));
+    $endDate = (new Carbon($request->get('start_date')))->addMonths($request->input('tenure'));
+    $nextDate = (new Carbon($request->get('next_date')))->addMonths(1);
 
-     $storeAccount = Account::create([
-       'slug' => $slug,
-       'amount_received' => $request->get('amount_received'),
-       'tenure' => $request->get('tenure'),
-       'interest_rate' => $request->get('interest_rate'),
-       'interest_amount' => $request->get('interest_amount'),
-       'total_amount' => $request->get('total_amount'),
-       'start_date' => $startDate,
-       'end_date' => $endDate,
-       'commission_type' => $request->get('commission_type'),
-       'commission_percentage' => $request->get('commission_percentage'),
-       'commission_amount' => $request->get('commission_amount'),
-       'commission_total_amount' => $request->get('commission_total_amount'),
-       'client_id' => $request->get('client_id'),
-       'current_amount'=> $request->get('amount_received'),
-       'next_date' => $nextDate,
-       'months_left' => $request->get('tenure')
-     ]);
+    $storeAccount = Account::create([
+      'slug' => $slug,
+      'amount_received' => $request->get('amount_received'),
+      'tenure' => $request->get('tenure'),
+      'interest_rate' => $request->get('interest_rate'),
+      'interest_amount' => $request->get('interest_amount'),
+      'total_amount' => $request->get('total_amount'),
+      'start_date' => $startDate,
+      'end_date' => $endDate,
+      'commission_type' => $request->get('commission_type'),
+      'commission_percentage' => $request->get('commission_percentage'),
+      'commission_amount' => $request->get('commission_amount'),
+      'commission_total_amount' => $request->get('commission_total_amount'),
+      'client_id' => $request->get('client_id'),
+      'current_amount'=> $request->get('amount_received'),
+      'next_date' => $nextDate,
+      'months_left' => $request->get('tenure')
+    ]);
 
-     $storePassbook = $this->passbookService->storePassbook($storeAccount);
+    $storePassbook = $this->passbookService->storePassbook($storeAccount);
 
-     Session::flash('success', 'Account created successfully');
-     return response()->json(['success'=>'Account created successfully.']);
+    Session::flash('success', 'Account created successfully');
+    return response()->json(['success'=>'Account created successfully.']);
 
-   }
+  }
 
-   //to softdelete the account entry
-   public function destroyAccount($clientSlug,$accountId)
-   {
+  //to softdelete the account entry
+  public function destroyAccount($clientSlug,$accountId)
+  {
 
-     try {
-       $account = Account::findOrFail($accountId);
-     } catch (ModelNotFoundException $e) {
-       Session::flash('success', 'Account is deleted already');
-       return redirect()->route('dashboard.clients.accounts.list',['slug'=> $clientSlug]);
-     }
+    try {
+      $account = Account::findOrFail($accountId);
+    } catch (ModelNotFoundException $e) {
+      Session::flash('success', 'Account is deleted already');
+      return redirect()->route('dashboard.clients.accounts.list',['slug'=> $clientSlug]);
+    }
 
-       $account->delete();
+    $account->delete();
 
-       Session::flash('success', 'Account deleted successfully');
-       return redirect()->route('dashboard.clients.accounts.list',['slug'=> $clientSlug]);
+    Session::flash('success', 'Account deleted successfully');
+    return redirect()->route('dashboard.clients.accounts.list',['slug'=> $clientSlug]);
 
-   }
+  }
 
-   //withdraw amount
-   public function withdrawAccount(Request $request)
-   {
+  //withdraw amount
+  public function withdrawAccount(Request $request)
+  {
 
-     $lastEntry = Passbook::where('account_id',$request->account_id)->orderBy('created_at','desc')->firstOrFail();
+    $lastEntry = Passbook::where('account_id',$request->account_id)->orderBy('created_at','desc')->firstOrFail();
 
-     $penalty = ($request->withdrawn_amount * 20)/100;
+    $penalty = ($request->withdrawn_amount * 20)/100;
 
-     $amountDeducted = $request->withdrawn_amount + $penalty;
+    $amountDeducted = $request->withdrawn_amount + $penalty;
 
-     $currentAmount = $lastEntry->current_amount - $amountDeducted;
+    $currentAmount = $lastEntry->current_amount - $amountDeducted;
 
-     $interestAmount = ($currentAmount * $lastEntry->interest_rate)/100;
+    $interestAmount = ($currentAmount * $lastEntry->interest_rate)/100;
 
-     $totalAmount = $currentAmount + ($interestAmount * $lastEntry->account->tenure);
+    $totalAmount = $currentAmount + ($interestAmount * $lastEntry->account->tenure);
 
-     $withdrawnDate = Carbon::now();
+    $withdrawnDate = Carbon::now();
 
-     $withdraw = Passbook::create([
-       'date' => $withdrawnDate,
-       'base_amount' => $lastEntry->base_amount,
-       'tenure' => $lastEntry->tenure,
-       'interest_rate' => $lastEntry->interest_rate,
-       'interest_amount' => $interestAmount,
-       'current_amount' => $currentAmount,
-       'total_amount' => $totalAmount,
-       'months_left' => $lastEntry->months_left,
-       'withdrawn_amount' => $request->withdrawn_amount,
-       'withdrawn_date' => $withdrawnDate,
-       'penalty' => $penalty,
-       'referred_by' => $lastEntry->referred_by,
-       'commission_type'=> $lastEntry->commission_type,
-       'commission_amount'=> $lastEntry->commission_amount,
-       'commission_percentage' => $lastEntry->commission_percentage,
-       'commission_total_amount' => $lastEntry->commission_total_amount,
-       'account_id' => $lastEntry->account_id
-     ]);
+    $withdraw = Passbook::create([
+      'date' => $withdrawnDate,
+      'base_amount' => $lastEntry->base_amount,
+      'tenure' => $lastEntry->tenure,
+      'interest_rate' => $lastEntry->interest_rate,
+      'interest_amount' => $interestAmount,
+      'current_amount' => $currentAmount,
+      'total_amount' => $totalAmount,
+      'months_left' => $lastEntry->months_left,
+      'withdrawn_amount' => $request->withdrawn_amount,
+      'withdrawn_date' => $withdrawnDate,
+      'penalty' => $penalty,
+      'referred_by' => $lastEntry->referred_by,
+      'commission_type'=> $lastEntry->commission_type,
+      'commission_amount'=> $lastEntry->commission_amount,
+      'commission_percentage' => $lastEntry->commission_percentage,
+      'commission_total_amount' => $lastEntry->commission_total_amount,
+      'account_id' => $lastEntry->account_id
+    ]);
 
-     $account = Account::findOrFail($lastEntry->account_id);
+    $account = Account::findOrFail($lastEntry->account_id);
 
-     $account->current_amount = $currentAmount;
-     $account->interest_amount = $interestAmount;
-     $account->total_amount = $totalAmount;
-     $account->total_withdraw_amount = $account->total_withdraw_amount + $request->withdrawn_amount;
+    $account->current_amount = $currentAmount;
+    $account->interest_amount = $interestAmount;
+    $account->total_amount = $totalAmount;
+    $account->total_withdraw_amount = $account->total_withdraw_amount + $request->withdrawn_amount;
 
-     $account->save();
+    $account->save();
 
-     Session::flash('success', 'Amount withdrawn successfully');
-     return redirect()->back();
+    Session::flash('success', 'Amount withdrawn successfully');
+    return redirect()->back();
 
-   }
+  }
 
-   public function accountCalc($id)
-   {
+  public function accountCalc($id)
+  {
 
-     $account = Account::find($id);
-     $nextDate = Carbon::now()->addMonths(1);
-     $monthsLeft = $account->months_left - 1;
-     $currentAmount = $account->current_amount + $account->interest_amount;
+    $account = Account::find($id);
+    $nextDate = Carbon::now()->addMonths(1);
+    $monthsLeft = $account->months_left - 1;
+    $currentAmount = $account->current_amount + $account->interest_amount;
 
-     //For account
-     $account->next_date = $nextDate;
-     $account->months_left = $monthsLeft;
-     $account->current_amount = $currentAmount;
-     $account->save();
-     //passbook
+    //For account
+    $account->next_date = $nextDate;
+    $account->months_left = $monthsLeft;
+    $account->current_amount = $currentAmount;
+    $account->save();
+    //passbook
 
-     $storePassbook = Passbook::create([
-       'date' => Carbon::now(),
-       'base_amount' => $account->amount_received,
-       'interest_rate' => $account->interest_rate,
-       'tenure' => $account->tenure,
-       'interest_amount' => $account->interest_amount,
-       'current_amount' => $currentAmount,
-       'total_amount' => $account->total_amount,
-       'referred_by' => $account->referred_by,
-       'commission_type'=> $account->commission_type,
-       'commission_percentage' => $account->commission_percentage,
-       'commission_amount' => $account->commission_amount,
-       'commission_total_amount' => $account->commission_total_amount,
-       'account_id' => $account->id
-     ]);
+    $storePassbook = Passbook::create([
+      'date' => Carbon::now(),
+      'base_amount' => $account->amount_received,
+      'interest_rate' => $account->interest_rate,
+      'tenure' => $account->tenure,
+      'interest_amount' => $account->interest_amount,
+      'current_amount' => $currentAmount,
+      'total_amount' => $account->total_amount,
+      'referred_by' => $account->referred_by,
+      'commission_type'=> $account->commission_type,
+      'commission_percentage' => $account->commission_percentage,
+      'commission_amount' => $account->commission_amount,
+      'commission_total_amount' => $account->commission_total_amount,
+      'account_id' => $account->id
+    ]);
 
-   }
+  }
 
 
 }

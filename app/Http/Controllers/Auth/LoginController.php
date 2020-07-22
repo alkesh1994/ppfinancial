@@ -51,7 +51,8 @@ class LoginController extends Controller
     * @return string
     */
 
-    public function logout() {
+    public function logout()
+    {
     Session::flush ();
     Auth::logout ();
     return redirect('/');
