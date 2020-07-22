@@ -45,7 +45,7 @@ class AccountService
 
     $startDate = (new Carbon($request->get('start_date')));
     $endDate = (new Carbon($request->get('start_date')))->addMonths($request->input('tenure'));
-    $nextDate = (new Carbon($request->get('next_date')))->addMonths(1);
+    $nextDate = (new Carbon($request->get('start_date')))->addMonths(1);
 
     $storeAccount = Account::create([
       'slug' => $slug,
