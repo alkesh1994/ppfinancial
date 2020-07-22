@@ -48,56 +48,6 @@ class PassbookService
 
    }
 
-   //withdraw amount
-   public function withdrawAmount(Request $request)
-   {
-
-     $lastEntry = Passbook::where('account_id',$request->account_id)->orderBy('created_at','desc')->firstOrFail();
-
-     $penalty = ($request->withdrawn_amount * 20)/100;
-
-     $amountDeducted = $request->withdrawn_amount + $penalty;
-
-     $currentAmount = $lastEntry->current_amount - $amountDeducted;
-
-     $interestAmount = ($currentAmount * $lastEntry->interest_rate)/100;
-
-     $totalAmount = $currentAmount + ($interestAmount * $lastEntry->account->tenure);
-
-     $withdrawnDate = Carbon::now();
-
-     $withdraw = Passbook::create([
-       'date' => $withdrawnDate,
-       'base_amount' => $lastEntry->base_amount,
-       'tenure' => $lastEntry->tenure,
-       'interest_rate' => $lastEntry->interest_rate,
-       'interest_amount' => $interestAmount,
-       'current_amount' => $currentAmount,
-       'total_amount' => $totalAmount,
-       'months_left' => $lastEntry->months_left,
-       'withdrawn_amount' => $request->withdrawn_amount,
-       'withdrawn_date' => $withdrawnDate,
-       'penalty' => $penalty,
-       'referred_by' => $lastEntry->referred_by,
-       'commission_type'=> $lastEntry->commission_type,
-       'commission_amount'=> $lastEntry->commission_amount,
-       'commission_percentage' => $lastEntry->commission_percentage,
-       'commission_total_amount' => $lastEntry->commission_total_amount,
-       'account_id' => $lastEntry->account_id
-     ]);
-
-     $account = Account::findOrFail($lastEntry->account_id);
-
-     $account->current_amount = $currentAmount;
-     $account->interest_amount = $interestAmount;
-     $account->total_amount = $totalAmount;
-     $account->total_withdraw_amount = $account->total_withdraw_amount + $request->withdrawn_amount;
-
-     $account->save();
-
-     return $withdraw;
-   }
-
    //export passbook report as pdf
    public function exportPdf(Request $request,$clientSlug,$accountSlug)
    {
