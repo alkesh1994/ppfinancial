@@ -48,9 +48,9 @@ class UpdatePassbook extends Command
         $todayDate = $todayDate->format('Y-m-d');
         foreach($accs as $acc)
         {
-            if($acc->next_date === $todayDate && $acc->months_left != 0)
+            if($acc->next_date == $todayDate && $acc->months_left != 0)
             {
-                if($acc->commission_type == 1 || $acc->commission_type == 0){
+                if($acc->commission_type == 1){
                     $account = Account::find($acc->id);
                     
                     $nextDate = Carbon::now()->addMonths(1);
@@ -63,7 +63,7 @@ class UpdatePassbook extends Command
                     $account->current_amount = $currentAmount;
                     $account->save();
                     //passbook
-
+                    
                     $storePassbook = Passbook::create([
                         'date' => $todayDate,
                         'base_amount' => $account->amount_received,
@@ -78,10 +78,36 @@ class UpdatePassbook extends Command
                         'commission_total_amount' => $account->commission_total_amount,
                         'account_id' => $account->id
                     ]);
-                }
-               
+                    
+                }elseif($acc->commission_type == 2){
+                    $account = Account::find($acc->id);
+                    $nextDate = Carbon::now()->addMonths(1);
+                    $monthsLeft = $account->months_left - 1;
+                    $currentAmount = $account->current_amount + $account->interest_amount;
+        
+                    //For account 
+                    $account->next_date = $nextDate;
+                    $account->months_left = $monthsLeft;
+                    $account->current_amount = $currentAmount;
+                    $account->save();
+                    //passbook
 
-                if($acc->commission_type === 2 || $acc->commission_type === 0){
+                    $storePassbook = Passbook::create([
+                        'date' => Carbon::now(),
+                        'base_amount' => $account->amount_received,
+                        'interest_rate' => $account->interest_rate,
+                        'tenure' => $account->tenure,
+                        'interest_amount' => $account->interest_amount,
+                        'current_amount' => $currentAmount,
+                        'total_amount' => $account->total_amount,
+                        'referred_by' => $account->referred_by,
+                        'commission_percentage' => $account->commission_percentage,
+                        'commission_amount' => $account->commission_amount,
+                        'commission_total_amount' => $account->commission_amount,
+                        'account_id' => $account->id
+                    ]);
+                }elseif($acc->commission_type == 0){
+
                     $account = Account::find($acc->id);
                     $nextDate = Carbon::now()->addMonths(1);
                     $monthsLeft = $account->months_left - 1;
