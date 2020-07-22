@@ -7,20 +7,33 @@ use App\Http\Requests\Client\UpdateClientRequest;
 use App\Models\Client\Client;
 use App\Services\Helpers\SlugService;
 use App\Services\Helpers\ImageUploadService;
-use File;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Session;
 
 class ClientService
 {
    private $slugService;
    private $imageUploadService;
 
-   public function __construct(SlugService $slugService,ImageUploadService $imageUploadService){
+   public function __construct(SlugService $slugService,ImageUploadService $imageUploadService)
+   {
      $this->slugService = $slugService;
      $this->imageUploadService = $imageUploadService;
    }
 
+   //To show list of clients
+   public function listClients()
+   {
+
+     $clients = Client::latest()->get();
+
+     return view('dashboard.client.list',['clients' => $clients]);
+
+   }
+
    //process and store data
-   public function storeData(StoreClientRequest $request){
+   public function storeClient(StoreClientRequest $request)
+   {
 
      $sluggableField = $request->get('client_first_name').' '.$request->get('client_middle_name').' '.$request->get('client_last_name').' '.str_random(10);
      $slug = $this->slugService->createSlug('Client\\Client',$sluggableField);
@@ -56,12 +69,24 @@ class ClientService
        'client_bank_cheque_photo' => $clientBankChequePhotoPath
      ]);
 
-     return $storeData;
+     Session::flash('success', 'Client created successfully');
+     return response()->json(['success'=>'Client created successfully.']);
+
+   }
+
+   //to show edit form
+   public function editClient($slug)
+   {
+
+     $client = Client::where('slug',$slug)->firstOrFail();
+
+     return view('dashboard.client.edit',['client' => $client]);
 
    }
 
    //process and update data
-   public function updateData(UpdateClientRequest $request,$id){
+   public function updateClient(UpdateClientRequest $request,$id)
+   {
 
      $client = Client::findOrFail($id);
 
@@ -102,7 +127,26 @@ class ClientService
 
      $client->save();
 
-     return $client;
+     Session::flash('success', 'Client updated successfully');
+     return response()->json(['success'=>'Client updated successfully.']);
+
+   }
+
+   //to softdelete the client entry
+   public function destroyClient($id)
+   {
+
+     try {
+       $client = Client::findOrFail($id);
+     } catch (ModelNotFoundException $e) {
+       Session::flash('success', 'Client is deleted already');
+       return redirect()->route('dashboard.clients.list');
+     }
+
+       $client->delete();
+
+       Session::flash('success', 'Client deleted successfully');
+       return redirect()->route('dashboard.clients.list');
 
    }
 }
