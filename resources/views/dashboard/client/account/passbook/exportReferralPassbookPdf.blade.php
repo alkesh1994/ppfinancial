@@ -25,7 +25,9 @@
 </style>
 </head>
 <body>
-<h1>Passbook</h1>
+<h1>{{$client->client_full_name}}</h1>
+<h2>{{$reportType}}</h2>
+<h5>{{$reportRange}}</h5>
   <table id="customers">
       <tr>
         <th>Date</th>

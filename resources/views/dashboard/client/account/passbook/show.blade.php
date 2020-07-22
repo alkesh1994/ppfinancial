@@ -23,29 +23,46 @@
         <div class="box-header">
           <h3 class="box-title">Passbook Entries</h3>
           <div class="pull-right">
-            <a data-toggle="modal" data-target="#customReport" title="Custom Report" class="btn btn-warning"><i class="fa fa-download"></i> Custom Report</a>
+            <a data-toggle="modal" data-target="#customReport" title="Custom Report" class="btn btn-warning"><i class="fa fa-download"></i> Reports</a>
             <div class="modal modal-warning fade" id="customReport">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span></button>
-                      <h4 class="modal-title">Custom Report: {{\Carbon\Carbon::parse($passbookOldest->date)->format('j F Y')}} to {{\Carbon\Carbon::parse($passbookLatest->date)->format('j F Y')}}</h4>
+                      <h4 class="modal-title">Download Report</h4>
+                      <h5>Passbook Entries : From {{\Carbon\Carbon::parse($passbookOldest->date)->format('j F Y')}} To {{\Carbon\Carbon::parse($passbookLatest->date)->format('j F Y')}}</h5>
                     </div>
                     <div class="modal-body">
-                      <form method="post" action="{{route('dashboard.clients.accounts.passbook.custom_passbook_pdf',['clientSlug' => $client->slug, 'accountSlug' => $account->slug])}}">
+                      <form method="post" action="{{route('dashboard.clients.accounts.passbook.export_passbook_pdf',['clientSlug' => $client->slug, 'accountSlug' => $account->slug])}}">
                         {{ csrf_field()}}
                         <div class="row">
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="from_date">From Date<span style="color:red;">*</span></label>
-                              <input type="date" id="from_date" name="from_date" class="form-control" value="{{old('from_date')}}" placeholder="Enter From Date" required>
+                              <label for="report_type">Report Type<span style="color:red;">*</span></label>
+                              <select class="form-control" id="report_type" name="report_type">
+                                <option value="Customer Report">Customer Report</option>
+                                <option value="Referral Report">Referral Report</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <h5>(Leave the dates empty for full report)</h5>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label for="from_date">From Date</label>
+                              <input type="date" id="from_date" name="from_date" class="form-control" value="{{old('from_date')}}" placeholder="Enter From Date">
                             </div>
                           </div>
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <label for="to_date">To Date<span style="color:red;">*</span></label>
-                              <input type="date" id="to_date" name="to_date" class="form-control" value="{{old('to_date')}}" placeholder="Enter To Date" required>
+                              <label for="to_date">To Date</label>
+                              <input type="date" id="to_date" name="to_date" class="form-control" value="{{old('to_date')}}" placeholder="Enter To Date">
                             </div>
                           </div>
                         </div>
@@ -60,7 +77,6 @@
                 <!-- /.modal-dialog -->
               </div>
               <!-- /.modal -->
-            <a href="{{route('dashboard.clients.accounts.passbook.full_passbook_pdf',['clientSlug' => $client->slug, 'accountSlug' => $account->slug])}}" class="btn btn-warning"><i class="fa fa-download"></i> Full Report</a>
           </div>
         </div>
         <div class="box-body table-responsive ">

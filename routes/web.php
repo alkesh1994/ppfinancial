@@ -60,9 +60,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::get('clients/{clientSlug}/accounts/{accountSlug}/passbook/show', 'PassbookController@show')->name('show');
 
-    Route::get('clients/{clientSlug}/accounts/{accountSlug}/passbook/full-passbook-pdf','PassbookController@full_passbook_pdf')->name('full_passbook_pdf');
-
-    Route::post('clients/{clientSlug}/accounts/{accountSlug}/passbook/custom-passbook-pdf','PassbookController@custom_passbook_pdf')->name('custom_passbook_pdf');
+    Route::post('clients/{clientSlug}/accounts/{accountSlug}/passbook/export-passbook-pdf','PassbookController@exportPassbookPdf')->name('export_passbook_pdf');
 
   });
 
