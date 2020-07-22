@@ -69,7 +69,7 @@ class AccountService
     $monthsLeft = $account->months_left - 1;
     $currentAmount = $account->current_amount + $account->interest_amount;
 
-    //For account 
+    //For account
     $account->next_date = $nextDate;
     $account->months_left = $monthsLeft;
     $account->current_amount = $currentAmount;
@@ -85,6 +85,7 @@ class AccountService
         'current_amount' => $currentAmount,
         'total_amount' => $account->total_amount,
         'referred_by' => $account->referred_by,
+        'commission_type'=> $account->commission_type,
         'commission_percentage' => $account->commission_percentage,
         'commission_amount' => $account->commission_amount,
         'commission_total_amount' => $account->commission_total_amount,
