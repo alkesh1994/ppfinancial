@@ -46,6 +46,7 @@ class AccountService
     $startDate = (new Carbon($request->get('start_date')));
     $endDate = (new Carbon($request->get('start_date')))->addMonths($request->input('tenure'));
     $nextDate = (new Carbon($request->get('start_date')))->addMonths(1);
+    $referredBy = $request->referred_by;
 
     $storeAccount = Account::create([
       'slug' => $slug,
@@ -66,7 +67,7 @@ class AccountService
       'months_left' => $request->get('tenure')
     ]);
 
-    $storePassbook = $this->passbookService->storePassbook($storeAccount);
+    $storePassbook = $this->passbookService->storePassbook($storeAccount,$referredBy);
 
     Session::flash('success', 'Account created successfully');
     return response()->json(['success'=>'Account created successfully.']);

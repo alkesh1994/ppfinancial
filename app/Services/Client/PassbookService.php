@@ -26,7 +26,7 @@ class PassbookService
   }
 
   //process and store data
-  public function storePassbook($storeAccount)
+  public function storePassbook($storeAccount,$referredBy)
   {
 
     $storePassbook = Passbook::create([
@@ -37,7 +37,7 @@ class PassbookService
       'interest_amount' => 0,
       'current_amount' => $storeAccount['amount_received'],
       'total_amount' => $storeAccount['total_amount'],
-      'referred_by' => $storeAccount['referred_by'],
+      'referred_by' => $referredBy,
       'commission_percentage' => $storeAccount['commission_percentage'],
       'commission_amount' => $storeAccount['commission_amount'],
       'commission_total_amount' => $storeAccount['commission_total_amount'],
