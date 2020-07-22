@@ -52,19 +52,7 @@ class UpdatePassbook extends Command
         {
             if($acc->next_date == $todayDate && $acc->months_left != 0)
             {
-                if($acc->commission_type == 1){
-                    
-                    $this->accountService->accountCalc($acc->id);    
-                
-                }elseif($acc->commission_type == 2){
-                    
-                    $this->accountService->accountCalc($acc->id);
-                
-                }elseif($acc->commission_type == 0){
-                   
-                    $this->accountService->accountCalc($acc->id);
-                                        
-                }
+                $this->accountService->accountCalc($acc->id);                
             }
         }    
     }
