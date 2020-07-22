@@ -87,7 +87,7 @@ class AccountService
         'referred_by' => $account->referred_by,
         'commission_percentage' => $account->commission_percentage,
         'commission_amount' => $account->commission_amount,
-        'commission_total_amount' => $account->commission_amount,
+        'commission_total_amount' => $account->commission_total_amount,
         'account_id' => $account->id
     ]);
 
