@@ -12,7 +12,7 @@ class ImageUploadService
     if($oldImage){
       //delete old image if exists
       if(File::exists($oldImage))
-          File::delete($oldImage);
+      File::delete($oldImage);
     }
 
     //handle image upload

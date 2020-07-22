@@ -34,7 +34,8 @@ class Client extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function accounts(){
+    public function accounts()
+    {
       return $this->hasMany('App\Models\Client\Account');
     }
 

@@ -32,11 +32,13 @@ class Account extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function client(){
-      return $this->belongsTo('App\Models\Client\Client')->withTrashed();
+    public function client()
+    {
+      return $this->belongsTo('App\Models\Client\Client');
     }
 
-    public function passbook(){
+    public function passbook()
+    {
       return $this->hasOne('App\Models\Client\Passbook');
     }
 

@@ -2,11 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Requests\Client\StoreAccountRequest;
 use App\Models\Client\Account;
 use App\Services\Client\AccountService;
-use App\Services\Helpers\SlugService;
-use App\Models\Client\Passbook;
 use Carbon\Carbon;
 
 use Illuminate\Console\Command;
@@ -44,7 +41,7 @@ class UpdatePassbook extends Command
      * @return int
      */
     public function handle()
-    {   
+    {
         $accs = Account::all();
         $todayDate = Carbon::now();
         $todayDate = $todayDate->format('Y-m-d');
@@ -52,9 +49,9 @@ class UpdatePassbook extends Command
         {
             if($acc->next_date == $todayDate && $acc->months_left != 0)
             {
-                $this->accountService->accountCalc($acc->id);                
+                $this->accountService->accountCalc($acc->id);
             }
-        }    
+        }
     }
-    
+
 }

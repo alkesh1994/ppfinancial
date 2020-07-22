@@ -24,7 +24,8 @@ class Passbook extends Model
       'account_id'
     ];
 
-    public function account(){
+    public function account()
+    {
       return $this->belongsTo('App\Models\Client\Account');
     }
 
