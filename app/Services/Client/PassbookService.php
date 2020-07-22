@@ -62,6 +62,7 @@ class PassbookService
        'withdrawn_date' => $withdrawnDate,
        'penalty' => $penalty,
        'referred_by' => $lastEntry->referred_by,
+       'commission_type'=> $lastEntry->commission_type,
        'commission_amount'=> $lastEntry->commission_amount,
        'commission_percentage' => $lastEntry->commission_percentage,
        'commission_total_amount' => $lastEntry->commission_total_amount,
