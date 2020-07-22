@@ -58,5 +58,15 @@ class AccountController extends Controller
 
     }
 
+    //export accounts as pdf
+    public function exportAccountsPdf($clientSlug)
+    {
+
+      $exportPdf = $this->accountService->exportPdf($clientSlug);
+
+      return $exportPdf;
+
+    }
+
 
 }

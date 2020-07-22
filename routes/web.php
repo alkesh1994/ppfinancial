@@ -53,6 +53,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
     Route::post('clients/accounts/withdraw','AccountController@withdraw')->name('withdraw');
 
+    Route::get('clients/{clientSlug}/accounts/export-accounts-pdf','AccountController@exportAccountsPdf')->name('export_accounts_pdf');
+
   });
 
   //Passbook routes group

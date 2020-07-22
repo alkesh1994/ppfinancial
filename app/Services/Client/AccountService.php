@@ -12,6 +12,7 @@ use App\Services\Client\PassbookService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
 use Carbon\Carbon;
+use PDF;
 
 class AccountService
 {
@@ -175,5 +176,24 @@ class AccountService
 
   }
 
+  //export accounts report as pdf
+  public function exportPdf($clientSlug)
+  {
+    // Fetch all records from database
+    $client = Client::where('slug',$clientSlug)->firstOrFail();
+
+    $accounts = Account::where('client_id',$client->id)->get();
+
+    if($accounts->isEmpty())
+    {
+      Session::flash('success', 'No accounts exist for this client');
+      return redirect()->back();
+    }
+
+    // Send data to the view using loadView function of PDF facade
+    $pdf = PDF::loadView('dashboard.client.account.exportAccountsPdf', ['client'=>$client,'accounts'=>$accounts]);
+    // download the file using download function
+    return $pdf->download('accounts.pdf');
+  }
 
 }

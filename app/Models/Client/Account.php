@@ -34,7 +34,7 @@ class Account extends Model
 
     public function client()
     {
-      return $this->belongsTo('App\Models\Client\Client')->withTrashed();
+      return $this->belongsTo('App\Models\Client\Client');
     }
 
     public function passbook()
