@@ -24,7 +24,7 @@
         <div class="icon">
           <i class="fa fa-taxi"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="{{route('dashboard.clients.list')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
@@ -34,12 +34,12 @@
         <div class="inner">
           <h3>{{$thisMonthClients->count()}}</h3>
 
-          <p>Clients registered this month</p>
+          <p>Clients registered in {{\Carbon\Carbon::now()->format('F Y')}}</p>
         </div>
         <div class="icon">
           <i class="fa fa-car"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="{{route('dashboard.clients.registered_this_month')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
@@ -49,12 +49,12 @@
         <div class="inner">
           <h3>{{$thisMonthExpiringAccounts->count()}}</h3>
 
-          <p>Accounts expiring this month</p>
+          <p>Accounts expiring in {{\Carbon\Carbon::now()->format('F Y')}}</p>
         </div>
         <div class="icon">
           <i class="fa fa-rupee"></i>
         </div>
-        <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="{{route('dashboard.clients.accounts.expiring_accounts_this_month')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
     <!-- ./col -->
@@ -88,7 +88,7 @@
                   <th>Amount Received</th>
                   <th>Interest Rate</th>
                   <th>Tenure</th>
-                  <th>Action</th>
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
@@ -103,7 +103,7 @@
                   <td>{{$recentAccount->interest_rate}} %</td>
                   <td>{{$recentAccount->tenure_display}}</td>
                   <td>
-                    <a href="#"><span class="label label-primary"><i class="glyphicon glyphicon-eye-open"></i></span></a>
+                    <a href="{{ route('dashboard.clients.accounts.passbook.show',['clientSlug'=> $recentAccount->client->slug,'accountSlug'=> $recentAccount->slug]) }}"><span class="label label-primary"><i class="glyphicon glyphicon-eye-open"></i></span></a>
                   </td>
                 </tr>
                 @endforeach
@@ -120,10 +120,6 @@
           <!-- /.table-responsive -->
         </div>
         <!-- /.box-body -->
-        <div class="box-footer clearfix">
-          <a href="#" class="btn btn-sm btn-primary btn-flat pull-left">View All Recent Accounts</a>
-        </div>
-        <!-- /.box-footer -->
       </div>
       <!-- /.box -->
     </div>
@@ -152,7 +148,7 @@
                   <th>Name</th>
                   <th>Phone No</th>
                   <th>Days Left</th>
-                  <th>Action</th>
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
@@ -173,7 +169,7 @@
                   <td>{{$expiringAccount->client->client_phone_number}}</td>
                   <td><span class="label label-success">{{$expiringAccountDaysLeft}}</span></td>
                   <td>
-                    <a href="#"><span class="label label-primary"><i class="glyphicon glyphicon-eye-open"></i></span></a>
+                    <a href="{{ route('dashboard.clients.accounts.passbook.show',['clientSlug'=> $expiringAccount->client->slug,'accountSlug'=> $expiringAccount->slug]) }}"><span class="label label-primary"><i class="glyphicon glyphicon-eye-open"></i></span></a>
                   </td>
                 </tr>
                 @endforeach
@@ -191,7 +187,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer clearfix">
-          <a href="#" class="btn btn-sm btn-primary btn-flat pull-left">View All Expiring Accounts</a>
+          <a href="{{route('dashboard.clients.accounts.expiring_accounts_list')}}" class="btn btn-sm btn-primary btn-flat pull-left">View All Expiring Accounts</a>
         </div>
         <!-- /.box-footer -->
       </div>
@@ -226,7 +222,7 @@
                   <th>Phone No</th>
                   <th>Interest Amount</th>
                   <th>Days Left</th>
-                  <th>Action</th>
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
@@ -234,11 +230,11 @@
 
                 @foreach($elapsingAccounts as $elapsingAccount)
                 <?php
-                $elapsingAccountEndDate = $elapsingAccount->end_date;
+                $elapsingAccountNextDate = \Carbon\Carbon::parse($elapsingAccount->next_date)->subDays(1)->format('Y-m-d');
                 $elapsingAccountCurrentDate = date("Y-m-d");
-                $elapsingAccountEndDateTime = new DateTime($elapsingAccountEndDate);
+                $elapsingAccountNextDateTime = new DateTime($elapsingAccountNextDate);
                 $elapsingAccountCurrentDateTime = new DateTime($elapsingAccountCurrentDate);
-                $elapsingAccountInterval = $elapsingAccountEndDateTime->diff($elapsingAccountCurrentDateTime);
+                $elapsingAccountInterval = $elapsingAccountNextDateTime->diff($elapsingAccountCurrentDateTime);
                 $elapsingAccountDaysLeft = $elapsingAccountInterval->format('%a');
                 ?>
                 <tr>
@@ -248,7 +244,7 @@
                   <td>{{$elapsingAccount->interest_amount}}</td>
                   <td><span class="label label-success">{{$elapsingAccountDaysLeft}}</span></td>
                   <td>
-                    <a href="#"><span class="label label-primary"><i class="glyphicon glyphicon-eye-open"></i></span></a>
+                    <a href="{{ route('dashboard.clients.accounts.passbook.show',['clientSlug'=> $elapsingAccount->client->slug,'accountSlug'=> $elapsingAccount->slug]) }}"><span class="label label-primary"><i class="glyphicon glyphicon-eye-open"></i></span></a>
                   </td>
                 </tr>
                 @endforeach
@@ -266,7 +262,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer clearfix">
-          <a href="#" class="btn btn-sm btn-primary btn-flat pull-left">View All Elapsing Accounts</a>
+          <a href="{{route('dashboard.clients.accounts.elapsing_accounts_list')}}" class="btn btn-sm btn-primary btn-flat pull-left">View All Elapsing Accounts</a>
         </div>
         <!-- /.box-footer -->
       </div>
@@ -298,7 +294,7 @@
                   <th>Referred By</th>
                   <th>Commission Amount</th>
                   <th>Days Left</th>
-                  <th>Action</th>
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
@@ -306,11 +302,11 @@
 
                 @foreach($elapsingCommissions as $elapsingCommission)
                 <?php
-                $elapsingCommissionEndDate = $elapsingCommission->end_date;
+                $elapsingCommissionNextDate = \Carbon\Carbon::parse($elapsingCommission->next_date)->subDays(1)->format('Y-m-d');
                 $elapsingCommissionCurrentDate = date("Y-m-d");
-                $elapsingCommissionEndDateTime = new DateTime($elapsingCommissionEndDate);
+                $elapsingCommissionNextDateTime = new DateTime($elapsingCommissionNextDate);
                 $elapsingCommissionCurrentDateTime = new DateTime($elapsingCommissionCurrentDate);
-                $elapsingCommissionInterval = $elapsingCommissionEndDateTime->diff($elapsingCommissionCurrentDateTime);
+                $elapsingCommissionInterval = $elapsingCommissionNextDateTime->diff($elapsingCommissionCurrentDateTime);
                 $elapsingCommissionDaysLeft = $elapsingCommissionInterval->format('%a');
                 ?>
                 <tr>
@@ -320,7 +316,7 @@
                   <td>{{$elapsingCommission->commission_amount}}</td>
                   <td><span class="label label-success">{{$elapsingCommissionDaysLeft}}</span></td>
                   <td>
-                    <a href="#"><span class="label label-primary"><i class="glyphicon glyphicon-eye-open"></i></span></a>
+                    <a href="{{ route('dashboard.clients.accounts.passbook.show',['clientSlug'=> $elapsingCommission->client->slug,'accountSlug'=> $elapsingCommission->slug]) }}"><span class="label label-primary"><i class="glyphicon glyphicon-eye-open"></i></span></a>
                   </td>
                 </tr>
                 @endforeach
@@ -338,7 +334,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer clearfix">
-          <a href="#" class="btn btn-sm btn-primary btn-flat pull-left">View All Elapsing Commissions</a>
+          <a href="{{route('dashboard.clients.accounts.elapsing_commissions_list')}}" class="btn btn-sm btn-primary btn-flat pull-left">View All Elapsing Commissions</a>
         </div>
         <!-- /.box-footer -->
       </div>

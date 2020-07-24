@@ -50,6 +50,10 @@
 
 <script src="https://unpkg.com/vue@2.1.10/dist/vue.js"></script>
 <style media="screen">
+.treeview-menu-visible {
+    display: block;
+}
+
 tfoot input {
       width: 100%;
       padding: 3px;
@@ -123,8 +127,8 @@ tfoot input {
 
           </a>
         </li>
-        <!--********Blog Navigation******-->
-        <li class="treeview">
+        <!--********Client Navigation******-->
+        <li class="treeview menu-open">
           <a href="#">
             <i class="fa fa-users" style="color:aqua;font-size:14px;"></i>
             <span>Clientele</span>
@@ -132,9 +136,14 @@ tfoot input {
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
-          <ul class="treeview-menu">
+          <ul class="treeview-menu menu-open treeview-menu-visible">
             <li><a href="{{route('dashboard.clients.list')}}"><i class="fa fa-list-ol"></i>Clients List</a></li>
+            <li><a href="{{route('dashboard.clients.registered_this_month')}}"><i class="fa fa-list-ol"></i>Clients Registered In {{\Carbon\Carbon::now()->format('F Y')}}</a></li>
             <li><a href="{{route('dashboard.clients.create_client')}}"><i class="fa fa-plus"></i>Add Client</a></li>
+            <li><a href="{{route('dashboard.clients.accounts.expiring_accounts_this_month')}}"><i class="fa fa-list-ol"></i>Accounts Expiring In {{\Carbon\Carbon::now()->format('F Y')}}</a></li>
+            <li><a href="{{route('dashboard.clients.accounts.expiring_accounts_list')}}"><i class="fa fa-list-ol"></i>Expiring Accounts List</a></li>
+            <li><a href="{{route('dashboard.clients.accounts.elapsing_accounts_list')}}"><i class="fa fa-list-ol"></i>Elapsing Accounts List</a></li>
+            <li><a href="{{route('dashboard.clients.accounts.elapsing_commissions_list')}}"><i class="fa fa-list-ol"></i>Elapsing Commissions List</a></li>
           </ul>
         </li>
       </ul>
@@ -144,7 +153,7 @@ tfoot input {
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="background-image: url('images/ppfbg.png');">
       @yield('content')
   </div>
   <!-- /.content-wrapper -->

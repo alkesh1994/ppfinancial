@@ -17,6 +17,16 @@ class ClientController extends Controller
       $this->clientService = $clientService;
     }
 
+    //To get clients registered this month
+    public function registeredThisMonth()
+    {
+
+      $registeredThisMonthClients = $this->clientService->thisMonthClients('view');
+
+      return $registeredThisMonthClients;
+
+    }
+
     //To show list of clients
     public function list()
     {

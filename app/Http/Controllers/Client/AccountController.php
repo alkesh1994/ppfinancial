@@ -17,6 +17,46 @@ class AccountController extends Controller
       $this->accountService = $accountService;
     }
 
+    //To show list of expiring accounts this month
+    public function expiringAccountsThisMonth()
+    {
+
+      $thisMonthExpiringAccounts = $this->accountService->thisMonthExpiringAccounts('view');
+
+      return $thisMonthExpiringAccounts;
+
+    }
+
+    //To show list of expiring accounts
+    public function expiringAccountsList()
+    {
+
+      $expiringAccounts = $this->accountService->expiringAccounts('view');
+
+      return $expiringAccounts;
+
+    }
+
+    //To show list of elapsing accounts
+    public function elapsingAccountsList()
+    {
+
+      $elapsingAccounts = $this->accountService->elapsingAccounts('view');
+
+      return $elapsingAccounts;
+
+    }
+
+    //To show list of elapsing commissions
+    public function elapsingCommissionsList()
+    {
+
+      $elapsingCommissions = $this->accountService->elapsingCommissions('view');
+
+      return $elapsingCommissions;
+
+    }
+
     //To show list of accounts
     public function list($slug)
     {

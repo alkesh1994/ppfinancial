@@ -25,22 +25,22 @@ class DashboardService
     $totalClients = $this->clientService->totalClients();
 
     //fetch clients registered this month
-    $thisMonthClients = $this->clientService->thisMonthClients();
+    $thisMonthClients = $this->clientService->thisMonthClients('count');
 
     //fetch accounts expiring this month
-    $thisMonthExpiringAccounts = $this->accountService->thisMonthExpiringAccounts();
+    $thisMonthExpiringAccounts = $this->accountService->thisMonthExpiringAccounts('count');
 
     //fetch recent accounts
     $recentAccounts = $this->accountService->recentAccounts();
 
     //fetch expiring accounts
-    $expiringAccounts = $this->accountService->expiringAccounts();
+    $expiringAccounts = $this->accountService->expiringAccounts('dashboard');
 
     //fetch elapsing accounts
-    $elapsingAccounts = $this->accountService->elapsingAccounts();
+    $elapsingAccounts = $this->accountService->elapsingAccounts('dashboard');
 
     //fetch elapsing commissions
-    $elapsingCommissions = $this->accountService->elapsingCommissions();
+    $elapsingCommissions = $this->accountService->elapsingCommissions('dashboard');
 
     return view('home',[
       'totalClients' => $totalClients,

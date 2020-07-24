@@ -33,13 +33,18 @@ class ClientService
   }
 
   //To get clients registered this month
-  public function thisMonthClients()
+  public function thisMonthClients($type)
   {
     $today = Carbon::now();
 
     $thisMonthClients = Client::whereMonth('created_at',$today)->whereYear('created_at',$today)->get();
 
-    return $thisMonthClients;
+    if($type === "view")
+    {
+      return view('dashboard.client.registeredThisMonth',['clients'=> $thisMonthClients]);
+    }else{
+      return $thisMonthClients;
+    }
 
   }
 
