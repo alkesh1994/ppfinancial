@@ -9,6 +9,7 @@ use App\Services\Helpers\SlugService;
 use App\Services\Helpers\ImageUploadService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
+use Carbon\Carbon;
 
 class ClientService
 {
@@ -19,6 +20,27 @@ class ClientService
   {
     $this->slugService = $slugService;
     $this->imageUploadService = $imageUploadService;
+  }
+
+  //To get total clients
+  public function totalClients()
+  {
+
+    $totalClients = Client::all();
+
+    return $totalClients;
+
+  }
+
+  //To get clients registered this month
+  public function thisMonthClients()
+  {
+    $today = Carbon::now()->format('Y-m-d');
+
+    $thisMonthClients = Client::whereMonth('created_at',$today)->whereYear('created_at',$today)->get();
+
+    return $thisMonthClients;
+
   }
 
   //To show list of clients

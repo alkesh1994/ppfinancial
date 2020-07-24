@@ -26,6 +26,60 @@ class AccountService
     $this->passbookService = $passbookService;
   }
 
+  //To get accounts expiring this month
+  public function thisMonthExpiringAccounts()
+  {
+
+    $today = Carbon::now()->format('Y-m-d');
+
+    $thisMonthExpiringAccounts = Account::where('status',1)->whereMonth('end_date',$today)->whereYear('end_date',$today)->get();
+
+    return $thisMonthExpiringAccounts;
+
+  }
+
+  //To get recent accounts
+  public function recentAccounts()
+  {
+
+    $recentAccounts = Account::latest()->limit(10)->get();
+
+    return $recentAccounts;
+
+  }
+
+  //To get expiring accounts
+  public function expiringAccounts()
+  {
+
+    $expiringAccounts = Account::where('status',1)->where('months_left',1)->latest()->limit(10)->get();
+
+    return $expiringAccounts;
+
+  }
+
+  //To get elapsing accounts
+  public function elapsingAccounts()
+  {
+    $comparableDate = Carbon::now()->addDays(10)->format('Y-m-d');
+
+    $elapsingAccounts = Account::where('status',1)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
+
+    return $elapsingAccounts;
+
+  }
+
+  //To get elapsing accounts
+  public function elapsingCommissions()
+  {
+    $comparableDate = Carbon::now()->addDays(10)->format('Y-m-d');
+
+    $elapsingCommissions = Account::where('status',1)->where('commission_type',1)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
+
+    return $elapsingCommissions;
+
+  }
+
   //To show list of accounts
   public function listAccounts($slug)
   {

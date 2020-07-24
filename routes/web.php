@@ -23,7 +23,7 @@ Auth::routes();
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
 
   //Dashboard home
-  Route::get('/', 'HomeController@index')->name('home');
+  Route::get('/', 'HomeController@dashboard')->name('home');
 
   //Client routes group
   Route::prefix('clients')->namespace('Client')->as('clients.')->group(function() {
