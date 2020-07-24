@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->
-	<link rel="icon" type="image/png" href="login-assets/images/logo.png"/>
+	<link rel="icon" type="image/png" href="images/ppflogo.png"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="login-assets/vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
@@ -26,17 +26,13 @@
 <body>
 
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('login-assets/images/img-01.jpg');">
+		<div class="container-login100" style="background-image: url('images/ppfbg.png');">
 			<div class="wrap-login100 p-t-30 p-b-30">
 				<form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
 					@csrf
 					<div class="login100-form-avatar">
-						<img src="login-assets/images/logo.png" alt="PP Financial Solutions">
+						<img src="images/ppflogo.png" alt="PP Financial Solutions">
 					</div>
-
-					<span class="login100-form-title p-t-20 p-b-45">
-						PP Financial Solutions
-					</span>
 
 					@error('email')
 					<span class="p-t-20 p-b-25">
