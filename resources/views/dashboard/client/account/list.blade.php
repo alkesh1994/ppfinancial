@@ -186,7 +186,7 @@
                 <td>{{ $account->commission_type_display}}</td>
                 <td><button @if($account->active)class="btn btn-sm btn-flat btn-success"@else class="btn btn-sm btn-flat btn-danger"@endif >{{$account->status}}</button></td>
                 <td>
-                  <a href="{{ route('dashboard.clients.accounts.passbook.show',['clientSlug'=> $client->slug,'accountSlug'=> $account->slug]) }}" title="Passbook" target="_blank"><span class="label label-success"><i class="glyphicon glyphicon-list-alt"></i></span></a>
+                  <a href="{{ route('dashboard.clients.accounts.passbook.show',['clientSlug'=> $client->slug,'accountSlug'=> $account->slug]) }}" title="Passbook"><span class="label label-success"><i class="glyphicon glyphicon-list-alt"></i></span></a>
                   <a data-toggle="modal" data-target="#withdrawnAmount{{$i}}" title="Withdraw Amount"><span class="label label-warning"><i class="glyphicon glyphicon-arrow-down"></i></span></a>
                   <div class="modal modal-warning fade" id="withdrawnAmount{{$i}}">
                     <div class="modal-dialog">
