@@ -100,7 +100,7 @@ class AccountService
     {
       $elapsingCommissions = Account::where('active',1)->where('commission_type',1)->where('next_date','!=',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->get();
 
-      return view('dashboard.client.account.elaspingComissionsList',['accounts'=>$elapsingCommissions]);
+      return view('dashboard.client.account.elaspingCommissionsList',['accounts'=>$elapsingCommissions]);
     }else{
       $elapsingCommissions = Account::where('active',1)->where('commission_type',1)->where('next_date','!=',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
 
