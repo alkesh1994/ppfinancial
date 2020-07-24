@@ -23,10 +23,12 @@ Auth::routes();
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['auth']], function () {
 
   //Dashboard home
-  Route::get('/', 'HomeController@index')->name('home');
+  Route::get('/', 'HomeController@dashboard')->name('home');
 
   //Client routes group
   Route::prefix('clients')->namespace('Client')->as('clients.')->group(function() {
+
+    Route::get('/registered-this-month', 'ClientController@registeredThisMonth')->name('registered_this_month');
 
     Route::get('/list', 'ClientController@list')->name('list');
 
@@ -44,6 +46,14 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.', 'middleware' => ['a
 
   //Accounts routes group
   Route::namespace('Client')->as('clients.accounts.')->group(function() {
+
+    Route::get('clients/accounts/expiring-accounts-this-month', 'AccountController@expiringAccountsThisMonth')->name('expiring_accounts_this_month');
+
+    Route::get('clients/accounts/expiring-accounts-list', 'AccountController@expiringAccountsList')->name('expiring_accounts_list');
+
+    Route::get('clients/accounts/elapsing-accounts-list', 'AccountController@elapsingAccountsList')->name('elapsing_accounts_list');
+
+    Route::get('clients/accounts/elapsing-commissions-list', 'AccountController@elapsingCommissionsList')->name('elapsing_commissions_list');
 
     Route::get('clients/{slug}/accounts/list', 'AccountController@list')->name('list');
 

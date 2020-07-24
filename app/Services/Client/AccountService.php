@@ -26,6 +26,89 @@ class AccountService
     $this->passbookService = $passbookService;
   }
 
+  //To get accounts expiring this month
+  public function thisMonthExpiringAccounts($type)
+  {
+
+    $today = Carbon::now();
+
+    $thisMonthExpiringAccounts = Account::where('active',1)->whereMonth('end_date',$today)->whereYear('end_date',$today)->get();
+
+    if($type === "view")
+    {
+      return view('dashboard.client.account.expiringThisMonth',['accounts'=> $thisMonthExpiringAccounts]);
+    }else{
+      return $thisMonthExpiringAccounts;
+    }
+
+  }
+
+  //To get recent accounts
+  public function recentAccounts()
+  {
+
+    $recentAccounts = Account::latest()->limit(10)->get();
+
+    return $recentAccounts;
+
+  }
+
+  //To get expiring accounts
+  public function expiringAccounts($type)
+  {
+    if($type === "view")
+    {
+      $expiringAccounts = Account::where('active',1)->where('months_left',1)->latest()->get();
+
+      return view('dashboard.client.account.expiringAccountsList',['accounts'=>$expiringAccounts]);
+    }else{
+      $expiringAccounts = Account::where('active',1)->where('months_left',1)->latest()->limit(10)->get();
+
+      return $expiringAccounts;
+    }
+
+  }
+
+  //To get elapsing accounts
+  public function elapsingAccounts($type)
+  {
+    $comparableDate = Carbon::now()->addDays(10)->format('Y-m-d');
+
+    $todaysDate = Carbon::now()->format('Y-m-d');
+
+    if($type === "view")
+    {
+      $elapsingAccounts = Account::where('active',1)->where('next_date','!=',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->get();
+
+      return view('dashboard.client.account.elapsingAccountsList',['accounts'=>$elapsingAccounts]);
+    }else{
+      $elapsingAccounts = Account::where('active',1)->where('next_date','!=',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
+
+      return $elapsingAccounts;
+    }
+
+  }
+
+  //To get elapsing accounts
+  public function elapsingCommissions($type)
+  {
+    $comparableDate = Carbon::now()->addDays(10)->format('Y-m-d');
+
+    $todaysDate = Carbon::now()->format('Y-m-d');
+
+    if($type === "view")
+    {
+      $elapsingCommissions = Account::where('active',1)->where('commission_type',1)->where('next_date','!=',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->get();
+
+      return view('dashboard.client.account.elapsingCommissionsList',['accounts'=>$elapsingCommissions]);
+    }else{
+      $elapsingCommissions = Account::where('active',1)->where('commission_type',1)->where('next_date','!=',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
+
+      return $elapsingCommissions;
+    }
+
+  }
+
   //To show list of accounts
   public function listAccounts($slug)
   {
@@ -151,6 +234,13 @@ class AccountService
     $nextDate = Carbon::now()->addMonths(1);
     $monthsLeft = $account->months_left - 1;
     $currentAmount = $account->current_amount + $account->interest_amount;
+
+    if($monthsLeft)
+    {
+      $account->active = 1;
+    }else{
+      $account->active = 0;
+    }
 
     //For account
     $account->next_date = $nextDate;

@@ -2,27 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\Dashboard\DashboardService;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-     public function __construct()
+     private $dashboardService;
+
+     public function __construct(DashboardService $dashboardService)
      {
        $this->middleware('auth');
+       $this->dashboardService = $dashboardService;
      }
 
-     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-     public function index()
+     //to fetch dashboard data
+     public function dashboard()
      {
-       return view('home');
+       $dashboardData = $this->dashboardService->dashboardData();
+
+       return $dashboardData;
      }
 }
