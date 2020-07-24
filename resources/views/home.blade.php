@@ -128,7 +128,7 @@
       <!-- /.box -->
     </div>
     <!-- /.col -->
-    <!-- Recent Accounts -->
+    <!-- Expiring Accounts -->
     <div class="col-md-6">
 
       <!-- TABLE: LATEST ORDERS -->
@@ -168,7 +168,7 @@
                 $expiringAccountDaysLeft = $expiringAccountInterval->format('%a');
                 ?>
                 <tr>
-                  <td>{{$expiringAccount->start_date}}</td>
+                  <td>{{$expiringAccount->end_date}}</td>
                   <td>{{$expiringAccount->client->client_full_name}}</td>
                   <td>{{$expiringAccount->client->client_phone_number}}</td>
                   <td><span class="label label-success">{{$expiringAccountDaysLeft}}</span></td>
@@ -192,6 +192,153 @@
         <!-- /.box-body -->
         <div class="box-footer clearfix">
           <a href="#" class="btn btn-sm btn-primary btn-flat pull-left">View All Expiring Accounts</a>
+        </div>
+        <!-- /.box-footer -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- /.row -->
+  <div class="row">
+    <!-- Elapsing Accounts -->
+    <div class="col-md-6">
+
+      <!-- TABLE: LATEST ORDERS -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Elapsing Accounts</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table id="example2" class="table no-margin">
+              <thead>
+                <tr>
+                  <th>Pay Date</th>
+                  <th>Name</th>
+                  <th>Phone No</th>
+                  <th>Interest Amount</th>
+                  <th>Days Left</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if($elapsingAccounts->count() > 0)
+
+                @foreach($elapsingAccounts as $elapsingAccount)
+                <?php
+                $elapsingAccountEndDate = $elapsingAccount->end_date;
+                $elapsingAccountCurrentDate = date("Y-m-d");
+                $elapsingAccountEndDateTime = new DateTime($elapsingAccountEndDate);
+                $elapsingAccountCurrentDateTime = new DateTime($elapsingAccountCurrentDate);
+                $elapsingAccountInterval = $elapsingAccountEndDateTime->diff($elapsingAccountCurrentDateTime);
+                $elapsingAccountDaysLeft = $elapsingAccountInterval->format('%a');
+                ?>
+                <tr>
+                  <td>{{\Carbon\Carbon::parse($elapsingAccount->next_date)->subDays(1)->format('Y-m-d')}}</td>
+                  <td>{{$elapsingAccount->client->client_full_name}}</td>
+                  <td>{{$elapsingAccount->client->client_phone_number}}</td>
+                  <td>{{$elapsingAccount->interest_amount}}</td>
+                  <td><span class="label label-success">{{$elapsingAccountDaysLeft}}</span></td>
+                  <td>
+                    <a href="#"><span class="label label-primary"><i class="glyphicon glyphicon-eye-open"></i></span></a>
+                  </td>
+                </tr>
+                @endforeach
+
+                @else
+
+                <tr>
+                  <th colspan="5" class="text-center">No Elapsinng Accounts</th>
+                </tr>
+                @endif
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <a href="#" class="btn btn-sm btn-primary btn-flat pull-left">View All Elapsing Accounts</a>
+        </div>
+        <!-- /.box-footer -->
+      </div>
+      <!-- /.box -->
+    </div>
+    <!-- /.col -->
+    <!-- Elapsing Commissions -->
+    <div class="col-md-6">
+
+      <!-- TABLE: LATEST ORDERS -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Elapsing Commissions</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="table-responsive">
+            <table id="example2" class="table no-margin">
+              <thead>
+                <tr>
+                  <th>Pay Date</th>
+                  <th>Name</th>
+                  <th>Referred By</th>
+                  <th>Commission Amount</th>
+                  <th>Days Left</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                @if($elapsingCommissions->count() > 0)
+
+                @foreach($elapsingCommissions as $elapsingCommission)
+                <?php
+                $elapsingCommissionEndDate = $elapsingCommission->end_date;
+                $elapsingCommissionCurrentDate = date("Y-m-d");
+                $elapsingCommissionEndDateTime = new DateTime($elapsingCommissionEndDate);
+                $elapsingCommissionCurrentDateTime = new DateTime($elapsingCommissionCurrentDate);
+                $elapsingCommissionInterval = $elapsingCommissionEndDateTime->diff($elapsingCommissionCurrentDateTime);
+                $elapsingCommissionDaysLeft = $elapsingCommissionInterval->format('%a');
+                ?>
+                <tr>
+                  <td>{{\Carbon\Carbon::parse($elapsingCommission->next_date)->subDays(1)->format('Y-m-d')}}</td>
+                  <td>{{$elapsingCommission->client->client_full_name}}</td>
+                  <td>{{$elapsingCommission->client->referred_by}}</td>
+                  <td>{{$elapsingCommission->commission_amount}}</td>
+                  <td><span class="label label-success">{{$elapsingCommissionDaysLeft}}</span></td>
+                  <td>
+                    <a href="#"><span class="label label-primary"><i class="glyphicon glyphicon-eye-open"></i></span></a>
+                  </td>
+                </tr>
+                @endforeach
+
+                @else
+
+                <tr>
+                  <th colspan="5" class="text-center">No Elapsing Commissions</th>
+                </tr>
+                @endif
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer clearfix">
+          <a href="#" class="btn btn-sm btn-primary btn-flat pull-left">View All Elapsing Commissions</a>
         </div>
         <!-- /.box-footer -->
       </div>
