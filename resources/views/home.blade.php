@@ -22,7 +22,7 @@
           <p>Total clients</p>
         </div>
         <div class="icon">
-          <i class="fa fa-taxi"></i>
+          <i class="fa fa-users"></i>
         </div>
         <a href="{{route('dashboard.clients.list')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
@@ -37,7 +37,7 @@
           <p>Clients registered in {{\Carbon\Carbon::now()->format('F Y')}}</p>
         </div>
         <div class="icon">
-          <i class="fa fa-car"></i>
+          <i class="fa fa-users"></i>
         </div>
         <a href="{{route('dashboard.clients.registered_this_month')}}" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
       </div>
