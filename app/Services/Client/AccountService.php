@@ -206,6 +206,13 @@ class AccountService
     $monthsLeft = $account->months_left - 1;
     $currentAmount = $account->current_amount + $account->interest_amount;
 
+    if($monthsLeft)
+    {
+      $account->active = 1;
+    }else{
+      $account->active = 0;
+    }
+
     //For account
     $account->next_date = $nextDate;
     $account->months_left = $monthsLeft;
