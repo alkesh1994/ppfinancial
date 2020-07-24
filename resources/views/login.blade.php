@@ -34,10 +34,6 @@
 						<img src="images/ppflogo.png" alt="PP Financial Solutions">
 					</div>
 
-					<span class="login100-form-title p-t-20 p-b-45" style="color:black;">
-						PP Financial Solutions
-					</span>
-
 					@error('email')
 					<span class="p-t-20 p-b-25">
 										<strong style="  border-radius: 10px;border: 2px solid #73AD21;padding: 4px;width: 120px;height: 30px;color:red;background-color:#fff;">{{ $message }}</strong>
