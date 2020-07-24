@@ -35,7 +35,7 @@ class ClientService
   //To get clients registered this month
   public function thisMonthClients()
   {
-    $today = Carbon::now()->format('Y-m-d');
+    $today = Carbon::now();
 
     $thisMonthClients = Client::whereMonth('created_at',$today)->whereYear('created_at',$today)->get();
 

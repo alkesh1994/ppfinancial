@@ -30,9 +30,9 @@ class AccountService
   public function thisMonthExpiringAccounts()
   {
 
-    $today = Carbon::now()->format('Y-m-d');
+    $today = Carbon::now();
 
-    $thisMonthExpiringAccounts = Account::where('status',1)->whereMonth('end_date',$today)->whereYear('end_date',$today)->get();
+    $thisMonthExpiringAccounts = Account::where('active',1)->whereMonth('end_date',$today)->whereYear('end_date',$today)->get();
 
     return $thisMonthExpiringAccounts;
 
@@ -52,7 +52,7 @@ class AccountService
   public function expiringAccounts()
   {
 
-    $expiringAccounts = Account::where('status',1)->where('months_left',1)->latest()->limit(10)->get();
+    $expiringAccounts = Account::where('active',1)->where('months_left',1)->latest()->limit(10)->get();
 
     return $expiringAccounts;
 
@@ -61,9 +61,9 @@ class AccountService
   //To get elapsing accounts
   public function elapsingAccounts()
   {
-    $comparableDate = Carbon::now()->addDays(10)->format('Y-m-d');
+    $comparableDate = Carbon::now()->addDays(10);
 
-    $elapsingAccounts = Account::where('status',1)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
+    $elapsingAccounts = Account::where('active',1)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
 
     return $elapsingAccounts;
 
@@ -72,9 +72,9 @@ class AccountService
   //To get elapsing accounts
   public function elapsingCommissions()
   {
-    $comparableDate = Carbon::now()->addDays(10)->format('Y-m-d');
+    $comparableDate = Carbon::now()->addDays(10);
 
-    $elapsingCommissions = Account::where('status',1)->where('commission_type',1)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
+    $elapsingCommissions = Account::where('active',1)->where('commission_type',1)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
 
     return $elapsingCommissions;
 
