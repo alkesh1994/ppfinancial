@@ -47,7 +47,7 @@ class AccountService
   public function recentAccounts()
   {
 
-    $recentAccounts = Account::latest()->limit(10)->get();
+    $recentAccounts = Account::latest('start_date')->limit(10)->get();
 
     return $recentAccounts;
 
@@ -78,11 +78,11 @@ class AccountService
 
     if($type === "view")
     {
-      $elapsingAccounts = Account::where('active',1)->where('next_date','!=',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->get();
+      $elapsingAccounts = Account::where('active',1)->where('next_date','>',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->get();
 
       return view('dashboard.client.account.elapsingAccountsList',['accounts'=>$elapsingAccounts]);
     }else{
-      $elapsingAccounts = Account::where('active',1)->where('next_date','!=',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
+      $elapsingAccounts = Account::where('active',1)->where('next_date','>',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
 
       return $elapsingAccounts;
     }
@@ -98,11 +98,11 @@ class AccountService
 
     if($type === "view")
     {
-      $elapsingCommissions = Account::where('active',1)->where('commission_type',1)->where('next_date','!=',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->get();
+      $elapsingCommissions = Account::where('active',1)->where('commission_type',1)->where('next_date','>',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->get();
 
       return view('dashboard.client.account.elapsingCommissionsList',['accounts'=>$elapsingCommissions]);
     }else{
-      $elapsingCommissions = Account::where('active',1)->where('commission_type',1)->where('next_date','!=',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
+      $elapsingCommissions = Account::where('active',1)->where('commission_type',1)->where('next_date','>',$todaysDate)->where('next_date','<=',$comparableDate)->latest()->limit(10)->get();
 
       return $elapsingCommissions;
     }

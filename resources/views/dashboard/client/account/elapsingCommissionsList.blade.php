@@ -40,7 +40,7 @@
             <tbody>
               @foreach($accounts as $account)
               <?php
-              $elapsingCommissionNextDate = \Carbon\Carbon::parse($elapsingCommission->next_date)->subDays(1)->format('Y-m-d');
+              $elapsingCommissionNextDate = \Carbon\Carbon::parse($account->next_date)->subDays(1)->format('Y-m-d');
               $elapsingCommissionCurrentDate = date("Y-m-d");
               $elapsingCommissionNextDateTime = new DateTime($elapsingCommissionNextDate);
               $elapsingCommissionCurrentDateTime = new DateTime($elapsingCommissionCurrentDate);
