@@ -49,7 +49,7 @@
 
       <div class="col-md-8">
         <div class=""style="text-align:center">
-          <img src="images/ppflogo.png" class="rounded" alt="Cinque Terre" width="100" height="80">
+          <img src="{{asset('images/ppflogo.png')}}" class="rounded" alt="pp finalcial solutions logo" width="100" height="80">
         </div>
 
         <p style="font-size:14px; text-align:center;"> <strong>Address:</strong> 510 Vision Vatika,Vitthalwadi, Akurdi,Pune 411035 </p>

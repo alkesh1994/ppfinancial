@@ -137,9 +137,9 @@ tfoot input {
             </span>
           </a>
           <ul class="treeview-menu menu-open treeview-menu-visible">
+            <li><a href="{{route('dashboard.clients.create_client')}}"><i class="fa fa-plus"></i>Add Client</a></li>
             <li><a href="{{route('dashboard.clients.list')}}"><i class="fa fa-list-ol"></i>Clients List</a></li>
             <li><a href="{{route('dashboard.clients.registered_this_month')}}"><i class="fa fa-list-ol"></i>Clients Registered In {{\Carbon\Carbon::now()->format('F Y')}}</a></li>
-            <li><a href="{{route('dashboard.clients.create_client')}}"><i class="fa fa-plus"></i>Add Client</a></li>
             <li><a href="{{route('dashboard.clients.accounts.expiring_accounts_this_month')}}"><i class="fa fa-list-ol"></i>Accounts Expiring In {{\Carbon\Carbon::now()->format('F Y')}}</a></li>
             <li><a href="{{route('dashboard.clients.accounts.expiring_accounts_list')}}"><i class="fa fa-list-ol"></i>Expiring Accounts List</a></li>
             <li><a href="{{route('dashboard.clients.accounts.elapsing_accounts_list')}}"><i class="fa fa-list-ol"></i>Elapsing Accounts List</a></li>
