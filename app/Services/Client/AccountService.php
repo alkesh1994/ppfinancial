@@ -9,6 +9,7 @@ use App\Models\Client\Account;
 use App\Models\Client\Passbook;
 use App\Services\Helpers\SlugService;
 use App\Services\Client\PassbookService;
+use App\Notifications\InterestAmountUpdateMessage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
 use Carbon\Carbon;
@@ -235,6 +236,8 @@ class AccountService
     $monthsLeft = $account->months_left - 1;
     $currentAmount = $account->current_amount + $account->interest_amount;
 
+    $interestMonth = Carbon::parse($account->next_date)->format('F y');
+
     if($monthsLeft)
     {
       $account->active = 1;
@@ -264,6 +267,9 @@ class AccountService
       'commission_total_amount' => $account->commission_total_amount,
       'account_id' => $account->id
     ]);
+
+    $client = Client::where('id',$account->client_id)->first();
+    $client->notify(new InterestAmountUpdateMessage($client->client_full_name,$account->interest_amount,$interestMonth));
 
   }
 

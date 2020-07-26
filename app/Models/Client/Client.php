@@ -4,10 +4,12 @@ namespace App\Models\Client;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Client extends Model
 {
     use SoftDeletes;
+    use Notifiable;
 
     protected $fillable = [
       'slug',
@@ -43,5 +45,11 @@ class Client extends Model
     {
       return $this->client_first_name . ' ' . $this->client_middle_name . ' ' . $this->client_last_name;
     }
+
+    public function routeNotificationForNexmo($notification)
+    {
+      return $this->client_phone_number;
+    }
+
 
 }
