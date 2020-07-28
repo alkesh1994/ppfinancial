@@ -38,52 +38,67 @@
   }
   .jumbotron-fluid{padding-right:0;padding-left:0;border-radius:0}
 </style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 </head>
 <body>
-  <div class="jumbotron">
-    <div class="row">
 
-      <div class="col-md-2">
+  <div class="row">
+
+    <div class="col-xs-3">
+      <div style="text-align:center;">
+        <img src="{{asset('images/ppflogo.png')}}" class="rounded" alt="pp financial solutions logo" width="100" height="80">
       </div>
 
-      <div class="col-md-8">
-        <div class=""style="text-align:center">
-          <img src="{{asset('images/ppflogo.png')}}" class="rounded" alt="pp finalcial solutions logo" width="100" height="80">
-        </div>
+      <p style="font-size:14px;text-align:center;"> <strong>Address:</strong> 510 Vision Vatika,Vitthalwadi, Akurdi,Pune 411035 </p>
 
-        <p style="font-size:14px; text-align:center;"> <strong>Address:</strong> 510 Vision Vatika,Vitthalwadi, Akurdi,Pune 411035 </p>
-
-        <div class="input-group mb-3" style="text-align:center;">
-          <div class="input-group-prepend">
-            <span class="input-group-text"><strong>Name:</strong> {{$client->client_full_name}}</span>
-
-            <span class="input-group-text"><strong>Phone No.:</strong> {{$client->client_phone_number}}</span>
-
-            <span class="input-group-text"><strong>Address:</strong> {{$client->client_permanent_address}}</span>
-          </div>
-
-        </div>
-
-        <div class="input-group mb-3" style="text-align:center;">
-          <div class="input-group-prepend">
-
-            <span class="input-group-text"><strong>Bank:</strong> {{$client->client_bank_name}}</span>
-
-            <span class="input-group-text"><strong>Account No:</strong> {{$client->client_bank_account_number}}</span>
-
-            <span class="input-group-text"><strong>IFS Code:</strong> {{$client->client_bank_ifsc_code}}</span>
-          </div>
-
-        </div>
-
-      </div>
     </div>
 
+    <div class="col-xs-9">
+
+      <div class="input-group mb-3" >
+        <div class="input-group-prepend">
+          <span class="input-group-text"><strong>Name:</strong> {{$client->client_full_name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+
+          <span class="input-group-text"><strong>Phone No.:</strong> {{$client->client_phone_number}}</span>
+          <br>
+
+          <span class="input-group-text" ><strong>Address:</strong> {{$client->client_permanent_address}}</span>
+        </div>
+
+      </div>
+      <br> <br>
+
+      <div class="input-group mb-3" >
+        <div class="input-group-prepend">
+
+          <span class="input-group-text"><strong>Bank Name:</strong> {{$client->client_bank_name}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+
+          <span class="input-group-text"><strong>Account No:</strong> {{$client->client_bank_account_number}}</span>
+
+
+        </div>
+
+      </div>
+
+      <div class="input-group mb-3" >
+        <div class="input-group-prepend">
+
+          <span class="input-group-text"><strong>IFS Code:</strong> {{$client->client_bank_ifsc_code}}</span>
+
+        </div>
+
+      </div>
+
+
+
+    </div>
   </div>
   <div class="container-fluid">
 
-    <p style="text-align:center;font-size:18px;"><strong>Accounts</strong></p>
+    <p style="text-align:center;font-size:18px;">------------ <strong>Accounts</strong> ------------</p>
     <table id="customers" style="font-size:10px;">
       <tr>
         <th>Start Date</th>
