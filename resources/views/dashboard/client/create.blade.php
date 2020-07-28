@@ -59,15 +59,15 @@
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label for="client_phone_number">Client Phone Number<span style="color:red;">*</span></label>
-                  <input type="number" id="client_phone_number" name="client_phone_number" class="form-control" value="{{old('client_phone_number')}}" placeholder="Enter Client Phone Number">
+                  <label for="client_phone_number">Client Phone Number (enter +91)<span style="color:red;">*</span></label>
+                  <input type="text" id="client_phone_number" name="client_phone_number" class="form-control" value="{{old('client_phone_number')}}" placeholder="Enter Client Phone Number">
                   <span data-name="client_phone_number" class="error" style="color:red;"></span>
                 </div>
               </div>
               <div class="col-sm-3">
                 <div class="form-group">
-                  <label for="client_alternate_phone_number">Alternate Phone Number</label>
-                  <input type="number" id="client_alternate_phone_number" name="client_alternate_phone_number" class="form-control" value="{{old('client_alternate_phone_number')}}" placeholder="Enter Alternate Phone Number">
+                  <label for="client_alternate_phone_number">Alternate Phone Number (enter +91)</label>
+                  <input type="text" id="client_alternate_phone_number" name="client_alternate_phone_number" class="form-control" value="{{old('client_alternate_phone_number')}}" placeholder="Enter Alternate Phone Number">
                   <span data-name="client_alternate_phone_number" class="error" style="color:red;"></span>
                 </div>
               </div>
