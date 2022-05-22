@@ -29,7 +29,9 @@
 
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.min.css">
-
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="{{ asset('bower_components/fullcalendar/dist/fullcalendar.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('bower_components/fullcalendar/dist/fullcalendar.print.min.css')}}" media="print">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('dist/css/AdminLTE.min.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -167,12 +169,17 @@ tfoot input {
 </div>
 
 <!-- jQuery 3 -->
+<!-- files for full calendar -->
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ asset('bower_components/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
+<script src="{{ asset('bower_components/fullcalendar/dist/fullcalendar.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.1.60/inputmask/jquery.inputmask.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.2/croppie.js"></script>
+
 
 
 <script type="text/javascript">
@@ -226,6 +233,7 @@ tfoot input {
 <script src="{{ asset('plugins/iCheck/icheck.min.js')}}"></script>
 <!-- Page script -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.4.2/handlebars.min.js'></script>
+
 @yield('scripts')
 </body>
 </html>

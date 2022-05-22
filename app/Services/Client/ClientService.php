@@ -10,6 +10,7 @@ use App\Services\Helpers\ImageUploadService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Session;
 use Carbon\Carbon;
+use Image;
 
 class ClientService
 {
@@ -64,6 +65,21 @@ class ClientService
 
     $sluggableField = $request->get('client_first_name').' '.$request->get('client_middle_name').' '.$request->get('client_last_name').' '.str_random(10);
     $slug = $this->slugService->createSlug('Client\\Client',$sluggableField);
+
+
+    //my code
+
+          $img = Image::make($request->client_aadhar_card_photo);
+          $img->insert($request->client_pan_card_photo, 'top-left', 200, 20);  
+          $img->text('Noob invoker', 120, 400, function($font) {  
+          $font->file(public_path('path/font.ttf'));  
+          $font->size(28);  
+          $font->color('#000000');  
+          $font->align('center');  
+          $font->valign('bottom');  
+          $font->angle(0);  
+          });  
+          $img->save('images/text_with_image.jpg');
 
     $clientAadharCardPhotoPath = $this->imageUploadService->handleImageUpload($request->file('client_aadhar_card_photo'),'clients/aadharCards');
 
